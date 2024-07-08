@@ -86,9 +86,32 @@ function showProfileCompletion() {
         }
     });
 }
-function showPassword() {
-    document.getElementById('profile-completion').classList.add('hidden');
-    document.getElementById('password-session').classList.remove('hidden');
-}
+
+
+
+
+    //
+    $(document).ready(function() {
+        $('#register').click(function() {
+            document.getElementById('profile-completion').classList.add('hidden');
+            document.getElementById('password-session').classList.remove('hidden');
+            var user = {
+                username: $('#name').val(),
+                rno: $('#rno').val(),
+                phone: $('#phone').val()
+            };
+
+            $.ajax({
+                url: '/register',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(user),
+
+            });
+        });
+    });
+    //
+
+
 
 
