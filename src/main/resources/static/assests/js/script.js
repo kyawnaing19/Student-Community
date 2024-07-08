@@ -15,9 +15,42 @@ function showGMail() {
     btn.style.left='210px'
  
 }
+
+function showPassword() {
+    document.getElementById('profile-completion').classList.add('hidden');
+    document.getElementById('password-session').classList.remove('hidden');
+    stuName=document.getElementById('StuName').value;
+    stuRno=document.getElementById('StuRno').value;
+    stuPhone=document.getElementById('StuPhone').value;
+}
 var inputValue;
-
-
+var stuName;
+var stuRno;
+var stuPhone;
+var password;
+function complete(){
+    password=document.getElementById('passWord').value;
+    const user = {
+        name: stuName,
+        rno: stuRno,
+        email: inputValue, // You can include numbers
+        phone: stuPhone,  // You can include booleans
+        password: password // You can include arrays
+    };
+    $.ajax({
+        url: "/createUser", // Replace with your server-side endpoint URL
+        type: "POST",
+        contentType: "application/json",
+        // Expected response format (optional)
+        data: JSON.stringify(user), // Convert object to JSON string
+        success: function(response) {
+            alert("successfully registered");
+        },
+        error: function(error) {
+            alert("error");
+        }
+    });
+}
 $(document).ready(function() {
     var isCallable = true;
 
@@ -85,33 +118,9 @@ function showProfileCompletion() {
             console.error(error);
         }
     });
+
+
 }
-
-
-
-
-    //
-    $(document).ready(function() {
-        $('#register').click(function() {
-            document.getElementById('profile-completion').classList.add('hidden');
-            document.getElementById('password-session').classList.remove('hidden');
-            var user = {
-                username: $('#name').val(),
-                rno: $('#rno').val(),
-                phone: $('#phone').val()
-            };
-
-            $.ajax({
-                url: '/register',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(user),
-
-            });
-        });
-    });
-    //
-
 
 
 

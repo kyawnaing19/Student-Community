@@ -101,26 +101,27 @@
                     </div>
                     <div id="gmail-fields" class=" mt-3">
                     <div id="gmail-fields" class=" mt-3">
-                        <input type="text" id="name"
+                        <input type="text" id="StuName"
                             class="custom-width form-control form-control-lg bg-light border border-primary rounded-pill ml-5 mb-3"
                             placeholder="Enter Your Name">
-                        <input type="text" id="rno"
+                        <input type="text" id="StuRno"
                             class="custom-width form-control form-control-lg bg-light border border-primary rounded-pill ml-5 mb-3"
                             placeholder="Enter Your Roll No">
-                        <input type="text" id="phone"
+                        <input type="text" id="StuPhone"
                             class="custom-width form-control form-control-lg bg-light border border-primary rounded-pill ml-5"
                             placeholder="Enter Your Phone Number">
                     </div>
                     <div class="input-group mt-5 d-flex justify-content-center">
-                        <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill"  id=register"
-                        >Continue ></button>
+                        <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill"
+                            onclick="showPassword()">Continue ></button>
                     </div>
                     <div class="row">
                         <small class="login text-white text-center mt-5 fs-6">Already have an account? <a
                                 href="#">Login</a> </small>
                     </div>
-
+                    </div>
                 </div>
+
                 <!-- ===== End Complete Profile session =====-->
 
                 <!-- ===== Password Session ====== -->
@@ -131,14 +132,14 @@
                     </div>
                     <div id="password-fields" class="mt-3">
                         <input type="password"
-                            class="custom-width form-control form-control-lg bg-light border border-primary rounded-pill ml-5 mb-3"
-                            placeholder="Enter Your Password">
-                        <input type="password"
-                            class="custom-width form-control form-control-lg bg-light border border-primary rounded-pill ml-5"
-                            placeholder="Confirm Your Password">
+                               class="custom-width form-control form-control-lg bg-light border border-primary rounded-pill ml-5 mb-3"
+                               placeholder="Enter Your Password">
+                        <input type="password" id="passWord"
+                               class="custom-width form-control form-control-lg bg-light border border-primary rounded-pill ml-5"
+                               placeholder="Confirm Your Password">
                     </div>
                     <div class="input-group mt-5 d-flex justify-content-center">
-                        <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill">Complete ></button>
+                        <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill" onclick="complete()">Complete ></button>
                     </div>
                 </div>
                 <!-- ===== End Password session =====-->
