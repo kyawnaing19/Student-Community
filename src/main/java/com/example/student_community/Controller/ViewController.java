@@ -10,11 +10,6 @@ public class ViewController {
        return "index";
     }
 
-    @GetMapping("/login")
-        public String login(){
-            return "login";
-        }
-
 }
 
 

@@ -3,6 +3,6 @@ package com.example.student_community.MailVerification;
 import com.example.student_community.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    User findByName(String name);
+public interface CheckUserRepository  extends JpaRepository<User,Integer> {
+    User findByEmail(String email);
 }

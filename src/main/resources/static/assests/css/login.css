@@ -5,22 +5,23 @@
     margin: 0;
     box-sizing: border-box;
 }
-body{
-    background: linear-gradient(90deg, rgba(2,0,36,1)0%,rgba(75,14,154,1)35%, rgba(0,212,255,1)100%);
+body {
     font-family: 'Poppins',sans-serif;
+    background-color: #000000;
+    color: white;
 }
 form{
-    width: 26%;
-    background-color: white;
+    width: 35%;
+    /* background-color:#252a2b; */
     padding: 50px;
     border-radius: 20px;
-    margin-top: 165px;
+
 }
 .btn-primary{
     width: 100%;
     border: none;
     border-radius: 50px;
-    background: linear-gradient(90deg, rgba(2,0,36,1)0%,rgba(75,14,154,1)35%, rgba(0,212,255,1)100%);
+   
 }
 .form-control{
     color: rgba(0,0,0,.87);
@@ -30,12 +31,42 @@ form{
     border-bottom: 1px solid;
     border-radius: 4px 4px 0 0;
 }
-h4{
+
+.bottom-box{
+    width: 300px;
+    background: #fff;
+    position: relative;
+    border-radius: 30px;
+    margin: 35px auto;
+}
+.toggle-btn{
+    padding: 8px 30px;
+    background: transparent;
+    outline: none;
+    border: 0;
+    position: relative;
+    text-align: center;
+}
+
+ /* Custom style for active button */
+#btn{
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 160px;
+    height: 100%;
+    background: #DEB887;
+    border-radius: 30px;
+    transform: .5s;
+}
+
+/* h4{
     font-size: 2rem !important;
     font-weight: 700;
-}
-.form-text a {
-    color: rgb(227, 17, 17); 
+} */
+::placeholder{
+    font-size: 16px;
+    letter-spacing: 2px;
 }
 @media screen and (max-width:1024px) {
     form{
@@ -51,5 +82,5 @@ h4{
     form{
         width: 90%;
     }
-}
 
+}
