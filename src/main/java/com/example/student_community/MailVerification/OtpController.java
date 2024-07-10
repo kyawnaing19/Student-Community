@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class OtpController {
-
-    @Autowired
-    private EmailService emailService;
+//
+//    @Autowired
+//    private EmailService emailService;
     @Autowired
     private OtpService otpService;
 
     @GetMapping("/sendOtp")
-    public String sendOtp(@RequestParam String email) {
+    public ResponseEntity<String> sendOtp(@RequestParam String email) {
         return otpService.sendOtp(email);
     }
 

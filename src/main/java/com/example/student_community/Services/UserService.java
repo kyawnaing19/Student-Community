@@ -6,13 +6,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
-    public ResponseEntity createUser(User user) {
+
+    public ResponseEntity<String> createUser(User user) {
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+
+        if (existingUser.isPresent()) {
+            return ResponseEntity.status(409).body("User already exists");
+        }
+
         userRepository.save(user);
-        return ResponseEntity.ok("created successfully");
+        return ResponseEntity.ok("Created successfully");
+
+
+
+    }
+    public User findByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail( email);
+        if (user.isPresent()) {return  user.get();}
+        else return null;
+    }
+
+    public List<User> searchUser(String keyword) {
+        return userRepository.findByNameContaining(keyword);
 
     }
 }
