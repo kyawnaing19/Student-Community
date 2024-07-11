@@ -10,6 +10,15 @@ public class ViewController {
        return "index";
     }
 
+    @GetMapping("/login")
+    public String loginForm() {
+        return "login";
+    }
+
+    @GetMapping("/profile")
+    public String profile(){
+        return "profileupdate";
+    }
 }
 
 

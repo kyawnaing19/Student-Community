@@ -17,11 +17,9 @@ public class UserService {
 
     public ResponseEntity<String> createUser(User user) {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-
         if (existingUser.isPresent()) {
             return ResponseEntity.status(409).body("User already exists");
         }
-
         userRepository.save(user);
         return ResponseEntity.ok("Created successfully");
 
@@ -30,8 +28,7 @@ public class UserService {
     }
     public User findByEmail(String email) {
         Optional<User> user = userRepository.findByEmail( email);
-        if (user.isPresent()) {return  user.get();}
-        else return null;
+        return user.orElse(null);
     }
 
     public List<User> searchUser(String keyword) {
