@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class Controller {
@@ -23,9 +24,12 @@ public class Controller {
     public ResponseEntity createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
-    @GetMapping("/test")
-    public String test(){
-        return "test";
+
+    @GetMapping("/userInfo/{email}")
+    public ResponseEntity<User> getUser(@PathVariable String email)
+    {
+       return ResponseEntity.ok(userService.findByEmail(email));
+
     }
 
 
