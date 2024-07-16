@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload Example</title>
+</head>
+<body>
+<h1>Upload an Image</h1>
+<input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)">
+<br><br>
+<img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; height: auto;">
+<br><br>
+<button type="button" onclick="uploadImage()">Upload Image</button>
+
+<script src="assests/js/jquery.min.js"></script>
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function uploadImage() {
+        var fileInput = document.getElementById('imageUpload');
+
+        if (fileInput.files.length === 0) {
+            alert("Please select a file.");
+            return;
+        }
+
+        var formData = new FormData();
+        var file = fileInput.files[0];
+        formData.append('image', file, file.name); // Append file with its name
+
+        $.ajax({
+            url: '/uploadImage', // Replace with your actual API endpoint
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('Image uploaded successfully:', response);
+                alert('Image uploaded successfully');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Error uploading image:', textStatus, errorThrown);
+                alert('Error uploading image');
+            }
+        });
+    }
+</script>
+</body>
+</html>
+
+

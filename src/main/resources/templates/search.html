@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Books</title>
+</head>
+<body>
+<h1>Search Books</h1>
+<form th:action="@{/search}" method="post">
+    <input type="text" name="keyword" placeholder="Enter book title">
+    <button type="submit">Search</button>
+</form>
+<div th:if="${users}">
+    <ul>
+        <li th:each="user : ${users}">
+            <p>Name: <span th:text="${user.name}"></span></p>
+            <p>Email: <span th:text="${user.email}"></span></p>
+        </li>
+    </ul>
+</div>
+
+
+
+<!--<div id="results"></div>-->
+
+<!--<script>-->
+<!--    const form = document.querySelector('form');-->
+<!--    const resultsDiv = document.getElementById('results');-->
+
+<!--    form.addEventListener('submit', async (event) => {-->
+<!--        event.preventDefault();-->
+<!--        const keyword = form.keyword.value;-->
+<!--        const response = await fetch(`/search?keyword=${keyword}`);-->
+<!--        const users = await response.json();-->
+
+<!--        resultsDiv.innerHTML = '<ul>' + books.map(book => `<li>${users.name} by ${users.email}</li>`).join('') + '</ul>';-->
+<!--    });-->
+<!--</script>-->
+</body>
+</html>

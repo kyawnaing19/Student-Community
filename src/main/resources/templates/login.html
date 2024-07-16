@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="assests/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assests/css/login.css">
+
+</head>
+
+<body>
+    <!-- =========== Main Container=========== -->
+
+    <div class="container-fluid ">
+
+        <!-- ========== Login  Container======== -->
+
+        <form class="mx-auto mt-4" th:action="@{/login}" method="post">
+            <!-- <h4 class="text-center">LOGIN</h4> -->
+            <div class="header-text">
+                <p class="fs-1 text-center text-primary mb-4">Login</p>
+            </div>
+
+            <div class="bottom-box email-type-selector d-flex mt-3 justify-content-center">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn btn-lg" onclick="showEduMail()">Edu Mail</button>
+                <button type="button" class="toggle-btn btn-lg" onclick="showGMail()">G-Mail</button>
+            </div>
+
+            <div id="edu-mail-fields" class="mb-3 mt-3">
+
+                <label for="exampleInputEmail1" id="email-label" class="form-label">Edu-Mail </label>
+                <input type="text" id="edu-mail-placeholder"
+                    class="custom-width form-control form-control-lg bg-light border border-primary rounded ml-5"
+                    placeholder="Enter Your Edu-Mail" name="email">
+            </div>
+
+            <div id="gmail-fields" class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password"
+                    class="custom-width form-control form-control-lg bg-light border border-primary rounded"
+                    id="exampleInputPassword1"  placeholder="Enter Your Password" name="password">
+
+                <div id="emailHelp" class="form-text mt-3">
+                    <a href="forgot-password.html" class="text-decoration-none">Forget password?</a>
+                </div>
+            </div>
+
+
+            <div th:if="${message}">
+                <p th:text="${message}"></p>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Remember me</label>
+            </div>
+            <div class="input-group mt-4 d-flex justify-content-center">
+                <button class="btn btn-lg btn-primary fs-unset rounded-pill"
+                    onclick="showOtpVerification()">Login </button>
+            </div>
+        </form>
+
+    </div>
+
+    <script src="assests/js/jquery.min.js"></script>
+    <script src="assests/js/bootstrap.min.js"></script>
+    <script src="assests/js/login.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Community </title>
+    <!-- ------------------Custom Css link -->
+    <link rel="stylesheet" href="./Assets/Style.css">
+    <!-- ----Font Awesome  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- -------Swiper Slider Link------ -->
+
+    <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
+
+</head>
+
+<body>
+
+
+    <!-- ..................Start Navbar...................... -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <h3>Community <span>Forum</span></h3>
+            </div>
+            <div class="serch-bar">
+                <i class="fa fa-search"></i>
+                <input type="search" name="" id="" placeholder="Search For Creators">
+            </div>
+            <div class="add-post">
+                <label for="add-post" class="btn btn-primary">Add Post</label>
+                <div class="profile-picture" id="my-profile-picture">
+                    <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- ...................Start Navbar................... -->
+
+
+    <!-- ...................Start Main Session...................-->
+    <main>
+        <div class="container main-container">
+
+
+            <!-- ...........Main Left Start......... -->
+            <div class="main-left">
+
+                <!--..................... Profile Start.............. -->
+                <a class="profile">
+                    <div class="profile-picture" id="my-profile-picture">
+                        <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                    </div>
+                    <div class="profile-handle">
+                        <h4 id="name"></h4>
+                    </div>
+                </a>
+
+                <!--..................... Profile End.............. -->
+
+                <!-- ............Start Aside Bar............... -->
+                <aside>
+                    <a class="menu-item active">
+                        <span>
+                            <img src="/Assets/images/svg/house-door.svg" alt="">
+                        </span>
+                        <h3>Home</h3>
+                    </a>
+
+                    <a class="menu-item">
+                        <span>
+                            <img src="/Assets/images/svg/joystick.svg" alt="">
+                        </span>
+                        <h3>Events</h3>
+                    </a>
+
+                    <a class="menu-item">
+                        <span>
+                            <img src="./Assets/images/svg/bell.svg" alt="">
+                        </span>
+                        <small class="notfy-counter">7+</small>
+                        <h3>Notifications</h3>
+
+                        <!--........... Notifications Box Start............. -->
+                        <div class="notification-box">
+                            <div>
+                                <div class="profile-picture">
+                                    <img src="./Assets/images/img/n1.jpg" alt="">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Aye Aye Min san</b> accepted your friend request
+                                    <small class="text-gry">1 DAYS AGO</small>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="profile-picture">
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Syan par Chan</b> commented on your post
+                                    <small class="text-gry">2 HOUR AGO</small>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="profile-picture">
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Aung Myo Kyaw</b> liked on your post
+                                    <small class="text-gry">JUST NOW</small>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="profile-picture">
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Aung Myint Tun</b> and <b> 10 others </b> liked on your post
+                                    <small class="text-gry">TODAY</small>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="profile-picture">
+                                    <img src="./Assets/images/img/n5.png" alt="">
+                                </div>
+                                <div class="notification-body">
+                                    <b>Kyaw Naing</b> and <b> 5 others </b> commented on your post
+                                    <small class="text-gry">3 DAYS AGO</small>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--........... Notifications Box End ............. -->
+
+                    </a>
+
+                    <a class="menu-item">
+                        <span>
+                            <img src="./Assets/images/svg/chat-dots.svg" alt="">
+                        </span>
+                        <small class="notfy-counter">3</small>
+                        <h3>Message</h3>
+                    </a>
+
+                    <a class="menu-item">
+                        <span>
+                            <img src="./Assets/images/svg/bookmarks.svg" alt="">
+                        </span>
+                        <h3>Saved</h3>
+                    </a>
+
+
+
+                    <a class="menu-item">
+                        <span>
+                            <img src="./Assets/images/svg/palette.svg" alt="">
+                        </span>
+                        <h3>Theme</h3>
+                    </a>
+
+                    <a class="menu-item">
+                        <span>
+                            <img src="./Assets/images/svg/gear.svg" alt="">
+                        </span>
+                        <h3>Settings</h3>
+                    </a>
+
+                    <a class="menu-item">
+                        <span>
+                            <img src="./Assets/images/svg/help-support.svg" alt="">
+                        </span>
+                        <h3>Help & Support</h3>
+                    </a>
+
+
+                    <!-- ..........Add Post Btn...........-->
+                    <label for="add-post" class="btn btn-primary btn-lg"><a href="profile" style="text-decoration: none; color: aliceblue; font-weight: bolder;">View Profile Details</a></label>
+
+                </aside>
+
+                <!-- ............End Aside Bar............... -->
+
+            </div>
+            <!-- ...........Main Left End......... -->
+
+            <!--======================Main Middle Start====================== -->
+
+            <div class="main-middle">
+                <div class="middle-container">
+                    <!-- ---Start Stories ---------- -->
+                    <div class="stories">
+                        <div class="swiper mySwiper stories-wrapper" style="margin-left: 0;">
+                            <div class="swiper-wrapper">
+                                <div class="story swiper-slide">
+                                    <img src="" alt="">
+                                    <div class="profile-picture my-profile-picture" id="my-profile-picture">
+                                        <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                                    </div>
+                                    <div class="add-story">
+                                        <i class="fa fa-add" id="upload"></i>
+                                        <p>Add Your <br>Story</p>
+                                    </div>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st1.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s1.jpg" alt="">
+                                    </div>
+                                    <p>Aye Aye Min San</p>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st2.jpeg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s2.jpg" alt="">
+                                    </div>
+                                    <p>Syan Par Chan</p>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st3.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s3.jpg" alt="">
+                                    </div>
+                                    <p>Moe Win</p>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/m1.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s4.jpg" alt="">
+                                    </div>
+                                    <p>Aung Myo Kyaw</p>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st6.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s5.jpg" alt="">
+                                    </div>
+                                    <p>Kyaw Kyaw Naing</p>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/st5.jpg" alt="">
+                                    </div>
+                                    <p>Aung Myint Tun</p>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st1.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s1.jpg" alt="">
+                                    </div>
+                                    <p>Aye Aye Min San</p>
+                                </div>
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st1.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s1.jpg" alt="">
+                                    </div>
+                                    <p>Aye Aye Min San</p>
+                                </div>
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st1.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s1.jpg" alt="">
+                                    </div>
+                                    <p>Aye Aye Min San</p>
+                                </div>
+
+                                <div class="story swiper-slide">
+                                    <img src="./Assets/images/img/st5.jpg" alt="">
+                                    <div class="profile-picture my-profile-picture">
+                                        <img src="./Assets/images/img/s7.jpg" alt="">
+                                    </div>
+                                    <p>Taylor</p>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                    <!-- ---------------------------End Stories --------------------------- -->
+
+                    <!-- =======================Post Input==================== -->
+                    <form class="add-post">
+                        <div class="profile-picture" id="my-profile-picture">
+                            <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                        </div>
+
+                        <input type="text" name="" id="add-post" placeholder="What's on your mind?">
+                        <input type="submit" value="post" class="btn btn-primary">
+                    </form>
+
+                    <!-- -------------------Feed Aria Start----------- ----->
+                    <div class="feeds">
+                        <div class="feed">
+                            <!------------------- Feed Top------------ -->
+
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture" id="my-profile-picture">
+                                        <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                                    </div>
+
+                                    <div class="info">
+                                        <h3>Aung Khaing Moe</h3>
+                                        <div class="time text-gry">
+                                            <small>YGN, <span>JUST NOW</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <img src="./Assets/images/svg/three-dots.svg" alt="">
+                                    <ul class="edit-menu">
+                                        <li><i class="fa fa-pen"></i>Edit</li>
+                                        <li><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </span>
+                            </div>
+                            <!------------------- Feed Img------------ -->
+                            <div class="feed-img">
+                                <h2>Hello World, I'm Aye Aye Min san's BF<br>
+                                    from YGN
+                                </h2>
+                            </div>
+                            <!------------------- Feed Action Aria------------ -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+                                    <span><i class="fa fa-heart"></i></span>
+                                    <span><i class="fa fa-comment-dots"></i></span>
+                                    <span><i class="fa fa-link"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <i class="fa fa-bookmark"></i>
+                                </div>
+                            </div>
+
+                            <!-- -----------------Liked by-------------- -->
+                            <div class="liked-by">
+                                <span>
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </span>
+
+                                <p>Liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
+                            </div>
+
+                            <!-- ----------Caption--------------- -->
+                            <div class="caption">
+                                <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
+                                    <span class="hars-tag">#lifestyle</span>
+                                </p>
+                            </div>
+
+                            <!-- -------------Comments------------ -->
+                            <div class="comments text-gry">
+                                View all comments
+                            </div>
+
+                        </div>
+
+                        <div class="feed">
+                            <!------------------- Feed Top------------ -->
+
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="./Assets/images/img/st6.jpg" alt="">
+                                    </div>
+
+                                    <div class="info">
+                                        <h3>Mi Jore Pare Chan</h3>
+                                        <div class="time text-gry">
+                                            <small>India, <span>2 DAYS AGO</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <img src="./Assets/images/svg/three-dots.svg" alt="">
+                                </span>
+                            </div>
+                            <!------------------- Feed Img------------ -->
+                            <div class="feed-img">
+                                <img src="./Assets/images/img/feed4.jpg" alt="">
+                            </div>
+                            <!------------------- Feed Action Aria------------ -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+                                    <span><i class="fa fa-heart"></i></span>
+                                    <span><i class="fa fa-comment-dots"></i></span>
+                                    <span><i class="fa fa-link"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <i class="fa fa-bookmark"></i>
+                                </div>
+                            </div>
+
+                            <!-- -----------------Liked by-------------- -->
+                            <div class="liked-by">
+                                <span>
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </span>
+
+                                <p>Liked by <b>Aung Myo Kyaw</b> and <b>77 comments other</b></p>
+                            </div>
+
+                            <!-- ----------Caption--------------- -->
+                            <div class="caption">
+                                <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
+                                    <span class="hars-tag">#lifestyle</span>
+                                </p>
+                            </div>
+
+                            <!-- -------------Comments------------ -->
+                            <div class="comments text-gry">
+                                View all comments
+                            </div>
+
+                        </div>
+
+                        <div class="feed">
+                            <!------------------- Feed Top------------ -->
+
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="./Assets/images/img/st4.jpg" alt="">
+                                    </div>
+
+                                    <div class="info">
+                                        <h3>Aye Aye Min San</h3>
+                                        <div class="time text-gry">
+                                            <small>Korea, <span>2 DAYS AGO</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <img src="./Assets/images/svg/three-dots.svg" alt="">
+                                </span>
+                            </div>
+                            <!------------------- Feed Img------------ -->
+                            <div class="feed-img">
+                                <img src="./Assets/images/img/feed6.png" alt="">
+                            </div>
+                            <!------------------- Feed Action Aria------------ -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+                                    <span><i class="fa fa-heart"></i></span>
+                                    <span><i class="fa fa-comment-dots"></i></span>
+                                    <span><i class="fa fa-link"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <i class="fa fa-bookmark"></i>
+                                </div>
+                            </div>
+
+                            <!-- -----------------Liked by-------------- -->
+                            <div class="liked-by">
+                                <span>
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </span>
+
+                                <p>liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
+                            </div>
+
+                            <!-- ----------Caption--------------- -->
+                            <div class="caption">
+                                <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
+                                    <span class="hars-tag">#lifestyle</span>
+                                </p>
+                            </div>
+
+                            <!-- -------------Comments------------ -->
+                            <div class="comments text-gry">
+                                View all comments
+                            </div>
+
+                        </div>
+
+                        <div class="feed">
+                            <!------------------- Feed Top------------ -->
+
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="./Assets/images/img/st4.jpg" alt="">
+                                    </div>
+
+                                    <div class="info">
+                                        <h3>Aye Aye Min San</h3>
+                                        <div class="time text-gry">
+                                            <small>Korea, <span>2 DAYS AGO</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <img src="./Assets/images/svg/three-dots.svg" alt="">
+                                </span>
+                            </div>
+                            <!------------------- Feed Img------------ -->
+                            <div class="feed-img">
+                                <img src="./Assets/images/img/feed7.jpg" alt="">
+                            </div>
+                            <!------------------- Feed Action Aria------------ -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+                                    <span><i class="fa fa-heart"></i></span>
+                                    <span><i class="fa fa-comment-dots"></i></span>
+                                    <span><i class="fa fa-link"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <i class="fa fa-bookmark"></i>
+                                </div>
+                            </div>
+
+                            <!-- -----------------Liked by-------------- -->
+                            <div class="liked-by">
+                                <span>
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </span>
+
+                                <p>liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
+                            </div>
+
+                            <!-- ----------Caption--------------- -->
+                            <div class="caption">
+                                <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
+                                    <span class="hars-tag">#lifestyle</span>
+                                </p>
+                            </div>
+
+                            <!-- -------------Comments------------ -->
+                            <div class="comments text-gry">
+                                View all comments
+                            </div>
+
+                        </div>
+
+
+                        <div class="feed">
+                            <!------------------- Feed Top------------ -->
+
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="./Assets/images/img/st4.jpg" alt="">
+                                    </div>
+
+                                    <div class="info">
+                                        <h3>Aye Aye Min San</h3>
+                                        <div class="time text-gry">
+                                            <small>Korea, <span>2 DAYS AGO</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <img src="./Assets/images/svg/three-dots.svg" alt="">
+                                </span>
+                            </div>
+                            <!------------------- Feed Img------------ -->
+                            <div class="feed-img">
+                                <h2>Hello World, I'm Aye Aye Min san<br>
+                                    from Korea
+                                </h2>
+                            </div>
+                            <!------------------- Feed Action Aria------------ -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+                                    <span><i class="fa fa-heart"></i></span>
+                                    <span><i class="fa fa-comment-dots"></i></span>
+                                    <span><i class="fa fa-link"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <i class="fa fa-bookmark"></i>
+                                </div>
+                            </div>
+
+                            <!-- -----------------Liked by-------------- -->
+                            <div class="liked-by">
+                                <span>
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </span>
+
+                                <p>Liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
+                            </div>
+
+                            <!-- ----------Caption--------------- -->
+                            <div class="caption">
+                                <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
+                                    <span class="hars-tag">#lifestyle</span>
+                                </p>
+                            </div>
+
+                            <!-- -------------Comments------------ -->
+                            <div class="comments text-gry">
+                                View all comments
+                            </div>
+
+                        </div>
+
+                        <div class="feed">
+                            <!------------------- Feed Top------------ -->
+
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="./Assets/images/img/st4.jpg" alt="">
+                                    </div>
+
+                                    <div class="info">
+                                        <h3>Aye Aye Min San</h3>
+                                        <div class="time text-gry">
+                                            <small>Korea, <span>2 DAYS AGO</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <img src="./Assets/images/svg/three-dots.svg" alt="">
+                                </span>
+                            </div>
+                            <!------------------- Feed Img------------ -->
+                            <div class="feed-img">
+                                <img src="./Assets/images/img/feed2.jpg" alt="">
+                            </div>
+                            <!------------------- Feed Action Aria------------ -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+                                    <span><i class="fa fa-heart"></i></span>
+                                    <span><i class="fa fa-comment-dots"></i></span>
+                                    <span><i class="fa fa-link"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <i class="fa fa-bookmark"></i>
+                                </div>
+                            </div>
+
+                            <!-- -----------------Liked by-------------- -->
+                            <div class="liked-by">
+                                <span>
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </span>
+
+                                <span>
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </span>
+
+                                <p>Liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
+                            </div>
+
+                            <!-- ----------Caption--------------- -->
+                            <div class="caption">
+                                <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
+                                    <span class="hars-tag">#lifestyle</span>
+                                </p>
+                            </div>
+
+                            <!-- -------------Comments------------ -->
+                            <div class="comments text-gry">
+                                View all comments
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- -------------------Feed Aria End----------- ----->
+
+                </div>
+            </div>
+            <!-- ======================Main Middle End======================-->
+
+            <!-- ...........Main Right Start......... -->
+            <div class="main-right">
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error non quasi reiciendis! Molestiae sapiente
+                omnis unde corporis vitae officia aspernatur deleniti doloremque aliquam itaque saepe, quae totam
+                laudantium voluptas aut. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus nulla
+                nostrum voluptate blanditiis, dolores id sint magnam consequuntur fugiat aperiam incidunt culpa pariatur
+                perspiciatis perferendis? Aliquid dolores doloremque veritatis tenetur. Explicabo ipsa dignissimos alias
+                rerum velit quibusdam vitae maxime quae sunt cum minus laboriosam consequatur nihil error dolores,
+                tempora ea, iste nam, soluta harum asperiores! Dolores laborum cum perferendis sequi adipisci quidem
+                libero est facilis culpa asperiores ducimus minus fugiat ut, eaque temporibus doloribus facere
+                exercitationem alias consequuntur nam commodi quas saepe dolor! Non sapiente, vel quo mollitia ratione
+                nisi recusandae qui fuga voluptate consequatur neque esse corrupti obcaecati dignissimos!
+
+            </div>
+            <!-- ...........Main Right End......... -->
+        </div>
+    </main>
+    <!-- ...................End Main Session................... -->
+
+    <!-- -----------------------Start PopUps Aria----------------- -->
+    <!-- ----------Start Profile-Popup------------- -->
+    <div class="popup profile-popup">
+        <div>
+            <div class="popup-box profile-popup-box">
+                <h1>Aung Khaing Moe</h1>
+                <p>@aungkhaingmoe</p>
+                <div id="my-profile-picture">
+                    <img src="./Assets/images/img/profile-1.jpeg">
+                </div>
+                <label for="profile-upload" class="btn btn-primary btn-lg"><a href="profile" style="text-decoration: none; color: aliceblue; font-weight: bolder;">View Profile Details</a></label>
+                <!-- <input type="file" name="" accept="image/jpg , image/png, image/jpep" id="profile-upload"> -->
+                <button class="btn btn-primary btn-lg">Log Out</button>
+            </div>
+            <span class="close"><i class="fa fa-close"></i></span>
+        </div>
+    </div>
+    <!-- ----------End Profile-Popup------------- -->
+
+    <!-- -----------------------End PopUps Aria----------------- -->
+
+
+    <!-- ----------------Swiper JS---------------------- -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 8,
+            spaceBetween: 10,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            direction: 'horizontal', // Ensures horizontal sliding
+        });
+    </script>
+
+    <script src="./Assets/Swiper/swiper-bundle.min.js"></script>
+    <!-- Custom Js Link -->
+    <script src="./Assets/Script.js"></script>
+
+    //validate session
+
+    <script src="assests/js/jquery.min.js"></script>
+    <script>
+        var username = '[[${email}]]';
+        console.log(username);
+        $(document).ready(function(){
+
+            $.ajax({
+                url: '/userInfo/'+username+'', // Replace with your actual API endpoint
+                type: 'GET', // HTTP method
+                dataType: 'json', // The type of data you're expecting back from the server
+                success: function(data) {
+                    $('#name').text(data.name)
+
+                    // Access specific keys from the JSON object
+                    console.log("ID: " + data.id);
+                    console.log("Name: " + data.name);
+                    console.log("Email: " + data.email);
+
+                },
+                error: function(error) {
+                    console.log("Error: ", error);
+                }
+            });
+
+        });
+    </script>
+
+    //validate session
+
+
+</body>
+
+</html>

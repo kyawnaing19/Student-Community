@@ -1,0 +1,740 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+
+}
+
+:root {
+    --color-white: hsl(252, 30%, 100%);
+    --color-light: hsl(252, 30%, 93%);
+    --color-gray: hsl(252, 15%, 60%);
+    --color-primary: hsl(252, 75%, 60%);
+    --color-secondary: hsl(252, 100%, 90%);
+    --color-success: hsl(120, 95%, 60%);
+    --color-danger: hsl(0, 95%, 60%);
+    --color-dark: hsl(252, 30%, 15%);
+    --color-black: hsl(252, 30%, 8%);
+
+
+    --border-radius: 2rem;
+    --card-border-radius: 1rem;
+
+    --btn-padding: .6rem 2rem;
+
+    --search-padding: .6rem 1rem;
+    --card-padding: 1rem;
+
+
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-dark);
+    background: var(--color-light);
+    /* overflow: hidden; */
+}
+
+/* ............Custom Style............. */
+.container {
+    width: 90%;
+    margin: 0 auto;
+
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+.profile-picture {
+    width: 3rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-picture:hover{
+    opacity: 0.75;
+}
+
+.btn {
+    padding: var(--btn-padding);
+    display: inline-block;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: 300ms ease all;
+}
+
+.btn:hover {
+    opacity: 0.75;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.text-bold {
+    font-weight: 500;
+
+}
+
+.text-gry {
+    color: var(--color-gray);
+}
+
+
+/* .....................Start NavBar.................... */
+
+nav {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    padding: .7rem 0;
+    background: var(--color-white);
+
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .serch-bar {
+    padding: var(--search-padding);
+    background: var(--color-light);
+    border-radius: var(--border-radius);
+
+}
+
+nav .serch-bar input[type="search"] {
+    background: transparent;
+    width: 30vw;
+    margin-left: 1rem;
+    font-size: .9rem;
+    color: var(--color-dark);
+
+}
+
+nav .serch-bar input[type="search"]::placeholder{
+    color: var(--color-gray);
+}
+
+.add-post{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 20px;
+}
+.logo h3{
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    user-select: none;
+    color: var(--color-dark);
+
+}
+
+.logo span{
+    color: var(--color-danger);
+
+}
+
+/* .....................End NavBar.................... */
+
+/* .....................Start Main Session.................... */
+/* Add a parent container for main-left and main-middle */
+.main-container {
+    display: flex;
+    gap: 1rem; /* Adjust gap between the two sections if needed */
+    margin: 1rem auto; /* Adjust margin to fit your layout */
+}
+
+/* Main Left */
+.main-left {
+    position: sticky;
+    height: max-content;
+    top: 5.4rem;
+    width: 35%;
+    margin-left: 5%;
+}
+
+.main-left .profile {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    width: 100%;
+    gap: 1rem;
+    display: flex;
+}
+
+.main-left {
+    position: sticky;
+    height: max-content;
+    top: 5.4rem;
+    width: 40%;
+}
+
+.profile {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    width: 100%;
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.profile .details {
+    width: 100%;
+    text-align: left;
+    line-height: 30px;
+}
+
+.profile .details div {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.profile .details div i {
+    margin-right: 0.5rem;
+    color: var(--color-primary);
+}
+
+/* Additional Info Below Profile */
+.main-left .profile-info {
+    text-align: center;
+    color: var(--color-dark);
+}
+
+.main-left .profile-info h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.main-left .profile-info p {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+}
+
+aside {
+    margin-top: 1rem;
+    border-radius: var(--card-border-radius);
+}
+
+aside .menu-item {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    position: relative;
+    cursor: pointer;
+    transition: 300ms ease all;
+    background-color: var(--color-white);
+}
+
+aside .menu-item:hover {
+    background: var(--color-light);
+}
+
+aside .menu-item span img {
+    width: 1.8rem;
+    margin-left: 2rem;
+    position: relative;
+}
+
+aside .notfy-counter {
+    background: var(--color-danger);
+    color: var(--color-white);
+    width: fit-content;
+    font-size: .7rem;
+    border-radius: 30%;
+    padding: .1rem .4rem;
+    position: absolute;
+    top: .7rem;
+    left: 3.2rem;
+}
+
+aside .menu-item h3 {
+    margin-left: 1.5rem;
+    font-size: 1rem;
+}
+
+aside .active {
+    background: var(--color-light);
+}
+
+aside .active h3 {
+    color: var(--color-primary);
+}
+
+aside .active::before {
+    content: '';
+    display: block;
+    width: .5rem;
+    height: 100%;
+    background: var(--color-primary);
+}
+
+aside .menu-item:first-child {
+    overflow: hidden;
+    border-top-left-radius: var(--card-border-radius);
+    border-top-right-radius: var(--card-border-radius);
+}
+
+aside .menu-item:nth-last-child(2) {
+    overflow: hidden;
+    border-bottom-left-radius: var(--card-border-radius);
+    border-bottom-right-radius: var(--card-border-radius);
+}
+
+.btn-lg {
+    padding: 1rem 0;
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Notification box */
+.notification-box {
+    width: 30rem;
+    left: 110%;
+    position: absolute;
+    top: 0;
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--color-primary) 0 0 1rem;
+    z-index: 8;
+    display: none;
+}
+
+.notification-box::before {
+    content: '';
+    width: 1.2rem;
+    height: 1.2rem;
+    background: var(--color-white);
+    position: absolute;
+    left: -.6rem;
+    transform: rotate(45deg);
+}
+
+.notification-box>div {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.notification-box .profile-picture {
+    width: 2.6rem;
+}
+
+.notification-box>div small {
+    display: block;
+}
+
+/* Main Middle */
+.main-middle {
+    width: 60%;
+    margin-top: 70px;
+}
+.main-middle.scroll-blocked {
+    overflow: hidden;
+}
+
+
+/* Stories */
+.middle-container {
+    max-width: 800px !important;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+/* Add Post */
+.main-middle .add-post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .4rem var(--card-padding);
+    border-radius: var(--border-radius);
+    background: var(--color-white);
+    margin-top: 1rem;
+    height: 60px;
+}
+
+.main-middle .add-post input[type="text"] {
+    justify-self: start;
+    width: 100%;
+    padding-left: 1rem;
+    background: transparent;
+    color: var(--color-dark);
+    margin-right: 1rem;
+}
+
+.main-middle .add-post .profile-picture {
+    width: 2.8rem;
+}
+
+/* Feeds */
+.feeds .feed {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin: 1rem auto;
+    line-height: 1.5;
+    font-size: .85rem;
+    position: relative;
+}
+
+.feeds .feed .feed-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.feed .feed-top .user {
+    display: flex;
+    gap: 1rem;
+}
+
+.feed .feed-top .edit img {
+    width: 1.6rem;
+}
+
+.feed .feed-img {
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    margin: .8rem 0;
+}
+
+.feed .action-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    margin: 0.6rem;
+}
+
+.action-button span:first-child i {
+    font-weight: normal;
+}
+
+.action-button span:nth-child(2) i {
+    font-weight: normal;
+}
+
+.bookmark i {
+    font-weight: normal;
+}
+
+.liked-by {
+    display: flex;
+}
+
+.liked-by span {
+    border-radius: 50%;
+    display: block;
+    height: 1.4rem;
+    width: 1.4rem;
+    overflow: hidden;
+    margin-left: -.6rem;
+    border: 2px solid var(--color-white);
+}
+
+.liked-by span:first-child {
+    margin: 0;
+}
+
+.liked-by p {
+    margin-left: .5rem;
+}
+
+.edit .edit-menu {
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+    right: 0;
+    box-shadow: 0 0 .2rem var(--color-primary);
+    top: 2.4rem;
+    transform: scale(0);
+    transition: 300ms all ease;
+    transform-origin: top right;
+}
+
+.edit:hover .edit-menu {
+    transform: scale(1);
+}
+
+.edit .edit-menu li {
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--color-gray);
+    transition: 300ms ease all;
+}
+
+.edit .edit-menu li:hover {
+    color: var(--color-dark);
+}
+
+.edit .edit-menu li:last-child:hover {
+    color: var(--color-danger);
+}
+
+/* --------------------End Feeds Aria------------------------- */
+
+/* ----------Start Popup Aria------------ */
+.popup {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    justify-content: center;
+    z-index: 9;
+    color: var(--color-primary);
+    background: rgba(0, 0, 0, 0.7); /* Adjusted for better transparency */
+    display: none;
+    margin-top: 3rem; /* Adjust as needed */
+}
+
+.popup > div {
+    display: flex;
+}
+
+.profile-popup-box {
+    width: 750px;
+    max-height: 80vh; /* Changed to max-height for responsiveness */
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-popup-box > div {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: 2rem;
+}
+
+#profile-upload {
+    display: none;
+}
+
+.profile-popup-box h1 {
+    line-height: 1.8;
+}
+
+.popup .close {
+    font-size: 1.6rem;
+    color: var(--color-white);
+    margin-left: .5rem;
+    margin-top: -.5rem;
+}
+
+/* Form Styles */
+#edit-profile-form {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark);
+}
+
+.form-group input[type="file"],
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--card-border-radius);
+    background: var(--color-light);
+    color: var(--color-dark);
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group .radio-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.form-group .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-group .radio-group input[type="radio"] {
+    margin: 0;
+}
+
+
+/* Scrollbar Styling */
+#edit-profile-form::-webkit-scrollbar {
+    width: 8px;
+}
+
+#edit-profile-form::-webkit-scrollbar-track {
+    background: var(--color-light);
+}
+
+#edit-profile-form::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 8px;
+}
+
+#edit-profile-form::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #edit-profile-form {
+        padding: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Bio Section */
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--card-border-radius);
+    resize: none;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+}
+
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+/* Add Bio Button */
+.form-group input[type="button"] {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: var(--card-border-radius);
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.form-group input[type="button"]:hover {
+    background: var(--color-gray);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-group textarea {
+        font-size: 0.9rem;
+    }
+
+    .form-group input[type="button"] {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+    }
+}
+
+/* Save Changes Button */
+#editProfile {
+    width: 100%;
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: var(--card-border-radius);
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #editProfile {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+    }
+}
+
+
+
+
+/* ------------------------------End Main Middle------------------------------------- */
+
+
+/* .....................End Main Session.................... */
