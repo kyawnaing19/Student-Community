@@ -64,7 +64,7 @@
             <div class="main-left">
                 <div class="profile">
 
-                    <img src="./Assets/images/img/profile-1.jpeg" alt="Profile Picture"
+                    <img src="." alt="Profile Picture"
                          style="border: 2px dashed purple" id="my-profile-picture1" class="profile-picture">
 
 
@@ -72,8 +72,8 @@
                     <div id="userBio" onclick="editBio()">Add bio</div>
 
                     <div class="profile-info" id="my-profile-picture">
-                        <h2 id="nm">Aung Khaing Moe</h2>
-                        <p id="em">aungkhaingmoe@ucstt.edu.mm</p>
+                        <h2 id="nm">loading</h2>
+                        <p id="em">loading</p>
                     </div>
 
 
@@ -621,10 +621,10 @@
     text-align: center;
     display: flex;
     flex-direction: column;">
-                <h1>Aung Khaing Moe</h1>
-                <p>@aungkhaingmoe</p>
+                <h1 id="nameForModal">loading</h1>
+                <p id="name2ForModal">loading</p>
                 <div id="my-profile-picture">
-                    <img src="./Assets/images/img/profile-1.jpeg">
+                    <img id="imageForModal" src="./Assets/images/img/profile-1.jpeg">
                 </div>
                 <label for="profile-upload" class="btn btn-primary btn-lg">Update Your Profile Picture</label>
                 <input type="file" name="" accept="image/*" id="profile-upload">
@@ -698,6 +698,8 @@
                      $('#address').val(data.address)
                      $('#date-of-birth').val(data.dob)
 
+                    $('#nameForModal').text(data.name)
+                    $('#name2ForModal').text(data.email)
                     if(data.gender==="Male")
                     {
                         $('input[name="gender"][value="Male"]').prop('checked',true);
@@ -716,9 +718,10 @@
                         $('#userBio').text(data.bio)
                     }
 
-                    if(data.profile!=null)
-                        $('#my-profile-picture1').attr('src', './image/'+data.profile+'');
-
+                    if(data.profile!=null) {
+                        $('#my-profile-picture1').attr('src', 'files/' + data.profile + '');
+                        $('#imageForModal').attr('src', 'files/'+data.profile + '');
+                    }
                     //auto fill
 
 

@@ -61,7 +61,7 @@ public class Controller {
 
 
     //edit pf image
-    private static final String UPLOAD_DIR = "\\src\\main\\resources\\static\\image"; // Replace with your desired upload directory
+    private static final String UPLOAD_DIR = "\\src\\main\\resources\\static\\profiles"; // Replace with your desired upload directory
 
     @PostMapping("/uploadImage")
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile file,@RequestParam String email) {
@@ -69,7 +69,7 @@ public class Controller {
             // Generate a random UUID for uniqueness
             String randomUUID = UUID.randomUUID().toString();
 
-            // Get original file name
+            // Get original file n`ame
             String originalFileName = file.getOriginalFilename();
 
             // Construct new file name with random UUID

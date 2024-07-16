@@ -31,11 +31,13 @@ document.querySelectorAll('.close').forEach(AllCloser => {
         document.querySelector('.profile-popup').style.display = 'none';
     });
 });
-
+let img= document.getElementById('my-profile-picture1')
 document.querySelector('#profile-upload').addEventListener('change', () => {
+    img.src=URL.createObjectURL(document.querySelector('#profile-upload').files[0])
     document.querySelectorAll('#my-profile-picture img').forEach(AllMyProfileImg => {
         AllMyProfileImg.src = URL.createObjectURL(document.querySelector('#profile-upload').files[0])
     })
+
 })
 
 //end

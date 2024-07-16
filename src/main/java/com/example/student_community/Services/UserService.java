@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,10 +84,16 @@ public class UserService {
 
     }
 
-    public ResponseEntity<String> uploadProfile(String email,String profile){
+    public ResponseEntity<String> uploadProfile(String email,String profile) throws IOException {
         Optional<User> user = userRepository.findByEmail( email);
         if(user.isPresent()){
             User user1=user.get();
+            String filepath="src/main/resources/static/profiles/"+user1.getProfile();
+            Path path=Path.of(filepath);
+            if(Files.exists(path)){
+                Files.deleteIfExists(path);
+                System.out.println("file deleted");
+            }
             user1.setProfile(profile);
             userRepository.save(user1);
             return ResponseEntity.ok("upload success");
