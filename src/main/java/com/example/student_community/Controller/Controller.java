@@ -69,7 +69,7 @@ public class Controller {
             // Generate a random UUID for uniqueness
             String randomUUID = UUID.randomUUID().toString();
 
-            // Get original file name
+            // Get original file n`ame
             String originalFileName = file.getOriginalFilename();
 
             // Construct new file name with random UUID
