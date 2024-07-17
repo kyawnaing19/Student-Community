@@ -51,7 +51,6 @@ public class UserService {
             existingUser.setAddress(editUser.getAddress());
             existingUser.setDOB(editUser.getDOB());
             existingUser.setGender(editUser.getGender());
-            existingUser.setProfile(editUser.getProfile());
 
 
             // Save the updated user

@@ -27,6 +27,7 @@ public class FileController {
             if (resource.exists()) {
                 return ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .header(HttpHeaders.CACHE_CONTROL, "public, max-age=3600")
                         .body(resource);
             } else {
                 return ResponseEntity.notFound().build();
