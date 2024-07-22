@@ -1,7 +1,9 @@
 package com.example.student_community.Controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ViewController {
@@ -13,6 +15,17 @@ public class ViewController {
     @GetMapping("/login")
     public String loginForm() {
         return "login";
+    }
+
+    @GetMapping("/friends")
+    public String friends() {
+        return "friends";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam String query, Model model) {
+        model.addAttribute("query", query);
+        return "search";
     }
 }
 

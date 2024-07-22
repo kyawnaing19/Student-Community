@@ -37,6 +37,7 @@ public class LoginController {
         if (user != null && user.getPassword().equals(password)) {
             model.addAttribute("message", "Login successful");
             session.setAttribute("email", user.getEmail());
+            session.setAttribute("id", user.getId());
             return "redirect:/home";
         }
 
@@ -53,10 +54,12 @@ public class LoginController {
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("email");
+        Integer id=(Integer) session.getAttribute("id");
         if (email == null) {
             return "redirect:/login";
         }
         model.addAttribute("email", email);
+        model.addAttribute("id", id);
         return "home";
     }
 
