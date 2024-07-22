@@ -1,39 +1,307 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
-    <title>Search Books</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Community </title>
+    <!-- ------------------Custom Css link -->
+    <link rel="stylesheet" href="./Assets/search.css">
+    <!-- ----Font Awesome  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="assests/js/jquery.min.js"></script>
+    <!-- -------Swiper Slider Link------ -->
+
+    <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
+
 </head>
+
 <body>
-<h1>Search Books</h1>
-<form th:action="@{/search}" method="post">
-    <input type="text" name="keyword" placeholder="Enter book title">
-    <button type="submit">Search</button>
-</form>
-<div th:if="${users}">
-    <ul>
-        <li th:each="user : ${users}">
-            <p>Name: <span th:text="${user.name}"></span></p>
-            <p>Email: <span th:text="${user.email}"></span></p>
-        </li>
-    </ul>
-</div>
+
+
+    <!-- ..................Start Navbar...................... -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <h3>Community <span>Forum</span></h3>
+            </div>
+            <div class="serch-bar">
+                <i class="fa fa-search"></i>
+                <input type="search" name="" id="" placeholder="Search For Creators">
+            </div>
+            <div class="add-post">
+                <label for="add-post" class="btn btn-primary">Add Post</label>
+                <div class="profile-picture" id="my-profile-picture">
+                    <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- ...................Start Navbar................... -->
+
+
+    <!-- ...................Start Main Session...................-->
+    <main>
+        <div class="container main-container">
+
+            <!-- ...........Main Left Start......... -->
+            <div class="main-left">
+
+                <!--.....................  ALl friends.............. -->
+            
+                    <div class="friends-suggest">
+                        <div class="back">
+                            <a href="friends.html" class="back-to">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </a>
+                        </div>
+                        <div class="text">
+                            <h2>Search Result</h2>
+                        </div>      
+                    </div>
+  
+                <!--.....................All friends End.............. -->
+
+                <!-- ............Start Aside Bar for your all friends............... -->
+                <aside>   
+                        
+                        <div class="horizontal-line"></div>
+                        <div class="cal-allfriend">
+                            <p>Filter</p>
+                        </div>
+                    
+                  
+
+                    <a class="menu-item" href="">
+                        <span>
+                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
+                        </span>
+                        <h3>All</h3>
+                    </a>
+
+                    <a class="menu-item" href="">
+                        <span>
+                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
+                        </span>
+                        <h3>People</h3>
+                    </a>
+
+                    <a class="menu-item" href="">
+                        <span>
+                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
+                        </span>
+                        <h3>Post</h3>
+                    </a>
+
+
+                    <a class="menu-item" href="">
+                        <span>
+                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
+                        </span>
+                        <h3>Videos</h3>
+                    </a>
+
+                    <a class="menu-item" href="">
+                        <span>
+                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
+                        </span>
+                        <h3>Photo</h3>
+                    </a>
+
+                    <a class="menu-item" href="">
+                        <span>
+                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
+                        </span>
+                        <h3>Event</h3>
+                    </a>
+
+                    <a class="menu-item" href="">
+                        <span>
+                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
+                        </span>
+                        <h3>Group</h3>
+                    </a>
+                    
+
+                    
+                </aside>
+
+                <!-- ............End Aside Bar............... -->
+
+            </div>
+            <!-- ...........Main Left End......... -->
 
 
 
-<!--<div id="results"></div>-->
+            <!--======================Main Middle Start====================== -->
+            <div class="main-middle">
+                <div class="speople" id="users-container">
 
-<!--<script>-->
-<!--    const form = document.querySelector('form');-->
-<!--    const resultsDiv = document.getElementById('results');-->
 
-<!--    form.addEventListener('submit', async (event) => {-->
-<!--        event.preventDefault();-->
-<!--        const keyword = form.keyword.value;-->
-<!--        const response = await fetch(`/search?keyword=${keyword}`);-->
-<!--        const users = await response.json();-->
 
-<!--        resultsDiv.innerHTML = '<ul>' + books.map(book => `<li>${users.name} by ${users.email}</li>`).join('') + '</ul>';-->
-<!--    });-->
-<!--</script>-->
+                </div>
+            </div>
+        
+    </main>
+    <!-- ...................End Main Session................... -->
+
+
+
+
+    <!-- -----------------------Start PopUps Aria----------------- -->
+    <!-- ----------Start Profile-Popup------------- -->
+    <div class="popup profile-popup">
+        <div>
+            <div class="popup-box profile-popup-box">
+                <h1>Aung Khaing Moe</h1>
+                <p>@aungkhaingmoe</p>
+                <div id="my-profile-picture">
+                    <img src="./Assets/images/img/profile-1.jpeg">
+                </div>
+                <label for="profile-upload" class="btn btn-primary btn-lg"><a href="profile.html" style="text-decoration: none; color: aliceblue; font-weight: bolder;">View Profile Details</a></label>
+                <!-- <input type="file" name="" accept="image/jpg , image/png, image/jpep" id="profile-upload"> -->
+                <button class="btn btn-primary btn-lg">Log Out</button>
+            </div>
+            <span class="close"><i class="fa fa-close"></i></span>
+        </div>
+    </div>
+    <!-- ----------End Profile-Popup------------- -->
+
+    <!-- -----------------------End PopUps Aria----------------- -->
+
+
+    <!-- ----------------Swiper JS---------------------- -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script src="./Assets/Swiper/swiper-bundle.min.js"></script>
+    <!-- Custom Js Link -->
+    <script src="./Assets/Script.js"></script>
+
+<script>
+    let searchValue = '[[${input}]]';
+    var email = sessionStorage.getItem("email");
+    var id = sessionStorage.getItem("id");
+
+    console.log(searchValue);
+    console.log(email);
+    console.log(id);
+
+    $.get('/getUserByName', { keyword: searchValue, idd:id }, function(response) {
+        if (Array.isArray(response)) {
+            var usersContainer = $('#users-container');
+            usersContainer.empty(); // Clear any existing content
+
+            response.forEach(function(user) {
+                fetchFriendRequestStatus(user);
+            });
+        } else {
+            console.log('Response is not an array:', response);
+        }
+    }).fail(function(xhr, status, error) {
+        alert('Request failed: ' + error);
+    });
+
+    function fetchFriendRequestStatus(user) {
+        $.get('/getFriendRequestStatus', { senderId: user.id, receiverId: id }, function(statusResponse) {
+            console.log(id);
+            console.log(user.id);
+
+            console.log(statusResponse);
+            var buttonText = statusResponse === 'pending '+user.id+''
+                ? 'Cancel Request'
+                : statusResponse === 'pending '+id+''
+                    ? 'Confirm Friend'
+                : statusResponse === 'approved'
+                    ? 'Remove Friend'
+                    : 'Add Friend';
+
+            var buttonAction = statusResponse === 'pending '+user.id+''
+                ? 'cancelRequest'
+                : statusResponse === 'pending '+id+''
+                    ? 'Confirmfriend'
+                : statusResponse === 'approved'
+                    ? 'cancelRequest'
+                    : 'adding';
+
+
+            var userDiv = `
+            <div class="user" id="user-${user.id}">
+                <img class="user-img" src="/files/${user.profile}" alt="User Image">
+                <div class="content">
+                    <h4>${user.name}</h4>
+                    <div class="liked-by">
+                        <p><b>55</b> mutual friends</p>
+                    </div>
+                </div>
+                <div class="add-friend">
+                    <a class="btn-confirm" id="btn-${user.id}" onclick="${buttonAction}(${user.id})">${buttonText}</a>
+                </div>
+            </div>
+        `;
+
+            $('#users-container').append(userDiv);
+        }).fail(function(xhr, status, error) {
+            console.log('Failed to fetch friend request status:', error);
+        });
+    }
+
+    function adding(userId) {
+        console.log('Add friend for user ID:', userId);
+
+        var addfris = {
+            "sender": id,
+            "receiver": userId,
+            "status": "pending "+userId,
+            "ctime": "17/7/2024"
+        };
+        console.log("add fri is: " + addfris);
+
+        $.ajax({
+            url: '/addFriend',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(addfris),
+            success: function(response) {
+                alert('add fri successful: ' + response);
+                var button = $('#btn-' + userId);
+                button.text('Cancel Request');
+                button.attr('onclick', 'cancelRequest(' + userId + ')');
+            },
+            error: function(error) {
+                alert('add fri failed: ' + error.responseText);
+            }
+        });
+    }
+
+    function cancelRequest(userId) {
+        console.log('Cancel friend request for user ID:', userId);
+        $.ajax({
+            url: '/cancelFriendRequest',
+            type: 'DELETE',
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                sender: id,
+                receiver: userId
+            },
+            success: function(response) {
+                alert('Cancel friend request successful: ' + response);
+                var button = $('#btn-' + userId);
+                button.text('Add Friend');
+                button.attr('onclick', 'adding(' + userId + ')');
+            },
+            error: function(error) {
+                alert('Cancel friend request failed: ' + error.responseText);
+            }
+        });
+    }
+
+
+
+
+</script>
+
+
 </body>
+
 </html>

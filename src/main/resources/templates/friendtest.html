@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="aung" onclick="addfri(this.id)">add friend Aung</button>
+<button id="ko_ko" onclick="addfri(this.id)">add friend Ko KO</button>
+<button id="kyaw" onclick="addfri(this.id)">add friend Kyaw</button>
+</body>
+<!--<script src="./Assets/Script.js"></script>-->
+<script src="assests/js/jquery.min.js"></script>
+<script>
+   var username = '[[${email}]]';
+    var receiver;
+    function addfri(buttonId)
+    {
+        receiver= buttonId;
+        var addfris={
+            "sender":username,
+            "receiver":receiver,
+            "status":"pending",
+            "ctime":"17/7/2024"
+        }
+       console.log("add fri is: " + addfris);
+
+        $.ajax({
+            url: '/addFriend',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(addfris),
+            success: function(response) {
+                alert('add fri successful: ' + response);
+            },
+            error: function(error) {
+                alert('add fri failed: ' + error.responseText);
+            }
+        });
+
+    }
+</script>
+</html>

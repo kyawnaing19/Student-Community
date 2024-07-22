@@ -29,8 +29,8 @@ public class UserService {
         return user.orElse(null);
     }
 
-    public List<User> searchUser(String keyword) {
-        return userRepository.findByNameContaining(keyword);
+    public List<User> searchUser(String keyword,int idd) {
+        return userRepository.findByNameAndExclude(keyword,idd);
 
     }
 

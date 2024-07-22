@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Buttons Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div id="users-container"></div>
+
+<script>
+    let searchValue = '[[${input}]]';
+    var email = sessionStorage.getItem("email");
+    var id = sessionStorage.getItem("id");
+
+
+    $.get('/getUserById', {  idd:id }, function(response) {
+        if (Array.isArray(response)) {
+            console.log(response);
+            var usersContainer = $('#users-container');
+            usersContainer.empty(); // Clear any existing content
+
+            response.forEach(function(user) {
+                fetchFriendRequestStatus(user);
+            });
+        } else {
+            console.log('Response is not an array:', response);
+        }
+    }).fail(function(xhr, status, error) {
+        alert('Request failed: ' + error);
+    });
+
+
+    function fetchFriendRequestStatus(user) {
+        // $.get('/getFriendRequestStatus', { senderId: id, receiverId: user.id }, function(statusResponse) {
+        //     var buttonText = statusResponse === 'pending' ? 'Cancel Request' : 'Add Friend';
+        //     var buttonAction = statusResponse=== 'pending' ? 'cancelRequest' : 'adding';
+
+            var userDiv = `
+            <div class="user" id="user-${user.id}">
+                // <img class="user-img" src="/files/${user.profile}" alt="User Image">
+                <div class="content">
+                    <h4>${user.receiver}</h4>
+                    <div class="liked-by">
+                        <p><b>55</b> mutual friends</p>
+                    </div>
+                </div>
+                <div class="add-friend">
+                    <a class="btn-confirm" id="btn-${user.id}" onclick="")"> Confirm</a>
+                </div>
+            </div>
+        `;
+
+            $('#users-container').append(userDiv);
+        // });
+    }
+
+</script>
+</body>
+</html>

@@ -31,12 +31,20 @@ public class LoginController {
     private UserService userService;
 
 
+//@GetMapping("/searchFriend")
+//public String search(@RequestParam String query,Model model)
+//{
+//    model.addAttribute("input",query);
+//    return "search";
+//}
+
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password,Model model,HttpSession session) {
         User user = userService.findByEmail(email);
         if (user != null && user.getPassword().equals(password)) {
             model.addAttribute("message", "Login successful");
             session.setAttribute("email", user.getEmail());
+            session.setAttribute("id", user.getId());
             return "redirect:/home";
         }
 
@@ -53,10 +61,12 @@ public class LoginController {
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("email");
+        int id=(Integer) session.getAttribute("id");
         if (email == null) {
             return "redirect:/login";
         }
         model.addAttribute("email", email);
+        model.addAttribute("id", id);
         return "home";
     }
 
@@ -70,6 +80,33 @@ public class LoginController {
         return "profile";
     }
 
+
+    //friend operation
+    @GetMapping("/friend")
+    public String friend(HttpSession session, Model model) {
+        String email = (String) session.getAttribute("email");
+//        int id=(Integer) session.getAttribute("id");
+        if (email == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("email", email);
+       // model.addAttribute("id", id);
+        return "friendtest";
+    }
+
+
+    @GetMapping("/friendRequest")
+    public String friendRequest(HttpSession session, Model model) {
+        String email = (String) session.getAttribute("email");
+//        int id=(Integer) session.getAttribute("id");
+        if (email == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("email", email);
+        // model.addAttribute("id", id);
+        return "friendRequestForm";
+    }
+    //friend operation
 //    @GetMapping("/search")
 //    public String SearchForm() {
 //        return "search";

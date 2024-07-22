@@ -27,7 +27,9 @@
             </div>
             <div class="serch-bar">
                 <i class="fa fa-search"></i>
-                <input type="search" name="" id="" placeholder="Search For Creators">
+
+                <input type="search" name="" id="search" placeholder="Search For Creators">
+
             </div>
             <div class="add-post">
                 <label for="add-post" class="btn btn-primary">Add Post</label>
@@ -795,7 +797,13 @@
     <script src="assests/js/jquery.min.js"></script>
     <script>
         var username = '[[${email}]]';
+        var id='[[${id}]]';
+
+        sessionStorage.setItem("email", username);
+        sessionStorage.setItem("id", id);
         console.log(username);
+        console.log(id);
+
         $(document).ready(function(){
 
             $.ajax({
@@ -820,6 +828,25 @@
     </script>
 
     //validate session
+
+
+
+//search function
+
+    <script>
+        document.getElementById('search').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default action (form submission)
+                // Perform your action here
+                const searchValue = event.target.value;
+                console.log('Search value:', searchValue);
+                // You can call a function or redirect to a search results page, for example
+                window.location.href = `/search?query=${searchValue}`;
+            }
+        });
+    </script>
+
+//search function
 
 
 </body>

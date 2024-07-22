@@ -1,7 +1,10 @@
 package com.example.student_community.Controller;
 
+import com.example.student_community.Model.Friends;
 import com.example.student_community.Model.User;
+import com.example.student_community.Repository.FriendRepository;
 import com.example.student_community.Repository.UserRepository;
+import com.example.student_community.Services.FriendService;
 import com.example.student_community.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -25,6 +31,13 @@ public class Controller {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FriendRepository friendRepository;
+
+    @Autowired
+    private FriendService friendService;
+
     @PostMapping("/createUser")
     public ResponseEntity createUser(@RequestBody User user) {
         return userService.createUser(user);
@@ -94,6 +107,113 @@ public class Controller {
         }
     }
     //edit pf image
+
+
+
+    @GetMapping("/getUserByName")
+    public ResponseEntity searchUser(@RequestParam String keyword,@RequestParam int idd) {
+
+      List<User> users =  userService.searchUser(keyword,idd);
+      if (users!= null) {
+
+          return ResponseEntity.ok(users);
+      }
+      else
+          return ResponseEntity.ok("User not found");
+    }
+
+
+    @GetMapping("/getUserById")
+    public ResponseEntity searchUserById(@RequestParam int idd) {
+
+        List<Friends> friends =  friendService.searchUserById(idd);
+        if (friends!= null) {
+
+            return ResponseEntity.ok(friends);
+        }
+        else
+            return ResponseEntity.ok("User not found");
+    }
+
+
+
+    @GetMapping("/getFriendRequestStatus")
+    public String getFriendRequestStatus(@RequestParam int senderId, @RequestParam int receiverId) {
+        return friendService.getFriendRequestStatus(senderId, receiverId);
+    }
+
+    //friends adding
+    @PostMapping("/addFriend")
+    public String addFri(@RequestBody Friends friends)
+    {
+       int receiver= friends.getReceiver();
+      int sender =  friends.getSender();
+        Optional<Friends> optionalFriends = friendRepository.findByReceiverAndSender(receiver,sender);
+
+        if(optionalFriends.isPresent())
+        return "search";
+        else
+        {
+            friendRepository.save(friends);
+            return "search";
+        }
+
+    }
+    //friends adding
+
+
+    //friend update
+    @PostMapping("/updateFriend/{receiver}/{sender}/{status}")
+    public ResponseEntity<Friends> updateUser(@PathVariable int receiver,@PathVariable int sender, @PathVariable String status) {
+        Optional<Friends> optionalFriends = friendRepository.findByReceiverAndSender(receiver,sender);
+
+        if (optionalFriends.isPresent()) {
+            Friends friends = optionalFriends.get();
+            friends.setStatus(status);
+            Friends updatedFriends = friendRepository.save(friends);
+            return ResponseEntity.ok(updatedFriends);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    //friend update
+
+    //unfriend
+    @DeleteMapping("/cancelFriendRequest")
+    public String deleteUser(@RequestParam int sender,@RequestParam int receiver){
+        Optional<Friends> optionalFriends = friendRepository.findByReceiverAndSender(receiver,sender);
+
+        if (optionalFriends.isPresent()) {
+            Friends friends = optionalFriends.get();
+            int id=friends.getId();
+
+            friendRepository.deleteById(id);
+            return "search"; // This is the response body
+
+        } else {
+            return"search";
+        }
+
+
+    }
+    //unfriend
+
+
+    //show friend request
+    @GetMapping("showFriend/{receiver}")
+    public List<Friends> getItems() {
+        int receiver =0;
+        List<Friends> friends=friendRepository.findByReceiver(receiver);
+        if(friends.isEmpty())
+        {
+            return null;
+        }
+        else {
+            return Arrays.asList((Friends) friends);
+
+        }
+    }
+    //show friend request
 
 
 }
