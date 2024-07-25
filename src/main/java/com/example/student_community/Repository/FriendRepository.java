@@ -17,4 +17,8 @@ public interface FriendRepository extends JpaRepository<Friends, Integer> {
     List<User> findByNameAndExclude(String keyword, int id);
 
    Optional<Friends> findBySenderAndReceiver(int sender, int receiver);
+
+   List<Friends> findByReceiverAndStatus(int receiver, String status);
+
+   List<Friends> findBySenderAndStatus(int sender, String status);
 }

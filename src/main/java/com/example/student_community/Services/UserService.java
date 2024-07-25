@@ -28,6 +28,12 @@ public class UserService {
         userRepository.save(user);
         return ResponseEntity.ok("Created successfully");
     }
+
+    public User getUserById(int id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
+    }
+
     public User findByEmail(String email) {
         Optional<User> user = userRepository.findByEmail( email);
         return user.orElse(null);

@@ -8,12 +8,14 @@
     <!-- ------------------Custom Css link -->
     <link rel="stylesheet" href="./Assets/Pstyle.css">
     <!-- ----Font Awesome  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <!-- -------Swiper Slider Link------ -->
+    <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.css">    <!-- -------Swiper Slider Link------ -->
 
     <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
-
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -92,7 +94,7 @@
                 </div>
 
                 <!-- ..........Add Post Btn...........-->
-                <label for="add-post" class="btn btn-primary btn-lg" id="my-profile-picture">Edit Profile
+                    <label for="add-post" class="hidden btn btn-primary btn-lg" id="my-profile-label">Edit Profile
                     Details</label>
 
             </div>
@@ -665,73 +667,112 @@
 
 
 
-    //validate session
+
 
     <script src="assests/js/jquery.min.js"></script>
     <script>
         var username = '[[${email}]]';
+        var otheremail = '[[${otheremail}]]';
         console.log(username);
-        $(document).ready(function(){
+        if(otheremail!==''){
+            $('#userBio').attr('onclick','');
+            $('.profile-info').css('pointer-events', 'none');
+            $(document).ready(function(){
 
-            $.ajax({
-                url: '/userInfo/'+username+'', // Replace with your actual API endpoint
-                type: 'GET', // HTTP method
-                dataType: 'json', // The type of data you're expecting back from the server
-                success: function(data) {
-                    $('#nm').text(data.name)
-                    $('#em').text(data.email)
-                    $('#addrs').text(data.address)
-                    $('#gender').text(data.gender)
-                    $('#mj').text(data.major)
-                    $('#rno').text(data.rno)
-                    $('#ph').text(data.phone)
-                    $('#dob').text(data.dob)
-
-                    // Access specific keys from the JSON object
-
-                    //auto fill
-
-                     $('#name').val(data.name)              // Assuming 'name' is an input field with id 'name'
-                     $('#major').val(data.major)           // Assuming 'major' is an input field with id 'major'
-                     $('#phone').val(data.phone)           // Assuming 'phone' is an input field with id 'phone'
-                     $('#roll-number').val(data.rno)        // Assuming 'roll-number' is an input field with id 'roll-number'
-                     $('#address').val(data.address)
-                     $('#date-of-birth').val(data.dob)
-
-                    $('#nameForModal').text(data.name)
-                    $('#name2ForModal').text(data.email)
-                    if(data.gender==="Male")
-                    {
-                        $('input[name="gender"][value="Male"]').prop('checked',true);
-                    }
-                    if(data.gender==="Female")
-                    {
-                        $('input[name="gender"][value="Female"]').prop('checked',true);
-                    }
-
-                    if(data.bio===null)
-                    {
-                        $('#userBio').text("Add Your Bio..")
-                    }
-                    else
-                    {
+                $.ajax({
+                    url: '/userInfo/'+otheremail+'', // Replace with your actual API endpoint
+                    type: 'GET', // HTTP method
+                    dataType: 'json', // The type of data you're expecting back from the server
+                    success: function(data) {
+                        $('#nm').text(data.name)
+                        $('#em').text(data.email)
+                        $('#addrs').text(data.address)
+                        $('#gender').text(data.gender)
+                        $('#mj').text(data.major)
+                        $('#rno').text(data.rno)
+                        $('#ph').text(data.phone)
+                        $('#dob').text(data.dob)
                         $('#userBio').text(data.bio)
+                        if(data.profile!=null) {
+                            console.log(data.profile)
+                            $('#my-profile-picture1').attr('src', 'files/' + data.profile + '');
+                            $('#imageForModal').attr('src', 'files/'+data.profile + '');
+                        }
+
+
+                    },
+                    error: function(error) {
+                        console.log("Error: ", error);
                     }
+                });
 
-                    if(data.profile!=null) {
-                        $('#my-profile-picture1').attr('src', 'files/' + data.profile + '');
-                        $('#imageForModal').attr('src', 'files/'+data.profile + '');
-                    }
-                    //auto fill
-
-
-                },
-                error: function(error) {
-                    console.log("Error: ", error);
-                }
             });
+        }else {
+            $(document).ready(function(){
 
-        });
+                $.ajax({
+                    url: '/userInfo/'+username+'', // Replace with your actual API endpoint
+                    type: 'GET', // HTTP method
+                    dataType: 'json', // The type of da
+                    // ta you're expecting back from the server
+                    success: function(data) {
+                        $('#my-profile-label').removeClass('hidden');
+                        $('#nm').text(data.name)
+                        $('#em').text(data.email)
+                        $('#addrs').text(data.address)
+                        $('#gender').text(data.gender)
+                        $('#mj').text(data.major)
+                        $('#rno').text(data.rno)
+                        $('#ph').text(data.phone)
+                        $('#dob').text(data.dob)
+
+
+                        // Access specific keys from the JSON object
+
+                        //edit auto fill
+
+                        $('#name').val(data.name)              // Assuming 'name' is an input field with id 'name'
+                        $('#major').val(data.major)           // Assuming 'major' is an input field with id 'major'
+                        $('#phone').val(data.phone)           // Assuming 'phone' is an input field with id 'phone'
+                        $('#roll-number').val(data.rno)        // Assuming 'roll-number' is an input field with id 'roll-number'
+                        $('#address').val(data.address)
+                        $('#date-of-birth').val(data.dob)
+
+                        $('#nameForModal').text(data.name)
+                        $('#name2ForModal').text(data.email)
+                        if(data.gender==="Male")
+                        {
+                            $('input[name="gender"][value="Male"]').prop('checked',true);
+                        }
+                        if(data.gender==="Female")
+                        {
+                            $('input[name="gender"][value="Female"]').prop('checked',true);
+                        }
+
+                        if(data.bio===null)
+                        {
+                            $('#userBio').text("Add Your Bio..")
+                        }
+                        else
+                        {
+                            $('#userBio').text(data.bio)
+                        }
+
+                        if(data.profile!=null) {
+                            $('#my-profile-picture1').attr('src', 'files/' + data.profile + '');
+                            $('#imageForModal').attr('src', 'files/'+data.profile + '');
+                        }
+                        //auto fill
+
+
+                    },
+                    error: function(error) {
+                        console.log("Error: ", error);
+                    }
+                });
+
+            });
+        }
 
 
         //edit profile
@@ -807,7 +848,7 @@
 
     </script>
     <script src="./Assets/Script.js"></script>
-    //validate session
+
 
 </body>
 

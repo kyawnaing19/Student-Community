@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CurrentTimestamp;
-
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,13 +20,15 @@ public class Posts {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public int getUserId(){
+        return user.getId();
+    }
+
     @Column(name = "content")
     private String content;
 
     @Column(name = "audience")
     private String audience;
-
-
 
     @CurrentTimestamp
     @Column(name = "created_at")

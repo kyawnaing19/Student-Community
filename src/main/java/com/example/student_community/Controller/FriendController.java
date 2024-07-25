@@ -1,6 +1,7 @@
 package com.example.student_community.Controller;
 
 import com.example.student_community.Model.FriendDTO;
+import com.example.student_community.Model.User;
 import com.example.student_community.Services.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,15 @@ public class FriendController {
     @DeleteMapping("/deleteFriend")
     public ResponseEntity<String> deleteFriend(@RequestParam int sender, @RequestParam int receiver){
         return friendService.deleteFriend(sender,receiver);
+    }
+
+    @GetMapping("/getFriendRequest")
+    public ResponseEntity<List<User>> getFriendsRequest(@RequestParam int id){
+        return friendService.getPendingFriend(id);
+    }
+
+    @GetMapping("/getFriends")
+    public ResponseEntity<List<User>> getFriends(@RequestParam int id){
+        return friendService.getFriends(id);
     }
 }

@@ -22,6 +22,11 @@ public class ViewController {
         return "friends";
     }
 
+    @GetMapping("/allFriends")
+    public String allFriends() {
+        return "allFriends";
+    }
+
     @GetMapping("/search")
     public String search(@RequestParam String query, Model model) {
         model.addAttribute("query", query);

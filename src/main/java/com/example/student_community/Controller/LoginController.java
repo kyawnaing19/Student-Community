@@ -2,13 +2,13 @@ package com.example.student_community.Controller;
 
 import com.example.student_community.Model.User;
 import com.example.student_community.Repository.UserRepository;
-import com.example.student_community.Services.LoginService;
+//import com.example.student_community.Services.LoginService;
 import com.example.student_community.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
-    @Autowired
-    private BCryptPasswordEncoder encoder;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+//    @Autowired
+//    private LoginService loginService;
+//    @Autowired
+//    private BCryptPasswordEncoder encoder;
+//    @Autowired
+//    private AuthenticationManager authenticationManager;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -64,12 +64,13 @@ public class LoginController {
     }
 
     @GetMapping("/profile")
-    public String profile(HttpSession session, Model model) {
+    public String profile(HttpSession session, Model model,@RequestParam(value = "otheremail", defaultValue = "") String otheremail) {
         String email = (String) session.getAttribute("email");
         if (email == null) {
             return "redirect:/login";
         }
         model.addAttribute("email", email);
+        model.addAttribute("otheremail", otheremail);
         return "profile";
     }
 

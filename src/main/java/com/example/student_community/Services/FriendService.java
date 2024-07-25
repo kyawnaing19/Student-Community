@@ -4,6 +4,7 @@ import com.example.student_community.Model.FriendDTO;
 import com.example.student_community.Model.Friends;
 import com.example.student_community.Model.User;
 import com.example.student_community.Repository.FriendRepository;
+import com.example.student_community.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import java.util.Optional;
 
 @Service
 public class FriendService {
+    @Autowired
+    private UserService userService;
     @Autowired
     private FriendRepository friendRepository;
 
@@ -51,6 +54,45 @@ public class FriendService {
     }
 
 
+    public ResponseEntity<List<User>> getPendingFriend(int id){
+        List<User> friends=new ArrayList<>();
+        List<Friends> f=friendRepository.findByReceiverAndStatus(id,"PENDING");
+        for(Friends fri:f){
+            User user=userService.getUserById(fri.getSender());
+            friends.add(user);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(friends);
+    }
+
+    public ResponseEntity<List<User>> getFriends(int id){
+        List<User> friends=new ArrayList<>();
+        List<Friends> f1=friendRepository.findBySenderAndStatus(id,"ACCEPTED");
+        List<Friends> f2=friendRepository.findByReceiverAndStatus(id,"ACCEPTED");
+
+        if(!f1.isEmpty())
+        {
+            for(Friends fri:f1){
+                User user=userService.getUserById(fri.getReceiver());
+                friends.add(user);
+            }
+        }
+         if (!f2.isEmpty())
+        {
+            for(Friends fri:f2){
+                User user=userService.getUserById(fri.getSender());
+                friends.add(user);
+            }
+        }
+
+
+
+        if(friends.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(friends);
+        }
+
+    }
 
 
     public ResponseEntity<List<FriendDTO>> getFriendDTO(int id, String input) {

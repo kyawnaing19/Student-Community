@@ -14,9 +14,8 @@ public class Images {
 
 
     @ManyToOne
-@JsonIgnore
+    @JsonIgnore
     @JoinColumn(name = "post_id", nullable = false)
-
     private Posts post;
 
 
