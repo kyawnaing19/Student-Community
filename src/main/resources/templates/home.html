@@ -2,19 +2,172 @@
 <html lang="en">
 
 <head>
+    <style>
+        .modall {
+            scroll-behavior: unset;
+            display: none;
+            position: absolute;
+            z-index: 9;
+            left: 50%;
+            transform: translateX(-50%);
+
+            top:150px;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modall-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+
+        .closee {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .closee:hover,
+        .closee:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Community </title>
     <!-- ------------------Custom Css link -->
     <link rel="stylesheet" href="./Assets/Style.css">
+ <link rel="stylesheet" href="./Assets/postStyle.css">
     <!-- ----Font Awesome  -->
     <!-- -------Swiper Slider Link------ -->
     <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.css">
     <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
 
+
 </head>
 
 <body>
+<!-- Post-->
+
+
+        <div class="containers modall" id="myModal">
+            <span class="closee">&times;</span>
+            <div class="wrapper">
+                <section class="post">
+                    <header>Create Post</header>
+                    <form action="/submitPost" method="POST" enctype="multipart/form-data">
+                        <div class="content">
+                            <img src="./Assets/icons/logo.png" alt="logo">
+                            <div class="details">
+                                <p>Student Community</p>
+                                <div class="privacy">
+                                    <i class="fas fa-user-friends"></i>
+                                    <span>Friends</span>
+                                    <i class="fas fa-caret-down"></i>
+
+                                </div>
+                            </div>
+                        </div>
+                        <textarea name="content" placeholder="What's on your mind, Aung?" spellcheck="false" required></textarea>
+                        <div class="image-containers">
+                            <img id="image-preview" class="image-preview" src="" alt="Image Preview">
+                        </div>
+                        <div class="theme-emoji">
+                            <img src="./Assets/icons/theme.svg" alt="theme">
+                            <img src="./Assets/icons/smile.svg" alt="smile">
+                        </div>
+                        <div class="options">
+                            <p>Add to Your Post</p>
+                            <ul class="list">
+                                <li id="file-icon"><img src="./Assets/icons/gallery.svg" alt="gallery"></li>
+                                <li><img src="./Assets/icons/tag.svg" alt="tag"></li>
+                                <li><img src="./Assets/icons/emoji.svg" alt="emoji"></li>
+                                <li><img src="./Assets/icons/mic.svg" alt="mic"></li>
+                                <li><img src="./Assets/icons/more.svg" alt="more"></li>
+                            </ul>
+                        </div>
+                        <input type="file" id="file-input" name="file" accept="image/*">
+                        <button type="submit">Post</button>
+                    </form>
+                </section>
+                <section class="audience">
+                    <header>
+                        <div class="arrow-back"><i class="fas fa-arrow-left"></i></div>
+
+                        <p>Select Audience</p>
+                    </header>
+                    <div class="content">
+                        <p>Who can see your post?</p>
+                        <span>Your post will show up in News Feed, on your profile and in search results.</span>
+                    </div>
+                    <ul class="list">
+                        <li class="active">
+                            <div class="column">
+                                <div class="icon"><i class="fas fa-globe-asia"></i></div>
+                                <div class="details">
+                                    <p>Public</p>
+                                    <span>Anyone on or off Facebook</span>
+                                </div>
+                            </div>
+                            <div class="radio"></div>
+                        </li>
+                        <li>
+                            <div class="column">
+                                <div class="icon"><i class="fas fa-user-friends"></i></div>
+                                <div class="details">
+                                    <p>Friends</p>
+                                    <span>Your friends on Facebook</span>
+                                </div>
+                            </div>
+                            <div class="radio"></div>
+                        </li>
+                        <li>
+                            <div class="column">
+                                <div class="icon"><i class="fas fa-user"></i></div>
+                                <div class="details">
+                                    <p>Specific</p>
+                                    <span>Only show to some friends</span>
+                                </div>
+                            </div>
+                            <div class="radio"></div>
+                        </li>
+                        <li>
+                            <div class="column">
+                                <div class="icon"><i class="fas fa-lock"></i></div>
+                                <div class="details">
+                                    <p>Only me</p>
+                                    <span>Only you can see your post</span>
+                                </div>
+                            </div>
+                            <div class="radio"></div>
+                        </li>
+                        <li>
+                            <div class="column">
+                                <div class="icon"><i class="fas fa-cog"></i></div>
+                                <div class="details">
+                                    <p>Custom</p>
+                                    <span>Include and exclude friends</span>
+                                </div>
+                            </div>
+                            <div class="radio"></div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
 
 
     <!-- ..................Start Navbar...................... -->
@@ -28,7 +181,7 @@
                 <input type="search" name="" id="search" placeholder="Search For Creators">
             </div>
             <div class="add-post">
-                <label for="add-post" class="btn btn-primary">Add Post</label>
+                <label for="add-post" class="btn btn-primary" id="openModalBtn">GGGGGGGGGG</label>
                 <div class="profile-picture" id="my-profile-picture">
                     <img src="./Assets/images/img/profile-1.jpeg" alt="">
                 </div>
@@ -831,7 +984,87 @@
             }
         });
     </script>
-    //validate session
+<!-- post modal-->
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("openModalBtn");
+        var span = document.getElementsByClassName("closee")[0];
+
+        btn.onclick = function() {
+            console.log("AAAAAAAAAAAAAAAAA")
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
+
+</script>
+<!--Post-->
+<script>
+    const containers = document.querySelector(".containers"),
+        privacy = containers.querySelector(".post .privacy"),
+        arrowBack = containers.querySelector(".audience .arrow-back"),
+        fileIcon = document.getElementById('file-icon'),
+        fileInput = document.getElementById('file-input'),
+        imagePreview = document.getElementById('image-preview');
+
+    privacy.addEventListener("click", () => {
+        containers.classList.add("active");
+    });
+
+    arrowBack.addEventListener("click", () => {
+        containers.classList.remove("active");
+    });
+
+    fileIcon.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+    const listItems = document.querySelectorAll('ul.list > li');
+
+    // Function to remove the "active" class from all list items
+    const removeActiveClassFromAll = () => {
+        listItems.forEach(item => {
+            item.classList.remove('active');
+        });
+    };
+
+    // Add click event listener to each list item
+    listItems.forEach(item => {
+        item.addEventListener('click', (event) => {
+            // Remove "active" class from all list items
+            removeActiveClassFromAll();
+
+            // Optionally, add "active" class to the clicked item
+            event.currentTarget.classList.add('active');
+
+            console.log('Clicked item:', event.currentTarget);
+        });
+    });
+
+
+</script>
 
 
 </body>
