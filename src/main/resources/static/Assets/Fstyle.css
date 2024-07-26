@@ -283,10 +283,13 @@ aside .menu-item:nth-last-child(2){
     margin: 15px;
     /* height: 320px; */
 }
-.middle-container img{
-    width: 100%;
-    height: auto;
-}
+
+/*.middle-container img{*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    width:30px;*/
+/*    height: 20px;*/
+/*}*/
 .card-content{
     padding: 10px;
 }

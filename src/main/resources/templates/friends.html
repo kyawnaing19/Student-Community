@@ -8,7 +8,7 @@
     <!-- ------------------Custom Css link -->
     <link rel="stylesheet" href="./Assets/Fstyle.css">
     <!-- ----Font Awesome  -->
-    <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.css">    <!-- -------Swiper Slider Link------ -->
+    <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.css">     <!-- -------Swiper Slider Link------ -->
 
     <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
 
@@ -178,7 +178,8 @@
 
                     var userDiv = `
                      <div class="middle-container" onclick="window.location.href='profile?otheremail=${user.email}'">
-                    <img src="/files/${user.profile}" alt="">
+                  <div class="friend-profile" style="width: 100%;height: 56%;background-size: cover;background-repeat: no-repeat;background-position: unset; border: #0b5ed7;background-image: url('/files/${user.profile}')">
+                   </div>
                     <div class="card-content">
                         <h4>${user.name}</h4>
                          <!-- -----------------Liked by-------------- -->

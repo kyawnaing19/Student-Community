@@ -2,9 +2,30 @@
 <html lang="en">
 
 <head>
+
     <style>
+        #file-input {
+            display: none;
+        }
+        /* Style for the image preview */
+        .image-preview {
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 300px;
+            display: none; /* Initially hidden */
+        }
+        .image-containers {
+            width: 100%;
+            text-align: center;
+        }
+        .image-containers img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
         .modall {
-            scroll-behavior: unset;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             display: none;
             position: absolute;
             z-index: 9;
@@ -66,7 +87,6 @@
             <span class="closee">&times;</span>
             <div class="wrapper">
                 <section class="post">
-                    <header>Create Post</header>
                     <form action="/submitPost" method="POST" enctype="multipart/form-data">
                         <div class="content">
                             <img src="./Assets/icons/logo.png" alt="logo">
@@ -74,7 +94,7 @@
                                 <p>Student Community</p>
                                 <div class="privacy">
                                     <i class="fas fa-user-friends"></i>
-                                    <span>Friends</span>
+                                    <span id="privacytype">Public</span>
                                     <i class="fas fa-caret-down"></i>
 
                                 </div>
@@ -84,10 +104,10 @@
                         <div class="image-containers">
                             <img id="image-preview" class="image-preview" src="" alt="Image Preview">
                         </div>
-                        <div class="theme-emoji">
-                            <img src="./Assets/icons/theme.svg" alt="theme">
-                            <img src="./Assets/icons/smile.svg" alt="smile">
-                        </div>
+<!--                        <div class="theme-emoji">-->
+<!--                            <img src="./Assets/icons/theme.svg" alt="theme">-->
+<!--                            <img src="./Assets/icons/smile.svg" alt="smile">-->
+<!--                        </div>-->
                         <div class="options">
                             <p>Add to Your Post</p>
                             <ul class="list">
@@ -113,7 +133,7 @@
                         <span>Your post will show up in News Feed, on your profile and in search results.</span>
                     </div>
                     <ul class="list">
-                        <li class="active">
+                        <li id="activePublic" class="active" value="Public">
                             <div class="column">
                                 <div class="icon"><i class="fas fa-globe-asia"></i></div>
                                 <div class="details">
@@ -123,7 +143,7 @@
                             </div>
                             <div class="radio"></div>
                         </li>
-                        <li>
+                        <li value="Friends">
                             <div class="column">
                                 <div class="icon"><i class="fas fa-user-friends"></i></div>
                                 <div class="details">
@@ -133,7 +153,7 @@
                             </div>
                             <div class="radio"></div>
                         </li>
-                        <li>
+                        <li value="Specific">
                             <div class="column">
                                 <div class="icon"><i class="fas fa-user"></i></div>
                                 <div class="details">
@@ -143,7 +163,7 @@
                             </div>
                             <div class="radio"></div>
                         </li>
-                        <li>
+                        <li value="Only me">
                             <div class="column">
                                 <div class="icon"><i class="fas fa-lock"></i></div>
                                 <div class="details">
@@ -153,7 +173,7 @@
                             </div>
                             <div class="radio"></div>
                         </li>
-                        <li>
+                        <li value="Custom">
                             <div class="column">
                                 <div class="icon"><i class="fas fa-cog"></i></div>
                                 <div class="details">
@@ -201,7 +221,7 @@
 
                 <!--..................... Profile Start.............. -->
                 <a class="profile">
-                    <div class="profile-picture" id="my-profile-picture">
+                    <div class="profile-picture" id="my-profile-picture-left">
                         <img src="./Assets/images/img/profile-1.jpeg" alt="">
                     </div>
                     <div class="profile-handle">
@@ -945,6 +965,12 @@
 
     <script src="assests/js/jquery.min.js"></script>
     <script>
+        var profileLeft=document.getElementById('my-profile-picture-left');
+        profileLeft.addEventListener('click', () => {
+            document.querySelector('.profile-popup').style.display = 'flex';
+        });
+
+
         var username = '[[${email}]]';
         var id= '[[${id}]]';
         sessionStorage.setItem("id",id);
@@ -958,7 +984,7 @@
                 dataType: 'json', // The type of data you're expecting back from the server
                 success: function(data) {
                     $('#name').text(data.name)
-
+                    $('#my-profile-picture-left img').attr('src', 'files/' + data.profile + '');
                     // Access specific keys from the JSON object
                     console.log("ID: " + data.id);
                     console.log("Name: " + data.name);
@@ -999,7 +1025,14 @@
         span.onclick = function() {
 
             modal.style.display = "none";
+            containers.classList.remove("active");
+            removeActiveClassFromAll();
+            $('#activePublic').attr('class','active');
+            $('#privacytype').text('Public');
+
+
         }
+
 
         window.onclick = function(event) {
             if (event.target == modal) {
@@ -1024,6 +1057,10 @@
 
     arrowBack.addEventListener("click", () => {
         containers.classList.remove("active");
+        console.log ("it work back")
+        var activeLi=document.querySelector('ul.list>li.active');
+        $('#privacytype').text(activeLi.getAttribute('value'));
+        console.log("ads"+activeLi.getAttribute('value'));
     });
 
     fileIcon.addEventListener('click', () => {
@@ -1047,6 +1084,7 @@
     const removeActiveClassFromAll = () => {
         listItems.forEach(item => {
             item.classList.remove('active');
+
         });
     };
 

@@ -94,7 +94,7 @@
                 </div>
 
                 <!-- ..........Add Post Btn...........-->
-                    <label for="add-post" class="hidden btn btn-primary btn-lg" id="my-profile-label">Edit Profile
+                    <label for="add-post" class="hidden btn btn-primary btn-lg" onclick="labelFun()" id="my-profile-label">Edit Profile
                     Details</label>
 
             </div>
@@ -846,6 +846,10 @@
             });
         }
 
+        function labelFun(){
+            console.log("safsdsddfsad lar san");
+            document.querySelector('.profile-popup').style.display = 'flex';
+        }
     </script>
     <script src="./Assets/Script.js"></script>
 

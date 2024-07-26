@@ -26,6 +26,7 @@ document.querySelectorAll('#my-profile-picture').forEach(AllProfile => {
     });
 });
 
+
 document.querySelectorAll('.close').forEach(AllCloser => {
     AllCloser.addEventListener('click', () => {
         document.querySelector('.profile-popup').style.display = 'none';
