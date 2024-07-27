@@ -1,5 +1,6 @@
 package com.example.student_community.Services;
 
+import com.example.student_community.Model.Posts;
 import com.example.student_community.Model.User;
 import com.example.student_community.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +106,8 @@ public class UserService {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+
+
+
 
 }

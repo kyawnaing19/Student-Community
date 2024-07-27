@@ -93,16 +93,16 @@
                             <div class="details">
                                 <p>Student Community</p>
                                 <div class="privacy">
-                                    <i class="fas fa-user-friends"></i>
+                                    <i id="iconPost" class="fas fa-globe-asia"></i>
                                     <span id="privacytype">Public</span>
                                     <i class="fas fa-caret-down"></i>
 
                                 </div>
                             </div>
                         </div>
-                        <textarea name="content" placeholder="What's on your mind, Aung?" spellcheck="false" required></textarea>
-                        <div class="image-containers">
-                            <img id="image-preview" class="image-preview" src="" alt="Image Preview">
+                        <textarea name="content" placeholder="What's on your mind, Aung?" spellcheck="false" id="caption" required></textarea>
+                        <div class="image-containers" id="image-containers">
+
                         </div>
 <!--                        <div class="theme-emoji">-->
 <!--                            <img src="./Assets/icons/theme.svg" alt="theme">-->
@@ -111,14 +111,16 @@
                         <div class="options">
                             <p>Add to Your Post</p>
                             <ul class="list">
-                                <li id="file-icon"><img src="./Assets/icons/gallery.svg" alt="gallery"></li>
+                                <li id="file-icon">
+                                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                                    <img src="./Assets/icons/gallery.svg" alt="gallery"></li>
                                 <li><img src="./Assets/icons/tag.svg" alt="tag"></li>
                                 <li><img src="./Assets/icons/emoji.svg" alt="emoji"></li>
                                 <li><img src="./Assets/icons/mic.svg" alt="mic"></li>
                                 <li><img src="./Assets/icons/more.svg" alt="more"></li>
                             </ul>
                         </div>
-                        <input type="file" id="file-input" name="file" accept="image/*">
+
                         <button type="submit">Post</button>
                     </form>
                 </section>
@@ -132,7 +134,7 @@
                         <p>Who can see your post?</p>
                         <span>Your post will show up in News Feed, on your profile and in search results.</span>
                     </div>
-                    <ul class="list">
+                    <ul class="list forAudience">
                         <li id="activePublic" class="active" value="Public">
                             <div class="column">
                                 <div class="icon"><i class="fas fa-globe-asia"></i></div>
@@ -145,7 +147,7 @@
                         </li>
                         <li value="Friends">
                             <div class="column">
-                                <div class="icon"><i class="fas fa-user-friends"></i></div>
+                                <div class="icon"><i class="fas fa-user"></i></div>
                                 <div class="details">
                                     <p>Friends</p>
                                     <span>Your friends on Facebook</span>
@@ -153,11 +155,11 @@
                             </div>
                             <div class="radio"></div>
                         </li>
-                        <li value="Specific">
+                        <li value="FOFriends">
                             <div class="column">
-                                <div class="icon"><i class="fas fa-user"></i></div>
+                                <div class="icon"><i class="fas fa-user-friends"></i></div>
                                 <div class="details">
-                                    <p>Specific</p>
+                                    <p>Friends Of Friends</p>
                                     <span>Only show to some friends</span>
                                 </div>
                             </div>
@@ -1029,6 +1031,10 @@
             removeActiveClassFromAll();
             $('#activePublic').attr('class','active');
             $('#privacytype').text('Public');
+            $('#iconPost').attr('class','fas fa-globe-asia')
+            imageContainer.innerHTML = ''; // Clear previous previews
+            fileInput.value = ''; // Clear the file input
+
 
 
         }
@@ -1048,8 +1054,9 @@
         privacy = containers.querySelector(".post .privacy"),
         arrowBack = containers.querySelector(".audience .arrow-back"),
         fileIcon = document.getElementById('file-icon'),
-        fileInput = document.getElementById('file-input'),
-        imagePreview = document.getElementById('image-preview');
+        fileInput = document.getElementById('fileInput'),
+        imageContainer = document.getElementById('image-containers');
+
 
     privacy.addEventListener("click", () => {
         containers.classList.add("active");
@@ -1058,8 +1065,15 @@
     arrowBack.addEventListener("click", () => {
         containers.classList.remove("active");
         console.log ("it work back")
-        var activeLi=document.querySelector('ul.list>li.active');
+        var activeLi=document.querySelector('ul.forAudience>li.active');
         $('#privacytype').text(activeLi.getAttribute('value'));
+       if(activeLi.getAttribute('value')=='Public'){
+           $('#iconPost').attr('class','fas fa-globe-asia')
+       }else if(activeLi.getAttribute('value')=="Friends"){
+           $('#iconPost').attr('class','fas fa-user')
+       }else if(activeLi.getAttribute('value')=="FOFriends"){
+           $('#iconPost').attr('class','fas fa-user-friends')
+        }
         console.log("ads"+activeLi.getAttribute('value'));
     });
 
@@ -1068,17 +1082,31 @@
     });
 
     fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
+        const files = fileInput.files;
+        // imageContainer.innerHTML = ''; // Clear previous previews
+
+        if (files.length > 5) {
+            alert("Please select a maximum of 5 photos");
+            fileInput.value = ''; // Clear the file input
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    img.style.maxWidth = '200px';
+                    imageContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(file);
         }
     });
-    const listItems = document.querySelectorAll('ul.list > li');
+    const listItems = document.querySelectorAll('ul.forAudience > li');
 
     // Function to remove the "active" class from all list items
     const removeActiveClassFromAll = () => {

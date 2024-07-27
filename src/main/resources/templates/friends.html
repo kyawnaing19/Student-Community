@@ -82,7 +82,7 @@
                         <h3>All Friends</h3>
                     </a>
 
-                    <a class="menu-item" href="suggestions">
+                    <a class="menu-item" href="suggestions.html">
                         <span>
                             <img src="./Assets/images/svg/add-friend-svgrepo-com (1).svg" alt="">
                         </span>
@@ -146,7 +146,7 @@
 
 
     <!-- ----------------Swiper JS---------------------- -->
-
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 8,
@@ -178,7 +178,8 @@
 
                     var userDiv = `
                      <div class="middle-container" onclick="window.location.href='profile?otheremail=${user.email}'">
-                  <div class="friend-profile" style="width: 100%;height: 56%;background-size: cover;background-repeat: no-repeat;background-position: unset; border: #0b5ed7;background-image: url('/files/${user.profile}')">
+                  <div class="friend-profile" style="">
+                  <img src="/files/${user.profile}" style="">
                    </div>
                     <div class="card-content">
                         <h4>${user.name}</h4>
