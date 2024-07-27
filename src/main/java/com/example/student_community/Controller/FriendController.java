@@ -43,4 +43,9 @@ public class FriendController {
     public ResponseEntity<List<User>> getFriends(@RequestParam int id){
         return friendService.getFriends(id);
     }
+
+    @GetMapping("/friends-of-friends")
+    public List<User> getFriendsOfFriends(@RequestParam int userId) {
+        return friendService.getFriendsOfFriends(userId);
+    }
 }

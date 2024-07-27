@@ -70,7 +70,7 @@
                         </div>
                         <div class="horizontal-line"></div>
                         <div class="cal-allfriend">
-                            <p><s>10</s> friends</p>
+                            <p><s id="count"></s> friends</p>
                         </div>
                     
 <!--                    <div class="add-friend">-->
@@ -207,7 +207,6 @@
 
 
     <!-- ----------------Swiper JS---------------------- -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
     <script src="./Assets/Swiper/swiper-bundle.min.js"></script>
     <!-- Custom Js Link -->
@@ -219,8 +218,10 @@
         if (Array.isArray(response)) {
             var usersContainer = $('#friends');
             usersContainer.empty(); // Clear any existing content
-
+var count=0;
             response.forEach(function(user) {
+
+                count++;
 
                 var userDiv = `
 
@@ -242,7 +243,8 @@
 
                 usersContainer.append(userDiv);
             });
-            console.log("success");
+            $('#count').text(count);
+            console.log(count);
         } else {
             console.log('Response is not an array:', response);
         }

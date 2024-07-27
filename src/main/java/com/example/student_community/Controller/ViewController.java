@@ -32,6 +32,11 @@ public class ViewController {
         model.addAttribute("query", query);
         return "search";
     }
+
+    @GetMapping("/suggestions")
+    public String suggestions() {
+        return "suggestions";
+    }
 }
 
 

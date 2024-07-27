@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FriendService {
@@ -21,6 +22,8 @@ public class FriendService {
     private UserService userService;
     @Autowired
     private FriendRepository friendRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public ResponseEntity<String> requestFriend(int sender_id, int receiver_id){
         if(friendRepository.existsBySenderAndReceiver(sender_id, receiver_id)){
@@ -118,4 +121,21 @@ public class FriendService {
         }
         return ResponseEntity.status(HttpStatus.OK).body(friends);
     }
+
+
+
+    public List<User> getFriendsOfFriends(int userId) {
+        // Step 1: Find friends of the given user
+        List<Integer> friendsOfUser = friendRepository.findFriendsOfUser(userId);
+
+        // Step 2: For each friend, find their friends and exclude the original user
+        List<Integer> friendsOfFriendsIds = friendsOfUser.stream()
+                .flatMap(friendId -> friendRepository.findFriendsOfFriend(friendId, userId).stream())
+                .distinct()
+                .collect(Collectors.toList());
+
+        // Step 3: Fetch User objects for these IDs
+        return userRepository.findAllById(friendsOfFriendsIds);
+    }
+
 }

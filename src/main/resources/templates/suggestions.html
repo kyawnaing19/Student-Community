@@ -8,7 +8,9 @@
     <!-- ------------------Custom Css link -->
     <link rel="stylesheet" href="./Assets/Fstyle.css">
     <!-- ----Font Awesome  -->
-    <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.css">     <!-- -------Swiper Slider Link------ -->
+    <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.css">
+
+    <!-- -------Swiper Slider Link------ -->
 
     <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
 
@@ -65,7 +67,7 @@
                         <h3>Home</h3>
                     </a>
 
-                    <a class="menu-item" href="#">
+                    <a class="menu-item" href="friends">
                         <span>
                             <img src="./Assets/images/svg/reshot-icon-user-arrow-right-4N3DKYSTC8.svg" alt="">
                         </span>
@@ -102,10 +104,28 @@
 
             <!--======================Main Middle Start====================== -->
 
-            <div class="main-middle" id="container">
+            <div class="main-middle" id="fof">
 
+<!--                <div class="middle-container" id="fof">-->
+<!--                    <img src="./Assets/images/img/profile-1.jpeg" alt="">-->
+<!--                    <div class="card-content">-->
+<!--                        <h4>Name</h4>-->
+<!--                         &lt;!&ndash; -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Liked by&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; &ndash;&gt;-->
+<!--                         <div class="liked-by">-->
+<!--                            <span>-->
+<!--                                <img src="./Assets/images/img/n2.png" alt="">-->
+<!--                            </span>-->
 
+<!--                            <span>-->
+<!--                                <img src="./Assets/images/img/n3.png" alt="">-->
+<!--                            </span>-->
 
+<!--                            <p> <b>2</b> mutal friends</p>-->
+<!--                        </div>-->
+<!--                        <a class="btn-confirm" href="#">Confirm</a>-->
+<!--                        <a class="btn-delete" href="#">Delete</a>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <!-- ======================Main Middle End======================-->
 
@@ -147,35 +167,19 @@
 
     <!-- ----------------Swiper JS---------------------- -->
 
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 8,
-            spaceBetween: 10,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            direction: 'horizontal', // Ensures horizontal sliding
-        });
-    </script>
 
-    <script src="./Assets/Swiper/swiper-bundle.min.js"></script>
-    <!-- Custom Js Link -->
-<!--    <script src="./Assets/Script.js"></script>-->
+<!--    //friend of friend-->
+
     <script src="assests/js/jquery.min.js"></script>
     <script>
         var id=sessionStorage.getItem("id");
-        $.get('/friend/getFriendRequest', { id: id }, function(response) {
+        $.get('/friend/friends-of-friends', { userId: id }, function(response) {
             if (Array.isArray(response)) {
-                var usersContainer = $('#container');
+                var usersContainer = $('#fof');
                 usersContainer.empty(); // Clear any existing content
 
                 response.forEach(function(user) {
-
+console.log(user);
                     var userDiv = `
                      <div class="middle-container" onclick="window.location.href='profile?otheremail=${user.email}'">
                   <div class="friend-profile" style="width: 100%;height: 56%;background-size: cover;background-repeat: no-repeat;background-position: unset; border: #0b5ed7;background-image: url('/files/${user.profile}')">
@@ -194,8 +198,8 @@
 
                             <p> <b>2</b> mutal friends</p>
                         </div>
-                       <a class="btn-confirm" href="#">Confirm</a>
-                       <a class="btn-delete" href="#">Delete</a>
+                       <a class="btn-confirm" href="#">Add Friend</a>
+                       <a class="btn-delete" href="#">Remove</a>
 
                     </div>
                 </div>
@@ -211,6 +215,27 @@
             alert('Request failed: ' + error);
         });
     </script>
+
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 8,
+            spaceBetween: 10,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            direction: 'horizontal', // Ensures horizontal sliding
+        });
+    </script>
+
+    <script src="./Assets/Swiper/swiper-bundle.min.js"></script>
+    <!-- Custom Js Link -->
+    <script src="./Assets/Script.js"></script>
 </body>
 
 </html>
