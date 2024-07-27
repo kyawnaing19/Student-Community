@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 public class FileController {
 
     private final Path fileStorageLocation = Paths.get("src/main/resources/static/profiles").toAbsolutePath().normalize();
+    private final Path imagesStorageLocation = Paths.get("src/main/resources/static/PostImages").toAbsolutePath().normalize();
 
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
@@ -36,5 +37,25 @@ public class FileController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/images/{imagesname:.+}")
+    public ResponseEntity<Resource> serveImages(@PathVariable String imagesname) {
+        try {
+            Path filePath = imagesStorageLocation.resolve(imagesname).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (resource.exists()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .header(HttpHeaders.CACHE_CONTROL, "public, max-age=3600")
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
 

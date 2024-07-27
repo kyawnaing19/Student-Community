@@ -2,13 +2,17 @@ package com.example.student_community.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CurrentTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "posts")
 public class Posts {
     @Id
@@ -20,9 +24,6 @@ public class Posts {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public int getUserId(){
-        return user.getId();
-    }
 
     @Column(name = "content")
     private String content;
@@ -36,6 +37,12 @@ public class Posts {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Images> images;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Likes> like;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comments> comments;
 
 
 }

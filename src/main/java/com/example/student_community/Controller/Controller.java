@@ -1,7 +1,9 @@
 package com.example.student_community.Controller;
 
+import com.example.student_community.Model.Comments;
 import com.example.student_community.Model.User;
 import com.example.student_community.Repository.UserRepository;
+import com.example.student_community.Services.CommentService;
 import com.example.student_community.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +17,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 public class Controller {
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 //    @Autowired
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
@@ -58,7 +63,12 @@ public class Controller {
     }
     //editBio
 
+    @GetMapping("/test")
+    public List<Comments> test() {
 
+            return commentService.getAllComments();
+
+    }
 
     //edit pf image
     private static final String UPLOAD_DIR = "\\src\\main\\resources\\static\\profiles"; // Replace with your desired upload directory
@@ -94,8 +104,6 @@ public class Controller {
         }
     }
     //edit pf image
-
-
 
     //post control
 

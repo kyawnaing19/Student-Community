@@ -121,7 +121,7 @@
                             </ul>
                         </div>
 
-                        <button type="submit">Post</button>
+                        <button id="postSubmit">Post</button>
                     </form>
                 </section>
                 <section class="audience">
@@ -1131,7 +1131,61 @@
 
 
 </script>
+<script>
+    document.getElementById('postSubmit').addEventListener('click', function(event) {
+        event.preventDefault();
 
+        var formData = new FormData();
+
+        let files=fileInput.files;
+
+        for (var i = 0; i < files.length; i++) {
+            formData.append('images', files[i]); // Note the use of 'images[]' to handle multiple files
+        }
+
+// Base data structure
+        const postRequest = {
+            user_id: id,
+            post: {
+                content: $('#caption').val(),
+                audience:  $('#privacytype').text()
+            },
+            images: []
+        };
+
+// Iterate over the files and add image URLs to the images array
+        for (var i = 0; i < files.length; i++) {
+            // Create a URL for each file (you may replace this with the actual URL if you are uploading files)
+            var imageName = files[i].name;
+            postRequest.images.push({ image_url: imageName });
+        }
+        formData.append("postRequest", JSON.stringify(postRequest));
+
+        $.ajax({
+            url: '/posts/createPost',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(response) {
+               document.getElementById("myModal").style.display="none";
+                containers.classList.remove("active");
+                removeActiveClassFromAll();
+                $('#caption').val('');
+                $('#activePublic').attr('class','active');
+                $('#privacytype').text('Public');
+                $('#iconPost').attr('class','fas fa-globe-asia')
+                imageContainer.innerHTML = ''; // Clear previous previews
+                fileInput.value = ''; // Clear the file input
+                alert('post successful: ' + response);
+            },
+            error: function(error) {
+                alert('post failed: ' + error.responseText);
+            }
+        });
+
+    });
+</script>
 
 </body>
 
