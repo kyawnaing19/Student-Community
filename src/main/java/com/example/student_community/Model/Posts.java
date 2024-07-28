@@ -24,6 +24,17 @@ public class Posts {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public String getUserName(){
+        return user.getName();
+    }
+
+    public String getEmail(){
+        return user.getEmail();
+    }
+
+    public String getProfile(){
+        return user.getProfile();
+    }
 
     @Column(name = "content")
     private String content;
@@ -43,6 +54,15 @@ public class Posts {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comments> comments;
+
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "parent_id")
+    private Posts parentId;
+
+    @OneToMany(mappedBy = "parentId", cascade = CascadeType.ALL)
+    private List<Posts> posts;
 
 
 }

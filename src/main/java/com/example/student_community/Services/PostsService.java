@@ -2,8 +2,11 @@ package com.example.student_community.Services;
 
 import com.example.student_community.Model.Images;
 import com.example.student_community.Model.Posts;
+import com.example.student_community.Model.User;
+import com.example.student_community.Repository.FriendRepository;
 import com.example.student_community.Repository.ImageRepository;
 import com.example.student_community.Repository.PostsRepository;
+import com.example.student_community.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -22,6 +27,11 @@ public class PostsService {
     private PostsRepository postsRepository;
     @Autowired
     private ImageRepository imageRepository;
+
+    @Autowired
+    private FriendRepository friendRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public Posts getPost(int id){
         return postsRepository.findById(id).get();
@@ -58,6 +68,31 @@ public class PostsService {
             System.out.println(absoluteUploadDir);
             Files.write(filePath, image.getBytes());
         }
+    }
+
+
+    //NEWFEED
+    public ResponseEntity<List<Posts>> getNewFeed(int id) {
+
+            List<String>audiences = Arrays.asList("Public", "Friends");
+
+        List<Integer> frilist=friendRepository.findFriendsOfUser(id);
+        List<User> users=new ArrayList<>();
+        List<Posts> posts=new ArrayList<>();
+        for (int a: frilist)
+        {
+            User u;
+            u=userRepository.findById(a).get();
+            users.add(u);
+        }
+
+        for(User usr:users){
+            List<Posts> p;
+            p=postsRepository.findByUserAndAudienceIn(usr, audiences);
+            posts.addAll(p);
+        }
+        return ResponseEntity.ok(posts);
+
     }
 
 }

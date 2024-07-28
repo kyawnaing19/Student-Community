@@ -52,7 +52,9 @@ public class PostsController {
         return postsService.createPostWithImages(posta, images);
     }
 
-
-
+    @GetMapping("/getNewFeeds")
+    public ResponseEntity<List<Posts>> getNewsFeeds(@RequestParam int id){
+        return postsService.getNewFeed(id);
+    }
 
 }
