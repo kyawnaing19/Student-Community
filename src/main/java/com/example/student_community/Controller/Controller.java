@@ -2,8 +2,10 @@ package com.example.student_community.Controller;
 
 import com.example.student_community.Model.Comments;
 import com.example.student_community.Model.User;
+import com.example.student_community.Repository.PostsRepository;
 import com.example.student_community.Repository.UserRepository;
 import com.example.student_community.Services.CommentService;
+import com.example.student_community.Services.PostsService;
 import com.example.student_community.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,11 @@ public class Controller {
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostsService postsService;
+    @Autowired
+    private PostsRepository postsRepository;
+
     @PostMapping("/createUser")
     public ResponseEntity createUser(@RequestBody User user) {
         return userService.createUser(user);
@@ -63,12 +70,13 @@ public class Controller {
     }
     //editBio
 
-    @GetMapping("/test")
-    public List<Comments> test() {
-
-            return commentService.getAllComments();
-
-    }
+//    @GetMapping("/test")
+//    public String test() {
+//
+//             postsRepository.deleteById(6);
+//             return "OK";
+//
+//    }
 
     //edit pf image
     private static final String UPLOAD_DIR = "\\src\\main\\resources\\static\\profiles"; // Replace with your desired upload directory

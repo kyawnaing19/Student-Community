@@ -988,20 +988,25 @@
 <!-- ----------------Swiper JS---------------------- -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
-    var swiper = new Swiper(".mySwiper1", {
-        slidesPerView: 6,
-        spaceBetween: 10,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        direction: 'horizontal', // Ensures horizontal sliding
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var mySwiper1 = new Swiper(".mySwiper1", {
+            slidesPerView: 6,
+            spaceBetween: 10,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            direction: 'horizontal', // Ensures horizontal sliding
+        });
     });
+
 </script>
+
 
 <script src="./Assets/Swiper/swiper-bundle.min.js"></script>
 <!-- Custom Js Link -->
@@ -1092,28 +1097,7 @@
 
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var mySwiper = new Swiper('.mySwiper', {
-            slidesPerView: 1,
-            spaceBetween: 10,
-            loop: true,
 
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            scrollbar: {
-                el: '.swiper-scrollbar',
-                hide: true,
-            },
-        });
-    });
-</script>
 <!--Post-->
 <script>
     const containers = document.querySelector(".containers"),
@@ -1255,6 +1239,7 @@
 
     });
 </script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
     var id=sessionStorage.getItem("id");
     $.get('/posts/getNewFeeds', { id: id }, function(response) {
@@ -1286,13 +1271,13 @@
                         </div>
                         <!------------------- Feed Img------------ -->
                        ${data.images.length > 1 ? `
-                <div class="swiper mySwiper">
+                <div class="swiper mySwiper2">
                     <div class="swiper-wrapper">
                         ${data.images.map(image => `
                             <div class="swiper-slide">
                                 <div class="feed-img">
                                     <h2>${data.content}</h2>
-                                    <img src="files/images/${image}" alt="">
+                                    <img src="files/images/${image.image_url}" alt="">
                                 </div>
                             </div>
                         `).join('')}
@@ -1308,7 +1293,7 @@
             ` : `
                 <div class="feed-img">
                     <h2>${data.content}</h2>
-                   ${data.images[0] != null ? `<img src="files/images/${data.images[0]}" alt="">` : ''}
+                   ${data.images[0] != null ? `<img src="files/images/${data.images[0].image_url}" alt="">` : ''}
                 </div>
             `}
 
@@ -1355,7 +1340,25 @@
 
                     </div>`;
                 //
-                 postsContainer.append(postDiv);
+                document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
+            });
+            var mySwiper2 = new Swiper('.mySwiper2', {
+                slidesPerView: 1,
+                spaceBetween: 10,
+                loop: true,
+
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true,
+                },
             });
             console.log("success");
         } else {

@@ -13,7 +13,7 @@ public class Images {
     private int id;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "post_id", nullable = false)
     private Posts post;

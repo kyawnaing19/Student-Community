@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface PostsRepository extends JpaRepository<Posts, Integer> {
 
-    @Query("SELECT p FROM Posts p WHERE p.user = :user AND p.audience IN :audiences")
+    @Query("SELECT p FROM Posts p WHERE p.user = :user AND p.audience IN :audiences order by p.id desc ")
     List<Posts> findByUserAndAudienceIn(@Param("user") User user, @Param("audiences") List<String> audiences);
 }
