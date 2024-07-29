@@ -64,13 +64,14 @@ public class LoginController {
     }
 
     @GetMapping("/profile")
-    public String profile(HttpSession session, Model model,@RequestParam(value = "otheremail", defaultValue = "") String otheremail) {
+    public String profile(HttpSession session, Model model,@RequestParam(value = "otheremail", defaultValue = "") String otheremail,@RequestParam(value = "othereid", defaultValue = "") String otherId) {
         String email = (String) session.getAttribute("email");
         if (email == null) {
             return "redirect:/login";
         }
         model.addAttribute("email", email);
         model.addAttribute("otheremail", otheremail);
+        model.addAttribute("otherid",otherId);
         return "profile";
     }
 

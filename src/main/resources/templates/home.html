@@ -1012,7 +1012,6 @@
 <!-- Custom Js Link -->
 <script src="./Assets/Script.js"></script>
 
-//validate session
 
 <script src="assests/js/jquery.min.js"></script>
 <script>
@@ -1248,6 +1247,25 @@
             postsContainer.empty();// Clear any existing content
             console.log(response);
             response.forEach(function(data) {
+                var boo;
+                if (Array.isArray(data.like) && data.like.length > 0) {
+                    boo = data.like.some(function (like) {
+                        console.log(like);
+                        if (like.usrId == id) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+
+                } else {
+                    boo = false;
+                }
+
+                console.log(boo);
+
+
+
 
                  var postDiv = `<div class="feed">
                         <!------------------- Feed Top------------ -->
@@ -1265,10 +1283,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <span class="edit">
-                                    <img src="./Assets/images/svg/three-dots.svg" alt="">
-                                </span>
+
                         </div>
+                          <h2>${data.content}</h2>
                         <!------------------- Feed Img------------ -->
                        ${data.images.length > 1 ? `
                 <div class="swiper mySwiper2">
@@ -1276,7 +1293,7 @@
                         ${data.images.map(image => `
                             <div class="swiper-slide">
                                 <div class="feed-img">
-                                    <h2>${data.content}</h2>
+
                                     <img src="files/images/${image.image_url}" alt="">
                                 </div>
                             </div>
@@ -1292,7 +1309,7 @@
                 </div>
             ` : `
                 <div class="feed-img">
-                    <h2>${data.content}</h2>
+
                    ${data.images[0] != null ? `<img src="files/images/${data.images[0].image_url}" alt="">` : ''}
                 </div>
             `}
@@ -1300,7 +1317,7 @@
                         <!------------------- Feed Action Aria------------ -->
                         <div class="action-button">
                             <div class="interaction-button">
-                                <span><i class="fa fa-heart"></i></span>
+                                <span><i class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
                                 <span><i class="fa fa-comment-dots"></i></span>
                                 <span><i class="fa fa-link"></i></span>
                             </div>

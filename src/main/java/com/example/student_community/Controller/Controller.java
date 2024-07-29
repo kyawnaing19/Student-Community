@@ -2,9 +2,11 @@ package com.example.student_community.Controller;
 
 import com.example.student_community.Model.Comments;
 import com.example.student_community.Model.User;
+import com.example.student_community.Repository.FriendRepository;
 import com.example.student_community.Repository.PostsRepository;
 import com.example.student_community.Repository.UserRepository;
 import com.example.student_community.Services.CommentService;
+import com.example.student_community.Services.FriendService;
 import com.example.student_community.Services.PostsService;
 import com.example.student_community.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,11 @@ public class Controller {
     private PostsService postsService;
     @Autowired
     private PostsRepository postsRepository;
+    @Autowired
+    private FriendRepository friendRepository;
+
+    @Autowired
+    private FriendService friendService;
 
     @PostMapping("/createUser")
     public ResponseEntity createUser(@RequestBody User user) {
@@ -70,13 +77,13 @@ public class Controller {
     }
     //editBio
 
-//    @GetMapping("/test")
-//    public String test() {
-//
-//             postsRepository.deleteById(6);
-//             return "OK";
-//
-//    }
+    @GetMapping("/test")
+    public boolean test() {
+
+        return   friendService.isFOF(7,6);
+
+
+    }
 
     //edit pf image
     private static final String UPLOAD_DIR = "\\src\\main\\resources\\static\\profiles"; // Replace with your desired upload directory

@@ -33,6 +33,7 @@ public class PostsService {
     @Autowired
     private UserRepository userRepository;
 
+
     public Posts getPost(int id){
         return postsRepository.findById(id).get();
     }
@@ -74,7 +75,7 @@ public class PostsService {
     //NEWFEED
     public ResponseEntity<List<Posts>> getNewFeed(int id) {
 
-            List<String>audiences = Arrays.asList("Public", "Friends");
+            List<String>audiences = Arrays.asList("Public", "Friends","FOFriends");
 
         List<Integer> frilist=friendRepository.findFriendsOfUser(id);
         List<User> users=new ArrayList<>();
@@ -94,5 +95,26 @@ public class PostsService {
         return ResponseEntity.ok(posts);
 
     }
+
+
+
+    //getMyWall
+    public ResponseEntity<List<Posts>> getMyWall(int id) {
+        User user=userRepository.findById(id).get();
+        List<Posts> posts= postsRepository.findMyWall(user);
+        return ResponseEntity.ok(posts);
+    }
+    //getMyWall
+
+
+
+    //if friend
+
+    //get other wall
+//    public ResponseEntity<List<Posts>> getOtherWall(int mid,int oid) {
+//
+//        return ResponseEntity.ok(posts);
+//    }
+    //get other wall
 
 }

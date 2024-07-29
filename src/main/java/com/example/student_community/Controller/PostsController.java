@@ -57,4 +57,19 @@ public class PostsController {
         return postsService.getNewFeed(id);
     }
 
+    @GetMapping("/getMyWall")
+    public ResponseEntity<List<Posts>> getMyWall(@RequestParam int id)
+    {
+        return  postsService.getMyWall(id);
+    }
+
+
+//    @GetMapping("/getOtherWall")
+//    public ResponseEntity<List<Posts>> getOtherWall(@RequestParam int id)
+//    {
+//        return  postsService.getOtherWall(id);
+//    }
+
+
+
 }

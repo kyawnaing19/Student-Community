@@ -16,6 +16,8 @@ public interface FriendRepository extends JpaRepository<Friends, Integer> {
     @Query("SELECT e FROM User e WHERE e.name LIKE %:keyword% AND e.id != :id")
     List<User> findByNameAndExclude(String keyword, int id);
 
+    Optional<Friends> findBySenderAndReceiverAndStatus(int sender,int receiver, String status);
+
    Optional<Friends> findBySenderAndReceiver(int sender, int receiver);
 
    List<Friends> findByReceiverAndStatus(int receiver, String status);

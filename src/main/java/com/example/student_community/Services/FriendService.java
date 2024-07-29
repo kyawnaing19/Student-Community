@@ -7,6 +7,7 @@ import com.example.student_community.Repository.FriendRepository;
 import com.example.student_community.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -137,5 +138,29 @@ public class FriendService {
         // Step 3: Fetch User objects for these IDs
         return userRepository.findAllById(friendsOfFriendsIds);
     }
+
+    //if friend
+    public boolean isFriend(int oid,int mid)
+    {
+        Optional<Friends> a=friendRepository.findBySenderAndReceiverAndStatus(oid, mid,"ACCEPTED");
+        Optional<Friends> b=friendRepository.findBySenderAndReceiverAndStatus(mid, oid,"ACCEPTED");
+        if(a.isPresent()) return true;
+        if(b.isPresent()) return  true;
+
+        return false;
+    }
+    //if friend
+
+    //fri of fri
+public boolean isFOF(int myId,int oId)
+{
+    List<Integer> fof=friendRepository.findFriendsOfFriend(oId,myId);
+    System.out.println(fof);
+
+ if(fof.contains(oId))
+     return true;
+    return false;
+}
+    //fri of fri
 
 }

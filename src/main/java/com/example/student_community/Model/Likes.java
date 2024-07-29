@@ -22,6 +22,11 @@ public class Likes {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public int getUsrId()
+    {
+        return user.getId();
+    }
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "post_id", nullable = false)
