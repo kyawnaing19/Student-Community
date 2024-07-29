@@ -59,6 +59,20 @@ img {
     border-radius: 50%;
     overflow: hidden;
 }
+.profile-picture12{
+    width:1rem;
+}
+
+.main-left .profile-picture12 img{
+    width:60px;
+    height: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+
+
 
 .profile-picture:hover{
     opacity: 0.75;
@@ -179,6 +193,10 @@ main{
     width: 100%;
     gap: 1rem;
     display: flex;
+}
+.profile-handle{
+    margin-left:40px;
+    margin-top:15px;
 }
 
 aside{
