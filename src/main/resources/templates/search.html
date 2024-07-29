@@ -8,8 +8,8 @@
     <!-- ------------------Custom Css link -->
     <link rel="stylesheet" href="./Assets/search.css">
     <!-- ----Font Awesome  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/all.min.css">
+
 
     <!-- -------Swiper Slider Link------ -->
 
@@ -182,6 +182,7 @@
 
     <script>
        var query = '[[${query}]]';
+       console.log(query);
        $('#search').val(query);
         document.getElementById('search').addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
@@ -216,7 +217,7 @@
                         buttonAction="cancelFunc";
 
                     var userDiv = `
-            <div class="user" id="user-${freindDTO.user.id}">
+            <div class="user" id="user-${freindDTO.user.id}" onclick="window.location.href='profile?otheremail=${freindDTO.user.email}&otherid=${freindDTO.user.id}'">
                 <img class="user-img" src="/files/${freindDTO.user.profile}" alt="User Image">
                 <div class="content">
                     <h4>${freindDTO.user.name}</h4>

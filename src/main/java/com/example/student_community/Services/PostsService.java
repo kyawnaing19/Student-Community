@@ -32,6 +32,8 @@ public class PostsService {
     private FriendRepository friendRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FriendService friendService;
 
 
     public Posts getPost(int id){
@@ -106,15 +108,28 @@ public class PostsService {
     }
     //getMyWall
 
-
-
-    //if friend
-
     //get other wall
-//    public ResponseEntity<List<Posts>> getOtherWall(int mid,int oid) {
-//
-//        return ResponseEntity.ok(posts);
-//    }
+    public ResponseEntity<List<Posts>> getOtherWall(int mid,int oid) {
+        List<String>audiences = new ArrayList<>();
+        List<Posts> posts=new ArrayList<>();
+ User user=userRepository.findById(oid).get();
+        if(friendService.isFriend(mid,oid))
+{
+    audiences.add("Public");
+    audiences.add("Friends");
+    audiences.add("FOFriends");
+    posts.addAll(postsRepository.findOtherWall(user,audiences));
+}else if(friendService.isFOF(mid,oid)){
+            audiences.add("Public");
+            audiences.add("FOFriends");
+            posts.addAll(postsRepository.findOtherWall(user,audiences));
+        }else{
+            audiences.add("Public");
+            posts.addAll(postsRepository.findOtherWall(user,audiences));
+
+        }
+        return ResponseEntity.ok(posts);
+    }
     //get other wall
 
 }

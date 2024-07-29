@@ -154,12 +154,15 @@ public class FriendService {
     //fri of fri
 public boolean isFOF(int myId,int oId)
 {
-    List<Integer> fof=friendRepository.findFriendsOfFriend(oId,myId);
-    System.out.println(fof);
+    List<Integer> friendsOfUser = friendRepository.findFriendsOfUser(myId);
 
- if(fof.contains(oId))
-     return true;
-    return false;
+    // Step 2: For each friend, find their friends and exclude the original user
+    List<Integer> friendsOfFriendsIds = friendsOfUser.stream()
+            .flatMap(friendId -> friendRepository.findFriendsOfFriend(friendId, myId).stream())
+            .distinct()
+            .toList();
+
+    return friendsOfFriendsIds.contains(oId);
 }
     //fri of fri
 

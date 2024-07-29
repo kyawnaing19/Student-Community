@@ -223,6 +223,7 @@ loading.....
 
 
     <!-- ----------------Swiper JS---------------------- -->
+    <script src="./assests/js/LikeComShr.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
@@ -291,11 +292,155 @@ loading.....
                 });
 
             });
+//get other wall
+            console.log("mY ID"+id);
+            console.log("OD"+otherid);
+            $.get('/posts/getOtherWall', { mid: id, oid:otherid }, function(response) {
 
-            lllllllllllllllllllllllllllll
-        }else {
+                if (Array.isArray(response)) {
+                    var postsContainer = $('#postsContainer');
+                    postsContainer.empty();// Clear any existing content
+                    console.log(response);
+                    response.forEach(function(data) {
+                        var boo;
+                        if (Array.isArray(data.like) && data.like.length > 0) {
+                            boo = data.like.some(function (like) {
+                                console.log(like);
+                                if (like.usrId == id) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            });
+
+                        } else {
+                            boo = false;
+                        }
+
+                        console.log(boo);
+
+
+
+
+                        var postDiv = `<div class="feed" style="background-color: white;margin-top: 10px;">
+                        <!------------------- Feed Top------------ -->
+
+                        <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.profile}" alt="">
+                                </div>
+
+                                <div class="info">
+                                    <h3>${data.userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                          <h2>${data.content}</h2>
+                        <!------------------- Feed Img------------ -->
+                       ${data.images.length > 1 ? `
+                <div class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                        ${data.images.map(image => `
+                            <div class="swiper-slide">
+                                <div class="feed-img">
+
+                                    <img src="files/images/${image.image_url}" alt="">
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Add Scrollbar -->
+                    <div class="swiper-scrollbar"></div>
+                </div>
+            ` : `
+                <div class="feed-img">
+
+                   ${data.images[0] != null ? `<img src="files/images/${data.images[0].image_url}" alt="">` : ''}
+                </div>
+            `}
+
+                        <!------------------- Feed Action Aria------------ -->
+                        <div class="action-button">
+                            <div class="interaction-button">
+                                <span><i class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
+                                <span><i class="fa fa-comment-dots"></i></span>
+                                <span><i class="fa fa-link"></i></span>
+                            </div>
+                            <div class="bookmark">
+                                <i class="fa fa-bookmark"></i>
+                            </div>
+                        </div>
+
+                        <!-- -----------------Liked by-------------- -->
+                        <div class="liked-by">
+                                <span>
+                                    <img src="./Assets/images/img/n2.png" alt="">
+                                </span>
+
+                            <span>
+                                    <img src="./Assets/images/img/n3.png" alt="">
+                                </span>
+
+                            <span>
+                                    <img src="./Assets/images/img/n4.png" alt="">
+                                </span>
+
+                            <p>liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
+                        </div>
+
+                        <!-- ----------Caption--------------- -->
+                        <div class="caption">
+                            <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
+                                <span class="hars-tag">#lifestyle</span>
+                            </p>
+                        </div>
+
+                        <!-- -------------Comments------------ -->
+                        <div class="comments text-gry">
+                            View all comments
+                        </div>
+
+                    </div>`;
+                        //
+                        document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
+                    });
+                    var mySwiper2 = new Swiper('.mySwiper2', {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                        loop: true,
+
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        scrollbar: {
+                            el: '.swiper-scrollbar',
+                            hide: true,
+                        },
+                    });
+                    console.log("success");
+                } else {
+                    console.log('Response is not an array:', response);
+                }
+            }).fail(function(xhr, status, error) {
+                alert('Request failed: ' );
+            });        }else {
             $(document).ready(function(){
-
+// get my wall
                 $.ajax({
                     url: '/userInfo/'+username+'', // Replace with your actual API endpoint
                     type: 'GET', // HTTP method
@@ -358,13 +503,13 @@ loading.....
                 });
 
                 //get My Wall
-                    var id=sessionStorage.getItem("id");
                     $.get('/posts/getMyWall', { id: id }, function(response) {
                     if (Array.isArray(response)) {
                     var postsContainer = $('#postsContainer');
                     postsContainer.empty();// Clear any existing content
                     console.log(response);
                     response.forEach(function(data) {
+
                     var boo;
                     if (Array.isArray(data.like) && data.like.length > 0) {
                     boo = data.like.some(function (like) {
@@ -435,7 +580,7 @@ loading.....
                         <!------------------- Feed Action Aria------------ -->
                         <div class="action-button">
                             <div class="interaction-button">
-                                <span><i class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
+                                <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
                                 <span><i class="fa fa-comment-dots"></i></span>
                                 <span><i class="fa fa-link"></i></span>
                             </div>

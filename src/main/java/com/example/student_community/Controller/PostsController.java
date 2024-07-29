@@ -22,8 +22,6 @@ public class PostsController {
     @Autowired
     private PostsService postsService;
     @Autowired
-    private UserRepository UserRepository;
-    @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/getPosts")
@@ -64,11 +62,11 @@ public class PostsController {
     }
 
 
-//    @GetMapping("/getOtherWall")
-//    public ResponseEntity<List<Posts>> getOtherWall(@RequestParam int id)
-//    {
-//        return  postsService.getOtherWall(id);
-//    }
+    @GetMapping("/getOtherWall")
+    public ResponseEntity<List<Posts>> getOtherWall(@RequestParam int mid,@RequestParam int oid)
+    {
+        return  postsService.getOtherWall(mid,oid);
+    }
 
 
 

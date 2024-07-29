@@ -77,13 +77,13 @@ public class Controller {
     }
     //editBio
 
-    @GetMapping("/test")
-    public boolean test() {
-
-        return   friendService.isFOF(7,6);
-
-
-    }
+//    @GetMapping("/test")
+//    public boolean test() {
+//
+//        return friendService.isFOF(8,4);
+//
+//
+//    }
 
     //edit pf image
     private static final String UPLOAD_DIR = "\\src\\main\\resources\\static\\profiles"; // Replace with your desired upload directory

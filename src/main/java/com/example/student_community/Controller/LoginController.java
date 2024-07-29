@@ -64,7 +64,7 @@ public class LoginController {
     }
 
     @GetMapping("/profile")
-    public String profile(HttpSession session, Model model,@RequestParam(value = "otheremail", defaultValue = "") String otheremail,@RequestParam(value = "othereid", defaultValue = "") String otherId) {
+    public String profile(HttpSession session, Model model,@RequestParam(value = "otheremail", defaultValue = "") String otheremail,@RequestParam(value = "otherid", defaultValue = "") String otherId) {
         String email = (String) session.getAttribute("email");
         if (email == null) {
             return "redirect:/login";
