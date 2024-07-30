@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .comment-container {
+            max-width: 600px;
+            height: 520px; /* Adjust height to make room for sticky comment box */
+            width: 100%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Enable scrolling */
+        }
+
+        .comment-box {
+            width: calc(100% - 40px);
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #e0e0e0;
+            box-sizing: border-box;
+            position: fixed; /* Make it sticky */
+            bottom: 20px; /* Space from the bottom */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .comment-box textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: none;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .comment-box button {
+            align-self: flex-end;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .comment-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .comments-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .comment-item {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            position: relative;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-item p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .comment-item button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 10px;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        .comment-item button:hover {
+            color: #0056b3;
+        }
+
+        .reply-box {
+            margin-top: 10px;
+            padding-left: 20px;
+            border-left: 2px solid #e0e0e0;
+            display: none;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .reply-box textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: none;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .reply-box button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #fff;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .reply-box button:hover {
+            background-color: #218838;
+        }
+
+        .reply-box .close-btn {
+            background-color: transparent;
+            color: #999;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .replies-list {
+            list-style: none;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .reply-item {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            background-color: #f1f1f1;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .reply-item p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="comment-container">
+        <ul id="commentsList" class="comments-list"></ul>
+    </div>
+    <div class="comment-box">
+        <textarea id="mainComment" rows="3" placeholder="Write a comment..."></textarea>
+        <button onclick="addComment()">Add Comment</button>
+    </div>
+
+    <script>
+        let commentsData = {};
+
+        function addComment(parentId = null) {
+            let aaa=document.querySelectorAll('.reply-box');
+            aaa.forEach(element => {
+    element.style.display = 'none';
+});
+            const commentText = parentId ? document.getElementById(`replyComment${parentId}`).value : document.getElementById('mainComment').value;
+            if (commentText.trim() === '') return;
+
+            const commentItem = document.createElement('li');
+            commentItem.className = parentId ? 'reply-item' : 'comment-item';
+            const uniqueId = Date.now();
+            commentsData[uniqueId] = parentId ? parentId : 'main';
+            commentItem.innerHTML = `
+                <p>${commentText}</p>
+                <button onclick="showReplyBox(${uniqueId})">Reply</button>
+                <div id="replyBox${uniqueId}" class="reply-box">
+                    <button class="close-btn" onclick="hideReplyBox(${uniqueId})">x</button>
+                    <textarea id="replyComment${uniqueId}" rows="2" placeholder="Write a reply..."></textarea>
+                    <button onclick="addComment(${uniqueId})">Add Reply</button>
+                </div>
+            `;
+
+            if (parentId) {
+                const parentMainId = getParentMainId(parentId);
+                const parentRepliesList = document.getElementById(`repliesList${parentMainId}`);
+                parentRepliesList.appendChild(commentItem);
+                document.getElementById(`replyComment${parentId}`).value = '';
+                hideReplyBox(parentId);
+                scrollToCommentBox();
+            } else {
+                commentItem.innerHTML += `<ul id="repliesList${uniqueId}" class="replies-list"></ul>`;
+                document.getElementById('commentsList').appendChild(commentItem);
+                document.getElementById('mainComment').value = '';
+                scrollToCommentBox();
+            }
+        }
+
+        function showReplyBox(commentId) {
+            console.log("reply clicked")
+            let aaa=document.querySelectorAll('.reply-box');
+            aaa.forEach(element => {
+    element.style.display = 'none';
+});
+            const replyBox = document.getElementById(`replyBox${commentId}`);
+            replyBox.style.display = 'block';
+            scrollToCommentBox();
+        }
+
+        function hideReplyBox(commentId) {
+            const replyBox = document.getElementById(`replyBox${commentId}`);
+            replyBox.style.display = 'none';
+        }
+
+        function scrollToCommentBox() {
+            const commentBox = document.querySelector('.comment-box');
+            commentBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        function getParentMainId(commentId) {
+            while (commentsData[commentId] !== 'main') {
+                commentId = commentsData[commentId];
+            }
+            return commentId;
+        }
+    </script>
+</body>
+</html>

@@ -64,7 +64,7 @@
 
             <!-- ...........Main Left Start......... -->
             <div class="main-left">
-                <div class="profile">
+                <div class="profile" id="pfAdjust" style="display: none">
 
                     <img src="." alt="Profile Picture"
                          style="border: 2px dashed purple" id="my-profile-picture1" class="profile-picture">
@@ -296,6 +296,7 @@ loading.....
             console.log("mY ID"+id);
             console.log("OD"+otherid);
             $.get('/posts/getOtherWall', { mid: id, oid:otherid }, function(response) {
+                $('#pfAdjust').css("margin-top", "10px");
 
                 if (Array.isArray(response)) {
                     var postsContainer = $('#postsContainer');
@@ -412,6 +413,7 @@ loading.....
 
                     </div>`;
                         //
+                        $('#pfAdjust').show();
                         document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
                     });
                     var mySwiper2 = new Swiper('.mySwiper2', {
@@ -620,6 +622,7 @@ loading.....
 
                     </div>`;
                     //
+                        $('#pfAdjust').show();
                     document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
                 });
                     var mySwiper2 = new Swiper('.mySwiper2', {

@@ -217,9 +217,9 @@
                         buttonAction="cancelFunc";
 
                     var userDiv = `
-            <div class="user" id="user-${freindDTO.user.id}" onclick="window.location.href='profile?otheremail=${freindDTO.user.email}&otherid=${freindDTO.user.id}'">
+            <div class="user" id="user-${freindDTO.user.id}" >
                 <img class="user-img" src="/files/${freindDTO.user.profile}" alt="User Image">
-                <div class="content">
+                <div class="content" onclick="window.location.href='profile?otheremail=${freindDTO.user.email}&otherid=${freindDTO.user.id}'">
                     <h4>${freindDTO.user.name}</h4>
                     <div class="liked-by">
                         <p><b>55</b> mutual friends</p>

@@ -186,6 +186,7 @@ nav .serch-bar input[type="search"]::placeholder{
     width: 100%;
     gap: 1rem;
     display: flex;
+
 }
 
 .main-left {
