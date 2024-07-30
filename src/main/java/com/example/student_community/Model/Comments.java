@@ -3,6 +3,8 @@ package com.example.student_community.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,8 @@ public class Comments {
     private Comments parentComment;
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Comments> replies;
 
     @Column(nullable = false)
@@ -40,4 +44,13 @@ public class Comments {
     @Column(nullable = true)
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Override
+    public String toString() {
+        return "Comments{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

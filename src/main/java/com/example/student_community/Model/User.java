@@ -1,14 +1,11 @@
 package com.example.student_community.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,11 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name ="user")
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
 
     @Column(nullable = false)
@@ -53,7 +48,6 @@ public class User {
     @Column(nullable = false)
     private String phone;
 
-
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime created_at;
@@ -62,17 +56,17 @@ public class User {
     private String bio;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Posts> posts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Likes> likes;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Comments> comments;
-
-
-
-
-
-
 }

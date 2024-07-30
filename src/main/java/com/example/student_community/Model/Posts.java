@@ -2,9 +2,7 @@ package com.example.student_community.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CurrentTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,14 +45,19 @@ public class Posts {
     private LocalDateTime created_at;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Images> images;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Likes> like;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Comments> comments;
-
 
     @ManyToOne
     @JsonIgnore
@@ -62,7 +65,17 @@ public class Posts {
     private Posts parentId;
 
     @OneToMany(mappedBy = "parentId", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Posts> posts;
 
-
+    @Override
+    public String toString() {
+        return "Posts{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", audience='" + audience + '\'' +
+                ", created_at=" + created_at +
+                '}';
+    }
 }

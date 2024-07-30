@@ -19,7 +19,6 @@ public class CommentService {
     public List<Comments> getComments(Integer postId) {
         Posts posts=postsRepository.findById(postId).get();
         System.out.println("This is post = "+posts);
-//        return commentsRepository.findComment(posts);
-        return null;
+        return commentsRepository.findComment(posts);
     }
 }
