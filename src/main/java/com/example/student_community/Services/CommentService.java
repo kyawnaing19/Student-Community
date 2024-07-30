@@ -27,7 +27,7 @@ public class CommentService {
         return commentsRepository.findComment(posts);
     }
 
-    public ResponseEntity createComment(int postId,int userId,int parentComId,String content) {
+    public Comments createComment(int postId,int userId,int parentComId,String content) {
         Posts posts=postsRepository.findById(postId).get();
         User users=userRepository.findById(userId).get();
         Comments comment=new Comments();
@@ -35,7 +35,8 @@ public class CommentService {
             comment.setContent(content);
             comment.setPost(posts);
             comment.setUser(users);
-            commentsRepository.save(comment);
+
+            return commentsRepository.save(comment);
         }
         else {
             comment.setContent(content);
@@ -43,8 +44,9 @@ public class CommentService {
             comment.setUser(users);
             Comments com=commentsRepository.findById(parentComId).get();
             comment.setParentComment(com);
-            commentsRepository.save(comment);
+            return commentsRepository.save(comment);
+
         }
-        return ResponseEntity.ok().build();
+
     }
 }

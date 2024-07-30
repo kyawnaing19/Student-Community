@@ -38,6 +38,7 @@ public class LoginController {
             model.addAttribute("message", "Login successful");
             session.setAttribute("email", user.getEmail());
             session.setAttribute("id", user.getId());
+            session.setAttribute("name",user.getName());
             return "redirect:/home";
         }
 
@@ -55,11 +56,13 @@ public class LoginController {
     public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("email");
         Integer id=(Integer) session.getAttribute("id");
+        String name=(String) session.getAttribute("name");
         if (email == null) {
             return "redirect:/login";
         }
         model.addAttribute("email", email);
         model.addAttribute("id", id);
+        model.addAttribute(("name"),name);
         return "home";
     }
 

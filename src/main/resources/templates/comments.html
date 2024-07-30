@@ -179,36 +179,39 @@
     </div>
     <div class="comment-box">
         <textarea id="mainComment" rows="3" placeholder="Write a comment..."></textarea>
-        <button onclick="addComment(null)">Add Comment</button>
+        <button onclick="addMainComment()">Add Comment</button>
     </div>
     <script src="../assests/js/jquery.min.js"></script>
     <script>
         let id=sessionStorage.getItem("id");
         let pId='[[${cid}]]';
+        let user=sessionStorage.getItem("username");
 
 
 
         let commentsData = {};
 
-        function addComment(parentId = null) {
+        function addComment(parentId = null,profilename,commentText) {
             let aaa=document.querySelectorAll('.reply-box');
             aaa.forEach(element => {
     element.style.display = 'none';
 });
-            const commentText = parentId ? document.getElementById(`replyComment${parentId}`).value : document.getElementById('mainComment').value;
-            if (commentText.trim() === '') return;
+            // const commentText = parentId ? document.getElementById(`replyComment${parentId}`).value : document.getElementById('mainComment').value;
+            // if (commentText.trim() === '') return;
 
             const commentItem = document.createElement('li');
             commentItem.className = parentId ? 'reply-item' : 'comment-item';
-            const uniqueId = Date.now();
+            const uniqueId = parentId;
             commentsData[uniqueId] = parentId ? parentId : 'main';
             commentItem.innerHTML = `
+                <h3>${name}</h3>
+                ${profilename ==null ? ``: `<h5>${profilename}</h5>`}
                 <p>${commentText}</p>
                 <button onclick="showReplyBox(${uniqueId})">Reply</button>
                 <div id="replyBox${uniqueId}" class="reply-box">
                     <button class="close-btn" onclick="hideReplyBox(${uniqueId})">x</button>
                     <textarea id="replyComment${uniqueId}" rows="2" placeholder="Write a reply..."></textarea>
-                    <button onclick="addComment(${uniqueId})">Add Reply</button>
+                    <button onclick="test(${uniqueId},pId,'${name}')">Add Reply</button>
                 </div>
             `;
 
@@ -263,6 +266,19 @@
             return commentId;
         }
 
+
+        function test(current,pid,username){
+            let content=document.getElementById("replyComment"+current).value;
+            $.get('/comments/addComment', { postId: pid, content:content, parentComId:current, userId:id }, function(response) {
+                console.log("user "+user);
+                addCommentInLoop(current,content,response.id,username,user);
+
+            }).fail(function(xhr, status, error) {
+                alert('Request failed: ' + error);
+            });
+        }
+
+
         $.get('/comments/getComments', { postId: pId }, function(response) {
             if (Array.isArray(response) && response.length>0 ) {
 
@@ -306,7 +322,7 @@
                 <div id="replyBox${cid}" class="reply-box">
                     <button class="close-btn" onclick="hideReplyBox(${cid})">x</button>
                     <textarea parentId="${cid}" id="replyComment${cid}" rows="2" placeholder="Write a reply..."></textarea>
-                    <button onclick="addComment(${cid})">Add Reply</button>
+                    <button onclick="test(${cid},pId,'${profilename}')">Add Reply</button>
                 </div>
             `;
 
@@ -339,6 +355,40 @@
             });
         }
 
+        function addMainComment(){
+            let cid;
+            let aaa=document.querySelectorAll('.reply-box');
+            aaa.forEach(element => {
+                element.style.display = 'none';
+            });
+            const commentText =  document.getElementById('mainComment').value;
+            if (commentText.trim() === '') return;
+            $.get('/comments/addComment', { postId: pId, content:commentText, parentComId:0, userId:id }, function(response) {
+                cid=response.id;
+                const commentItem = document.createElement('li');
+                commentItem.className = 'comment-item';
+                commentItem.innerHTML = `
+                <h3>${user}</h3>
+                <p>${commentText}</p>
+
+                <button onclick="showReplyBox(${cid})">Reply</button>
+                <div id="replyBox${cid}" class="reply-box">
+                    <button class="close-btn" onclick="hideReplyBox(${cid})">x</button>
+                    <textarea id="replyComment${cid}" rows="2" placeholder="Write a reply..."></textarea>
+                    <button onclick="test(${cid},pId,user)">Add Reply</button>
+                </div>
+            `;
+                commentItem.innerHTML += `<ul id="repliesList${cid}" class="replies-list"></ul>`;
+                document.getElementById('commentsList').appendChild(commentItem);
+                document.getElementById('mainComment').value = '';
+                scrollToCommentBox();
+
+            }).fail(function(xhr, status, error) {
+                alert('Request failed: ' + error);
+            });
+
+        }
+
         // data.forEach(item => {
         //     console.log('ID:', item.id);
         //     console.log('Content:', item.content);
@@ -348,6 +398,7 @@
         //         processReplies(item.replies);
         //     }
         // });
+
     </script>
 
 </body>
