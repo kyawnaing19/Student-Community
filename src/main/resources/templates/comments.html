@@ -183,6 +183,11 @@
     </div>
 
     <script>
+        let id=sessionStorage.getItem("id");
+        let pId='[[${cid}]]';
+
+        console.log(pId);
+
         let commentsData = {};
 
         function addComment(parentId = null) {
@@ -249,6 +254,19 @@
             }
             return commentId;
         }
+
+        $.get('/comments/getComments', { postId: pId }, function(response) {
+            if (Array.isArray(response)) {
+                console.log(response);
+            } else {
+                console.log('Response is not an array:', response);
+            }
+        }).fail(function(xhr, status, error) {
+            alert('Request failed: ' + error);
+        });
+
+
+
     </script>
 </body>
 </html>

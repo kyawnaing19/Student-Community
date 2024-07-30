@@ -21,7 +21,6 @@ public class Comments {
     @JoinColumn(name = "post_id", nullable = false)
     private Posts post;
 
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)

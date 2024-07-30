@@ -4,6 +4,7 @@ import com.example.student_community.DTO.PostRequest;
 import com.example.student_community.Model.Images;
 import com.example.student_community.Model.Posts;
 import com.example.student_community.Model.User;
+import com.example.student_community.Repository.PostsRepository;
 import com.example.student_community.Repository.UserRepository;
 import com.example.student_community.Services.PostsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +24,8 @@ public class PostsController {
     private PostsService postsService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostsRepository postsRepository;
 
     @GetMapping("/getPosts")
     public Posts getPosts(@RequestParam int id){
@@ -67,7 +70,5 @@ public class PostsController {
     {
         return  postsService.getOtherWall(mid,oid);
     }
-
-
 
 }

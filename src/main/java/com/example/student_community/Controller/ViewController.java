@@ -3,6 +3,7 @@ package com.example.student_community.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -36,6 +37,13 @@ public class ViewController {
     @GetMapping("/suggestions")
     public String suggestions() {
         return "suggestions";
+    }
+
+
+    @GetMapping("/comments/{postId}")
+   public  String comments(@PathVariable int postId,Model model){
+        model.addAttribute("cid",postId);
+        return "comments";
     }
 }
 
