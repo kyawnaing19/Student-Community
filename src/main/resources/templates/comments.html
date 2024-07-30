@@ -179,14 +179,14 @@
     </div>
     <div class="comment-box">
         <textarea id="mainComment" rows="3" placeholder="Write a comment..."></textarea>
-        <button onclick="addComment()">Add Comment</button>
+        <button onclick="addComment(null)">Add Comment</button>
     </div>
-
+    <script src="../assests/js/jquery.min.js"></script>
     <script>
         let id=sessionStorage.getItem("id");
         let pId='[[${cid}]]';
 
-        console.log(pId);
+
 
         let commentsData = {};
 
@@ -225,6 +225,14 @@
                 document.getElementById('mainComment').value = '';
                 scrollToCommentBox();
             }
+            // $.get('/comments/addComment', { userId: userId, postId:postId }, function(response) {
+            //
+            //     $('#LikeIcon-'+postId+'').attr('class','fa-brands fa-gratipay');
+            //     $('#Like-'+postId+'').attr('onclick','deleteLike('+userId+','+postId+')');
+            //
+            // }).fail(function(xhr, status, error) {
+            //     alert('Request failed: ' + error);
+            // });
         }
 
         function showReplyBox(commentId) {
@@ -256,8 +264,16 @@
         }
 
         $.get('/comments/getComments', { postId: pId }, function(response) {
-            if (Array.isArray(response)) {
-                console.log(response);
+            if (Array.isArray(response) && response.length>0 ) {
+
+                response.forEach(function(data){
+
+                        addCommentInLoop(null,data.content,data.id,null,data.username);
+                        processReplies(data.id,data.replies,data.username);
+
+
+
+                });
             } else {
                 console.log('Response is not an array:', response);
             }
@@ -267,6 +283,72 @@
 
 
 
+
+
+
+        function addCommentInLoop(parentId = null,comment,cid,username,profilename) {
+            let aaa=document.querySelectorAll('.reply-box');
+            aaa.forEach(element => {
+                element.style.display = 'none';
+            });
+            // const commentText = parentId ? document.getElementById(`replyComment${parentId}`).value : document.getElementById('mainComment').value;
+            // if (commentText.trim() === '') return;
+
+            const commentItem = document.createElement('li');
+            commentItem.className = parentId ? 'reply-item' : 'comment-item';
+
+            commentsData[cid] = parentId ? parentId : 'main';
+            commentItem.innerHTML = `
+                <h3>${profilename}</h3>
+                ${username ==null ? ``: `<h5>${username}</h5>`}
+                <p>${comment}</p>
+                <button onclick="showReplyBox(${cid})">Reply</button>
+                <div id="replyBox${cid}" class="reply-box">
+                    <button class="close-btn" onclick="hideReplyBox(${cid})">x</button>
+                    <textarea parentId="${cid}" id="replyComment${cid}" rows="2" placeholder="Write a reply..."></textarea>
+                    <button onclick="addComment(${cid})">Add Reply</button>
+                </div>
+            `;
+
+            if (parentId) {
+                const parentMainId = getParentMainId(parentId);
+                const parentRepliesList = document.getElementById(`repliesList${parentMainId}`);
+                parentRepliesList.appendChild(commentItem);
+                document.getElementById(`replyComment${parentId}`).value = '';
+                hideReplyBox(parentId);
+                scrollToCommentBox();
+            } else {
+                commentItem.innerHTML += `<ul id="repliesList${cid}" class="replies-list"></ul>`;
+                document.getElementById('commentsList').appendChild(commentItem);
+                document.getElementById('mainComment').value = '';
+                scrollToCommentBox();
+            }
+        }
+
+        function processReplies(id,data,username) {
+            console.log("iddd"+id);
+            console.log("aaa"+data);
+            data.forEach(reply => {
+                // console.log('ID:', reply.id);
+                addCommentInLoop(id,reply.content,reply.id,username,reply.username);
+                // console.log('CreatedAt:', reply.createdAt);
+
+                if (reply.replies && reply.replies.length > 0) {
+                    processReplies(reply.id, reply.replies,reply.username);
+                }
+            });
+        }
+
+        // data.forEach(item => {
+        //     console.log('ID:', item.id);
+        //     console.log('Content:', item.content);
+        //     console.log('CreatedAt:', item.createdAt);
+        //
+        //     if (item.replies && item.replies.length > 0) {
+        //         processReplies(item.replies);
+        //     }
+        // });
     </script>
+
 </body>
 </html>

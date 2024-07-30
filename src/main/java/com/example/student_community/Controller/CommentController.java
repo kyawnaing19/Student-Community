@@ -32,4 +32,10 @@ private CommentService commentService;
         return  ResponseEntity.ok(commentService.getComments(postId));
     }
 
+    @GetMapping("/addComment")
+    public ResponseEntity addComment(@RequestParam int postId, @RequestParam String content, @RequestParam int parentComId,@RequestParam int userId)
+    {
+        return  ResponseEntity.ok(commentService.createComment(postId,userId,parentComId,content));
+    }
+
 }

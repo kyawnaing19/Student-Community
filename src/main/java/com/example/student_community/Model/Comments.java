@@ -28,6 +28,10 @@ public class Comments {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public String getUsername(){
+        return user.getName();
+    }
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "parent_comment_id")
