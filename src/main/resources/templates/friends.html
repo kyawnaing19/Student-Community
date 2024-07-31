@@ -25,7 +25,7 @@
             </div>
             <div class="serch-bar">
                 <i class="fa fa-search"></i>
-                <input type="search" name="" id="" placeholder="Search For Creators">
+                <input type="search" name="" id="search" placeholder="Search For Creators">
             </div>
             <div class="add-post">
                 <label for="add-post" class="btn btn-primary">Add Post</label>
@@ -82,7 +82,7 @@
                         <h3>All Friends</h3>
                     </a>
 
-                    <a class="menu-item" href="suggestions.html">
+                    <a class="menu-item" href="suggestions">
                         <span>
                             <img src="./Assets/images/svg/add-friend-svgrepo-com (1).svg" alt="">
                         </span>
@@ -177,26 +177,16 @@
                 response.forEach(function(user) {
 
                     var userDiv = `
-                     <div class="middle-container" onclick="window.location.href='profile?otheremail=${user.email}'">
+                     <div class="middle-container" ">
                   <div class="friend-profile" style="">
                   <img src="/files/${user.profile}" style="">
                    </div>
                     <div class="card-content">
-                        <h4>${user.name}</h4>
+                       <div onclick="window.location.href='profile?otheremail=${user.email}&otherid=${user.id}'"> <h4>${user.name}</h4></div>
                          <!-- -----------------Liked by-------------- -->
-                         <div class="liked-by">
-                            <span>
-                                <img src="./Assets/images/img/n2.png" alt="">
-                            </span>
 
-                            <span>
-                                <img src="./Assets/images/img/n3.png" alt="">
-                            </span>
-
-                            <p> <b>2</b> mutal friends</p>
-                        </div>
-                       <a class="btn-confirm" href="#">Confirm</a>
-                       <a class="btn-delete" href="#">Delete</a>
+                       <a class="btn-confirm" id="btn-${user.id}" onclick="confirmFunc(${user.id})">Confirm</a>
+                       <a class="btn-delete" id="btn1-${user.id}" onclick="cancelFunc(${user.id})">Delete</a>
 
                     </div>
                 </div>
@@ -211,7 +201,57 @@
         }).fail(function(xhr, status, error) {
             alert('Request failed: ' + error);
         });
+
+        function cancelFunc(userId) {
+            $.ajax({
+                url: '/friend/deleteFriend', // your delete mapping URL
+                type: 'DELETE',
+                data: { sender: id, receiver: userId },
+                success: function(response) {
+                    $('#btn1-'+userId+'').text("Canceled");
+                    $('#btn1-'+userId+'').attr('onclick', '');
+                    $('#btn-'+userId+'').hide();
+                },
+                error: function(xhr, status, error) {
+                    alert('Request failed: ' + error);
+                }
+            });
+        }
+
+        function  confirmFunc(userId)
+        {
+            $.ajax({
+                url: '/friend/acceptFriend', // your delete mapping URL
+                type: 'POST',
+                data: { sender: userId, receiver: id },
+                success: function(response) {
+                    $('#btn-'+userId+'').text("Confirmed");
+                    $('#btn-'+userId+'').attr('onclick', '');
+                    $('#btn1-'+userId+'').hide();
+                },
+                error: function(xhr, status, error) {
+                    alert('Request failed: ' + error);
+                }
+            });
+        }
+
+
     </script>
+    <!--serch-->
+    <script>
+        document.getElementById('search').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default action (form submission)
+                // Perform your action here
+                const searchValue = event.target.value;
+                console.log('Search value:', searchValue);
+                // You can call a function or redirect to a search results page, for example
+                window.location.href = `/search?query=${searchValue}`;
+            }
+        });
+    </script>
+    <!--serch-->
+
 </body>
 
 </html>

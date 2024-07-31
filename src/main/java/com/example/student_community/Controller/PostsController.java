@@ -1,6 +1,7 @@
 package com.example.student_community.Controller;
 
 import com.example.student_community.DTO.PostRequest;
+import com.example.student_community.DTO.PostWithParentDTO;
 import com.example.student_community.Model.Images;
 import com.example.student_community.Model.Posts;
 import com.example.student_community.Model.User;
@@ -59,9 +60,9 @@ public class PostsController {
     }
 
     @GetMapping("/getMyWall")
-    public ResponseEntity<List<Posts>> getMyWall(@RequestParam int id)
+    public ResponseEntity<List<PostWithParentDTO>> getMyWall(@RequestParam int id)
     {
-        return  postsService.getMyWall(id);
+        return  ResponseEntity.ok(postsService.getAllPostsByUser(id));
     }
 
 

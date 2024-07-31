@@ -1,5 +1,6 @@
 package com.example.student_community.Services;
 
+import com.example.student_community.DTO.PostWithParentDTO;
 import com.example.student_community.Model.Images;
 import com.example.student_community.Model.Posts;
 import com.example.student_community.Model.User;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostsService {
@@ -101,11 +103,11 @@ public class PostsService {
 
 
     //getMyWall
-    public ResponseEntity<List<Posts>> getMyWall(int id) {
-        User user=userRepository.findById(id).get();
-        List<Posts> posts= postsRepository.findMyWall(user);
-        return ResponseEntity.ok(posts);
-    }
+//    public ResponseEntity<List<Posts>> getMyWall(int id) {
+//        User user=userRepository.findById(id).get();
+//        List<Posts> posts= postsRepository.findMyWall(user);
+//        return ResponseEntity.ok(posts);
+//    }
     //getMyWall
 
     //get other wall
@@ -131,6 +133,46 @@ public class PostsService {
         return ResponseEntity.ok(posts);
     }
     //get other wall
+
+
+
+
+
+    public List<PostWithParentDTO> getAllPostsByUser(int userId) {
+        List<Posts> userPosts = postsRepository.findAllPostsByUserId(userId);
+        return userPosts.stream().map(this::mapToPostWithParentDTO).collect(Collectors.toList());
+    }
+
+    private PostWithParentDTO mapToPostWithParentDTO(Posts post) {
+        PostWithParentDTO dto = new PostWithParentDTO();
+        dto.setId(post.getId());
+        dto.setContent(post.getContent());
+        dto.setAudience(post.getAudience());
+        dto.setCreatedAt(post.getCreated_at());
+        dto.setUserName(post.getUserName());
+        dto.setUserEmail(post.getEmail());
+        dto.setUserProfile(post.getProfile());
+        dto.setImages(post.getImages());
+        dto.setLikes(post.getLike());
+        dto.setComments(post.getComments());
+
+        if (post.getParentId() != null) {
+            PostWithParentDTO.ParentPostDTO parentPostDTO = new PostWithParentDTO.ParentPostDTO();
+            parentPostDTO.setId(post.getParentId().getId());
+            parentPostDTO.setContent(post.getParentId().getContent());
+            parentPostDTO.setAudience(post.getParentId().getAudience());
+            parentPostDTO.setCreatedAt(post.getParentId().getCreated_at());
+            parentPostDTO.setUserName(post.getParentId().getUserName());
+            parentPostDTO.setUserEmail(post.getParentId().getEmail());
+            parentPostDTO.setUserProfile(post.getParentId().getProfile());
+            parentPostDTO.setImages(post.getParentId().getImages());
+            parentPostDTO.setComments(post.getParentId().getComments());
+            dto.setParentPost(parentPostDTO);
+
+        }
+
+        return dto;
+    }
 
 
 

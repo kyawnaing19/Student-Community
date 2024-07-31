@@ -78,9 +78,12 @@ public class Controller {
     //editBio
 
 //    @GetMapping("/test")
-//    public boolean test() {
+//    public void test() {
 //
-//        return friendService.isFOF(8,4);
+//         postsRepository.deleteAll();
+////         userRepository.deleteAll();
+////         friendRepository.deleteAll();
+//
 //
 //
 //    }

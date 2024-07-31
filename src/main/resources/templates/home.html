@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navigateTo = (url, pushState = true) => {
@@ -42,6 +43,31 @@
 
     </script>
     <style>
+        .text-container {
+            width: 100%; /* Set the width of the container */
+            overflow: hidden; /* Hide overflow text */
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .text {
+            margin: 0; /* Remove default margin */
+        }
+
+        .see-more {
+            color: blue;
+            cursor: pointer;
+            display: none; /* Hide initially */
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background: white;
+        }
+
+
+
+
+
         #file-input {
             display: none;
         }
@@ -1289,9 +1315,9 @@
             console.log(response);
             response.forEach(function(data) {
                 var boo;
+                var boo2;
                 if (Array.isArray(data.like) && data.like.length > 0) {
                     boo = data.like.some(function (like) {
-                        console.log(like);
                         if (like.usrId == id) {
                             return true;
                         } else {
@@ -1303,12 +1329,49 @@
                     boo = false;
                 }
 
+
+
                 console.log(boo);
+                var postDiv;
+            if(data.posts.length>0){
+                if (Array.isArray(data.posts[0].like) && data.posts[0].like.length > 0) {
+                    console.log(data.posts[0].like);
+                    boo2 = data.posts[0].like.some(function (like) {
+                        if (like.usrId == id) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
 
+                } else {
+                    boo2 = false;
+                }
+                // SHAREeeeeeeeeeeeeeeeeee
+                console.log("it is share")
+                postDiv  = `<div class="feed">
 
+     <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.posts[0].profile}" alt="">
+                                </div>
 
+                                <div class="info">
+                                    <h3>${data.posts[0].userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
 
-                 var postDiv = `<div class="feed">
+                        </div>
+                          <div class="text-container">
+        <p class="text" id="text">${data.posts[0].content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+ <div class="feed" style="border: 1px solid black;">
                         <!------------------- Feed Top------------ -->
 
                         <div class="feed-top">
@@ -1326,7 +1389,80 @@
                             </div>
 
                         </div>
-                          <h2>${data.content}</h2>
+                          <div class="text-container">
+        <p class="text" id="text">${data.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+                        <!------------------- Feed Img------------ -->
+                       ${data.images.length > 1 ? `
+                <div class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                        ${data.images.map(image => `
+                            <div class="swiper-slide">
+                                <div class="feed-img">
+
+                                    <img src="files/images/${image.image_url}" alt="">
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Add Scrollbar -->
+                    <div class="swiper-scrollbar"></div>
+                </div>
+            ` : `
+                <div class="feed-img">
+
+                   ${data.images[0] != null ? `<img src="files/images/${data.images[0].image_url}" alt="">` : ''}
+                </div>
+            `}
+
+
+
+
+</div>
+
+    <div class="action-button">
+                            <div class="interaction-button">
+                                <span id="Like-${data.posts[0].id}" onclick="${boo2 === true ? `deleteLike(${id},${data.posts[0].id})` : `addLike(${id},${data.posts[0].id})`}"><i id="LikeIcon-${data.posts[0].id}" class="${boo2 === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
+                                <span id="likeCount">${data.posts[0].like.length}</span><a data-link href="comments/${data.posts[0].id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.posts[0].comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                            </div>
+                            <div class="bookmark">
+                                <i class="fa fa-bookmark"></i>
+                            </div>
+                        </div>
+                    </div>`;
+            }else{
+                postDiv = `<div class="feed">
+                        <!------------------- Feed Top------------ -->
+
+                        <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.profile}" alt="">
+                                </div>
+
+                                <div class="info">
+                                    <h3>${data.userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                      <div class="text-container">
+        <p class="text" id="text">${data.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+
                         <!------------------- Feed Img------------ -->
                        ${data.images.length > 1 ? `
                 <div class="swiper mySwiper2">
@@ -1375,6 +1511,10 @@
                         </div>
 
                     </div>`;
+            }
+
+                console.log(data);
+
                 //
                 document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
             });
@@ -1396,6 +1536,47 @@
                     hide: true,
                 },
             });
+            $(document).ready(function() {
+                $('.text-container').each(function() {
+                    var $container = $(this);
+                    var $textElement = $container.find('.text');
+                    var $seeMore = $container.find('.see-more');
+
+                    // Save the initial auto height
+                    var initialHeight = $container.height('auto').height();
+
+                    // Set the max height limit for containers
+                    var maxHeight = 100; // Change this to your desired maximum height
+
+                    function checkOverflow() {
+                        if ($textElement[0].scrollHeight >= maxHeight+10) {
+                            $container.css('height', maxHeight + 'px');
+                            $seeMore.show();
+                        } else {
+                            $container.css('height', initialHeight + 'px');
+                            $seeMore.hide();
+                        }
+                    }
+
+                    checkOverflow();
+
+                    $seeMore.on('click', function() {
+                        if ($(this).text() === 'See More') {
+                            $container.css('height', 'auto'); // Allow container to expand to fit content
+                            $(this).text('See Less');
+                        } else {
+                            $container.css('height', maxHeight + 'px'); // Restrict container height
+                            $(this).text('See More');
+                        }
+                    });
+                });
+            });
+
+
+
+
+
+
             console.log("success");
         } else {
             console.log('Response is not an array:', response);

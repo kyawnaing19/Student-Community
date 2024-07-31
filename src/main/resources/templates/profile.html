@@ -12,6 +12,27 @@
     <link rel="stylesheet" href="./Assets/postStyle.css">
     <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
     <style>
+        .text-container {
+            width: 100%; /* Set the width of the container */
+            overflow: hidden; /* Hide overflow text */
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .text {
+            margin: 0; /* Remove default margin */
+        }
+
+        .see-more {
+            color: blue;
+            cursor: pointer;
+            display: none; /* Hide initially */
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background: white;
+        }
+
         .hidden {
             display: none;
         }
@@ -29,7 +50,7 @@
             </div>
             <div class="serch-bar">
                 <i class="fa fa-search"></i>
-                <input type="search" name="" id="" placeholder="Search For Creators">
+                <input type="search" name="" id="search" placeholder="Search For Creators">
             </div>
             <div class="add-post">
 <!--                <label for="add-post" class="btn btn-primary">Add Post</label>-->
@@ -87,8 +108,7 @@
                         <div><i class="fas fa-venus-mars"></i> Gender:<p id="gender"></p> </div>
                         <div><i class="fas fa-phone"></i> Phone: <p id="ph"></p></div>
                         <div><i class="fas fa-map-marker-alt"></i>Lives in <p id="addrs"></p></div>
-                        <div><i class="fas fa-heart"></i> In a relationship with <b>&nbsp; Aye Aye Min San</b></div>
-                        <div><i class="fas fa-user-friends"></i> Followed by 1,500 people</div>
+
                     </div>
 
                 </div>
@@ -308,9 +328,9 @@ loading.....
                     console.log(response);
                     response.forEach(function(data) {
                         var boo;
+                        var boo2;
                         if (Array.isArray(data.like) && data.like.length > 0) {
                             boo = data.like.some(function (like) {
-                                console.log(like);
                                 if (like.usrId == id) {
                                     return true;
                                 } else {
@@ -319,16 +339,49 @@ loading.....
                             });
 
                         } else {
-
                             boo = false;
                         }
-
                         console.log(boo);
+                        var postDiv;
+                        if(data.posts.length>0){
+                            if (Array.isArray(data.posts[0].like) && data.posts[0].like.length > 0) {
+                                console.log(data.posts[0].like);
+                                boo2 = data.posts[0].like.some(function (like) {
+                                    if (like.usrId == id) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                });
 
+                            } else {
+                                boo2 = false;
+                            }
+                            // SHAREeeeeeeeeeeeeeeeeee
+                            console.log("it is share")
+                            postDiv  = `<div class="feed">
 
+     <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.posts[0].profile}" alt="">
+                                </div>
 
+                                <div class="info">
+                                    <h3>${data.posts[0].userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
 
-                        var postDiv = `<div class="feed" style="background-color: white;margin-top: 10px;">
+                        </div>
+                          <div class="text-container">
+        <p class="text" id="text">${data.posts[0].content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+ <div class="feed" style="border: 1px solid black;">
                         <!------------------- Feed Top------------ -->
 
                         <div class="feed-top">
@@ -346,7 +399,80 @@ loading.....
                             </div>
 
                         </div>
-                          <h2>${data.content}</h2>
+                          <div class="text-container">
+        <p class="text" id="text">${data.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+                        <!------------------- Feed Img------------ -->
+                       ${data.images.length > 1 ? `
+                <div class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                        ${data.images.map(image => `
+                            <div class="swiper-slide">
+                                <div class="feed-img">
+
+                                    <img src="files/images/${image.image_url}" alt="">
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Add Scrollbar -->
+                    <div class="swiper-scrollbar"></div>
+                </div>
+            ` : `
+                <div class="feed-img">
+
+                   ${data.images[0] != null ? `<img src="files/images/${data.images[0].image_url}" alt="">` : ''}
+                </div>
+            `}
+
+
+
+
+</div>
+
+    <div class="action-button">
+                            <div class="interaction-button">
+                                <span id="Like-${data.posts[0].id}" onclick="${boo2 === true ? `deleteLike(${id},${data.posts[0].id})` : `addLike(${id},${data.posts[0].id})`}"><i id="LikeIcon-${data.posts[0].id}" class="${boo2 === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
+                                <span id="likeCount">${data.posts[0].like.length}</span><a data-link href="comments/${data.posts[0].id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.posts[0].comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                            </div>
+                            <div class="bookmark">
+                                <i class="fa fa-bookmark"></i>
+                            </div>
+                        </div>
+                    </div>`;
+                        }else{
+                            postDiv = `<div class="feed">
+                        <!------------------- Feed Top------------ -->
+
+                        <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.profile}" alt="">
+                                </div>
+
+                                <div class="info">
+                                    <h3>${data.userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                      <div class="text-container">
+        <p class="text" id="text">${data.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+
                         <!------------------- Feed Img------------ -->
                        ${data.images.length > 1 ? `
                 <div class="swiper mySwiper2">
@@ -379,45 +505,24 @@ loading.....
                         <div class="action-button">
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
-                                <a href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                <span><i class="fa fa-link"></i></span>
+                                <span id="likeCount">${data.like.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
                             </div>
                         </div>
 
-                        <!-- -----------------Liked by-------------- -->
-                        <div class="liked-by">
-                                <span>
-                                    <img src="./Assets/images/img/n2.png" alt="">
-                                </span>
 
-                            <span>
-                                    <img src="./Assets/images/img/n3.png" alt="">
-                                </span>
-
-                            <span>
-                                    <img src="./Assets/images/img/n4.png" alt="">
-                                </span>
-
-                            <p>liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
-                        </div>
-
-                        <!-- ----------Caption--------------- -->
-                        <div class="caption">
-                            <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
-                                <span class="hars-tag">#lifestyle</span>
-                            </p>
-                        </div>
 
                         <!-- -------------Comments------------ -->
                         <div class="comments text-gry">
                             View all comments
                         </div>
 
-                    </div>`;
+                    </div>`;}
                         //
+
 
                         document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
                     });
@@ -439,6 +544,41 @@ loading.....
                             el: '.swiper-scrollbar',
                             hide: true,
                         },
+                    });
+                    $(document).ready(function() {
+                        $('.text-container').each(function() {
+                            var $container = $(this);
+                            var $textElement = $container.find('.text');
+                            var $seeMore = $container.find('.see-more');
+
+                            // Save the initial auto height
+                            var initialHeight = $container.height('auto').height();
+
+                            // Set the max height limit for containers
+                            var maxHeight = 100; // Change this to your desired maximum height
+
+                            function checkOverflow() {
+                                if ($textElement[0].scrollHeight >= maxHeight+10) {
+                                    $container.css('height', maxHeight + 'px');
+                                    $seeMore.show();
+                                } else {
+                                    $container.css('height', initialHeight + 'px');
+                                    $seeMore.hide();
+                                }
+                            }
+
+                            checkOverflow();
+
+                            $seeMore.on('click', function() {
+                                if ($(this).text() === 'See More') {
+                                    $container.css('height', 'auto'); // Allow container to expand to fit content
+                                    $(this).text('See Less');
+                                } else {
+                                    $container.css('height', maxHeight + 'px'); // Restrict container height
+                                    $(this).text('See More');
+                                }
+                            });
+                        });
                     });
                     $('#pfAdjust').show();
                     console.log("success");
@@ -528,27 +668,130 @@ loading.....
                     console.log(response);
                     response.forEach(function(data) {
 
-                    var boo;
-                    if (Array.isArray(data.like) && data.like.length > 0) {
-                    boo = data.like.some(function (like) {
-                    console.log(like);
-                    if (like.usrId == id) {
-                    return true;
-                } else {
-                    return false;
-                }
-                });
+                        var boo;
+                        var boo2;
+                        if (Array.isArray(data.likes) && data.likes.length > 0) {
+                            boo = data.likes.some(function (like) {
+                                if (like.usrId == id) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            });
 
-                } else {
-                    boo = false;
-                }
-
+                        } else {
+                            boo = false;
+                        }
                     console.log(boo);
+                        var postDiv;
+                        if(data.parentPost!=null){
+                            console.log("not null parent");
+                            if (Array.isArray(data.likes) && data.likes.length > 0) {
+                                boo2 = data.likes.some(function (like) {
+                                    if (like.usrId == id) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                });
+
+                            } else {
+                                boo2 = false;
+                            }
+                            // SHAREeeeeeeeeeeeeeeeeee
+                            console.log("it is share")
+                            postDiv  = `<div class="feed">
+
+     <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.profile}" alt="">
+                                </div>
+
+                                <div class="info">
+                                    <h3>${data.userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                          <div class="text-container">
+        <p class="text" id="text">${data.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+ <div class="feed" style="border: 1px solid black;">
+                        <!------------------- Feed Top------------ -->
+
+                        <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.parentPost.profile}" alt="">
+                                </div>
+
+                                <div class="info">
+                                    <h3>${data.parentPost.userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                          <div class="text-container">
+        <p class="text" id="text">${data.parentPost.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+
+                        <!------------------- Feed Img------------ -->
+                       ${data.parentPost.images.length > 1 ? `
+                <div class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                        ${data.parentPost.images.map(image => `
+                            <div class="swiper-slide">
+                                <div class="feed-img">
+
+                                    <img src="files/images/${image.image_url}" alt="">
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Add Scrollbar -->
+                    <div class="swiper-scrollbar"></div>
+                </div>
+            ` : `
+                <div class="feed-img">
+
+                   ${data.parentPost.images[0] != null ? `<img src="files/images/${data.parentPost.images[0].image_url}" alt="">` : ''}
+                </div>
+            `}
 
 
 
 
-                    var postDiv = `<div class="feed" style="background-color: white;margin-top: 10px;">
+</div>
+
+    <div class="action-button">
+                            <div class="interaction-button">
+                                <span id="Like-${data.parentPost.id}" onclick="${boo2 === true ? `deleteLike(${id},${data.parentPost.id})` : `addLike(${id},${data.parentPost.id})`}"><i id="LikeIcon-${data.parentPost.id}" class="${boo2 === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
+                                <span id="likeCount">${data.parentPost.length}</span><a data-link href="comments/${data.parentPost.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.parentPost.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                            </div>
+                            <div class="bookmark">
+                                <i class="fa fa-bookmark"></i>
+                            </div>
+                        </div>
+                    </div>`;
+                        }else{
+                            postDiv = `<div class="feed">
                         <!------------------- Feed Top------------ -->
 
                         <div class="feed-top">
@@ -566,7 +809,12 @@ loading.....
                             </div>
 
                         </div>
-                          <h2>${data.content}</h2>
+                      <div class="text-container">
+        <p class="text" id="text">${data.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+
                         <!------------------- Feed Img------------ -->
                        ${data.images.length > 1 ? `
                 <div class="swiper mySwiper2">
@@ -599,37 +847,15 @@ loading.....
                         <div class="action-button">
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
-                                <span><a href="comments/${data.id}"><i class="fa fa-comment-dots"></i></a></span>
-                                <span><i class="fa fa-link"></i></span>
+                                <span id="likeCount">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
                             </div>
                         </div>
 
-                        <!-- -----------------Liked by-------------- -->
-                        <div class="liked-by">
-                                <span>
-                                    <img src="./Assets/images/img/n2.png" alt="">
-                                </span>
 
-                            <span>
-                                    <img src="./Assets/images/img/n3.png" alt="">
-                                </span>
-
-                            <span>
-                                    <img src="./Assets/images/img/n4.png" alt="">
-                                </span>
-
-                            <p>liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
-                        </div>
-
-                        <!-- ----------Caption--------------- -->
-                        <div class="caption">
-                            <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
-                                <span class="hars-tag">#lifestyle</span>
-                            </p>
-                        </div>
 
                         <!-- -------------Comments------------ -->
                         <div class="comments text-gry">
@@ -637,7 +863,7 @@ loading.....
                         </div>
 
                     </div>`;
-                    //
+                        }
 
                     document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
                 });
@@ -660,6 +886,41 @@ loading.....
                 },
                 });
                     console.log("success");
+                        $(document).ready(function() {
+                            $('.text-container').each(function() {
+                                var $container = $(this);
+                                var $textElement = $container.find('.text');
+                                var $seeMore = $container.find('.see-more');
+
+                                // Save the initial auto height
+                                var initialHeight = $container.height('auto').height();
+
+                                // Set the max height limit for containers
+                                var maxHeight = 100; // Change this to your desired maximum height
+
+                                function checkOverflow() {
+                                    if ($textElement[0].scrollHeight >= maxHeight+10) {
+                                        $container.css('height', maxHeight + 'px');
+                                        $seeMore.show();
+                                    } else {
+                                        $container.css('height', initialHeight + 'px');
+                                        $seeMore.hide();
+                                    }
+                                }
+
+                                checkOverflow();
+
+                                $seeMore.on('click', function() {
+                                    if ($(this).text() === 'See More') {
+                                        $container.css('height', 'auto'); // Allow container to expand to fit content
+                                        $(this).text('See Less');
+                                    } else {
+                                        $container.css('height', maxHeight + 'px'); // Restrict container height
+                                        $(this).text('See More');
+                                    }
+                                });
+                            });
+                        });
                         $('#pfAdjust').show();
                 } else {
                     console.log('Response is not an array:', response);
@@ -749,6 +1010,20 @@ loading.....
             document.querySelector('.profile-popup').style.display = 'flex';
         }
     </script>
+<!--search-->
+    <script>
+        document.getElementById('search').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default action (form submission)
+                // Perform your action here
+                const searchValue = event.target.value;
+                console.log('Search value:', searchValue);
+                // You can call a function or redirect to a search results page, for example
+                window.location.href = `/search?query=${searchValue}`;
+            }
+        });
+    </script>
+    <!--search-->
     <script src="./Assets/Script.js"></script>
 
 
