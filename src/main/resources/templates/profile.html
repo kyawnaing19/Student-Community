@@ -296,9 +296,13 @@ loading.....
             console.log("mY ID"+id);
             console.log("OD"+otherid);
             $.get('/posts/getOtherWall', { mid: id, oid:otherid }, function(response) {
-                $('#pfAdjust').css("margin-top", "10px");
+                if(response.length>0)
+                    $('#pfAdjust').css("margin-top", "10px");
+                else
+                    $('#pfAdjust').css("margin-top", "100px");
 
                 if (Array.isArray(response)) {
+
                     var postsContainer = $('#postsContainer');
                     postsContainer.empty();// Clear any existing content
                     console.log(response);
@@ -315,6 +319,7 @@ loading.....
                             });
 
                         } else {
+
                             boo = false;
                         }
 
@@ -373,7 +378,7 @@ loading.....
                         <!------------------- Feed Action Aria------------ -->
                         <div class="action-button">
                             <div class="interaction-button">
-                                <span><i class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
+                                <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
                                 <a href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 <span><i class="fa fa-link"></i></span>
                             </div>
@@ -413,9 +418,10 @@ loading.....
 
                     </div>`;
                         //
-                        $('#pfAdjust').show();
+
                         document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
                     });
+
                     var mySwiper2 = new Swiper('.mySwiper2', {
                         slidesPerView: 1,
                         spaceBetween: 10,
@@ -434,13 +440,19 @@ loading.....
                             hide: true,
                         },
                     });
+                    $('#pfAdjust').show();
                     console.log("success");
                 } else {
                     console.log('Response is not an array:', response);
                 }
+
             }).fail(function(xhr, status, error) {
                 alert('Request failed: ' );
-            });        }else {
+            });
+
+
+
+        }else {
             $(document).ready(function(){
 // get my wall
                 $.ajax({
@@ -506,6 +518,10 @@ loading.....
 
                 //get My Wall
                     $.get('/posts/getMyWall', { id: id }, function(response) {
+                        if(response.length>0)
+                            $('#pfAdjust').css("margin-top", "10px");
+                        else
+                            $('#pfAdjust').css("margin-top", "100px");
                     if (Array.isArray(response)) {
                     var postsContainer = $('#postsContainer');
                     postsContainer.empty();// Clear any existing content
@@ -622,7 +638,7 @@ loading.....
 
                     </div>`;
                     //
-                        $('#pfAdjust').show();
+
                     document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
                 });
                     var mySwiper2 = new Swiper('.mySwiper2', {
@@ -644,6 +660,7 @@ loading.....
                 },
                 });
                     console.log("success");
+                        $('#pfAdjust').show();
                 } else {
                     console.log('Response is not an array:', response);
                 }

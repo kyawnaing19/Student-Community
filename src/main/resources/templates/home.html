@@ -2,7 +2,45 @@
 <html lang="en">
 
 <head>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navigateTo = (url, pushState = true) => {
+                if (pushState) {
+                    history.pushState(null, null, url);
+                }
+                loadPage(url);
+            };
 
+            const loadPage = url => {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        const parser = new DOMParser();
+                        const htmlDocument = parser.parseFromString(data, 'text/html');
+                        document.body.innerHTML = htmlDocument.body.innerHTML;
+                        bindNavigationLinks();
+                    })
+                    .catch(error => console.error('Error loading page:', error));
+            };
+
+            const bindNavigationLinks = () => {
+                document.querySelectorAll('a[data-link]').forEach(link => {
+                    link.addEventListener('click', event => {
+                        event.preventDefault();
+                        navigateTo(event.target.href);
+                    });
+                });
+            };
+
+            window.addEventListener('popstate', () => {
+                loadPage(window.location.pathname, false);
+            });
+
+            // Bind navigation links on initial load
+            bindNavigationLinks();
+        });
+
+    </script>
     <style>
         #file-input {
             display: none;
@@ -1100,6 +1138,7 @@
 
 
 <!--Post-->
+<script src="./assests/js/LikeComShr.js"></script>
 <script>
     const containers = document.querySelector(".containers"),
         privacy = containers.querySelector(".post .privacy"),
@@ -1319,38 +1358,16 @@
                         <!------------------- Feed Action Aria------------ -->
                         <div class="action-button">
                             <div class="interaction-button">
-                                <span><i class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
-                                <a href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                <span><i class="fa fa-link"></i></span>
+                                <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
+                                <span id="likeCount">${data.like.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
                             </div>
                         </div>
 
-                        <!-- -----------------Liked by-------------- -->
-                        <div class="liked-by">
-                                <span>
-                                    <img src="./Assets/images/img/n2.png" alt="">
-                                </span>
 
-                            <span>
-                                    <img src="./Assets/images/img/n3.png" alt="">
-                                </span>
-
-                            <span>
-                                    <img src="./Assets/images/img/n4.png" alt="">
-                                </span>
-
-                            <p>liked by <b>Syan Par Chan</b> and <b>77 comments other</b></p>
-                        </div>
-
-                        <!-- ----------Caption--------------- -->
-                        <div class="caption">
-                            <p><b>Chill </b>Lorem ipsum dolor sit amet, consectetur adipisicing.
-                                <span class="hars-tag">#lifestyle</span>
-                            </p>
-                        </div>
 
                         <!-- -------------Comments------------ -->
                         <div class="comments text-gry">

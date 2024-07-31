@@ -52,10 +52,7 @@ img {
     display: block;
     width: 100%;
 }
-.add-friend{
-    display: flex;
 
-}
 .add-friend-profile{
     border-radius: 50%;
     overflow: hidden;
