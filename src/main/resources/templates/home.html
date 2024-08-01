@@ -212,14 +212,62 @@
     <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.css">
     <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
 
+<style>
+    /* Modal container */
+    .apple {
+        display: none;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
 
+    /* Modal content */
+    .orange {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        border-radius: 10px;
+    }
+
+    /* Close button */
+    .grape {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .grape:hover,
+    .grape:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+</style>
 </head>
 
 <body>
 
 
 
-
+<div id="bananaModal" class="apple">
+    <div class="orange">
+        <span class="grape">&times;</span>
+        <video id="video" autoplay></video>
+        <button id="capture">Capture</button>
+        <canvas style="display: none;" id="canvas"></canvas>
+    </div>
+</div>
 <!-- Post-->
 
 <div class="containers modall" id="myModal">
@@ -258,7 +306,7 @@
                         <li id="file-icon">
                             <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
                             <img src="./Assets/icons/gallery.svg" alt="gallery"></li>
-                        <li><img src="./Assets/icons/tag.svg" alt="tag"></li>
+                        <li id="openBananaBtn"><img src="./Assets/icons/tag.svg" alt="tag"></li>
                         <li><img src="./Assets/icons/emoji.svg" alt="emoji"></li>
                         <li><img src="./Assets/icons/mic.svg" alt="mic"></li>
                         <li><img src="./Assets/icons/more.svg" alt="more"></li>
@@ -1121,7 +1169,6 @@
 
 
 <!-- ----------------Swiper JS---------------------- -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -1376,7 +1423,6 @@
 
     });
 </script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
     var id=sessionStorage.getItem("id");
     $.get('/posts/getNewFeeds', { id: id }, function(response) {
@@ -1672,6 +1718,104 @@
     }).fail(function(xhr, status, error) {
         alert('Request failed: ' + error);
     });
+
+
+
+    // Get modal element
+    const bananaModal = document.getElementById("bananaModal");
+
+    // Get open modal button
+    const openBananaBtn = document.getElementById("openBananaBtn");
+
+    // Get close button
+    const grape = document.getElementsByClassName("grape")[0];
+
+    // Listen for open click
+    openBananaBtn.addEventListener("click", () => {
+        bananaModal.style.display = "block";
+        const video = document.getElementById('video');
+
+        let stream;
+
+        // Request access to the front camera
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+            .then(mediaStream => {
+                stream = mediaStream;
+                // Set the video source to the stream
+                video.srcObject = stream;
+            })
+            .catch(error => {
+                console.error('Error accessing the camera', error);
+            });
+
+        // Capture the image
+        document.getElementById('capture').addEventListener('click', () => {
+            // Create a canvas element internally
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Draw the video frame onto the canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas content to a Data URL
+            const imageDataURL = canvas.toDataURL('image/png');
+
+            // Generate a timestamp for the file name
+            const timestamp = new Date().toISOString().replace(/[-:.]/g, '');
+            const fileName = `captured_image_${timestamp}.png`;
+
+            // Convert the Data URL to a blob
+            fetch(imageDataURL)
+                .then(res => res.blob())
+                .then(blob => {
+                    // Create a file from the blob with the timestamp in the name
+                    const file = new File([blob], fileName, { type: "image/png" });
+
+                    // Get the file input element
+                    const fileInput = document.getElementById('fileInput');
+
+                    // Create a DataTransfer object
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+
+                    // Set the file input element's files property to the new file list
+                    fileInput.files = dataTransfer.files;
+
+                    console.log(fileInput.files);
+
+                    // Display the image
+                    const newSlide = document.createElement('div');
+                    newSlide.classList.add('swiper-slide');
+                    const img = document.createElement('img');
+                    img.src = imageDataURL;
+                    newSlide.appendChild(img);
+                    imageContainer.appendChild(newSlide);
+                    bananaModal.style.display="none";
+                    // Stop the video stream
+                    stream.getTracks().forEach(track => track.stop());
+                })
+                .catch(error => {
+                    console.error('Error creating the file from blob', error);
+                });
+        });
+
+    });
+
+    // Listen for close click
+    grape.addEventListener("click", () => {
+        bananaModal.style.display = "none";
+    });
+
+    // Listen for outside click
+    window.addEventListener("click", (event) => {
+        if (event.target == bananaModal) {
+            bananaModal.style.display = "none";
+        }
+    });
+
+
 
 
 </script>
