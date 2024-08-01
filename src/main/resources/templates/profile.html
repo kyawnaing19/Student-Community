@@ -12,6 +12,74 @@
     <link rel="stylesheet" href="./Assets/postStyle.css">
     <link rel="stylesheet" href="./Assets/Swiper/swiper-bundle.min.css">
     <style>
+
+        .modalshare {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            animation: fadeIn 0.5s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            position: absolute;
+            bottom: 0;
+            transform: translateY(0%);
+            animation: slideUpToHalf 0.5s forwards;
+        }
+
+        .closeshare {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .closeshare:hover,
+        .closeshare:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            height: 40px;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideUpToHalf {
+            from {transform: translateY(100%);}
+            to {transform: translateY(-50%);}
+        }
+
         .text-container {
             width: 100%; /* Set the width of the container */
             overflow: hidden; /* Hide overflow text */
@@ -327,7 +395,22 @@ loading.....
                     postsContainer.empty();// Clear any existing content
                     console.log(response);
                     response.forEach(function(data) {
-
+                        var smodel=`<!--sharemodal-start-->
+<div id="shareModal${data.id}" class="modalshare">
+    <div class="modal-content">
+        <span id="span-${data.id}" class="closeshare">&times;</span>
+        <h2>Share Post</h2>
+        <textarea id="shareContent-${data.id}" placeholder="Add a comment..."></textarea>
+        <select id="shareAudience-${data.id}">
+            <option value="Public">Public</option>
+            <option value="Friends">Friends</option>
+            <option value="FOFriends">FOFriends</option>
+            <option value="Only Me">Only Me</option>
+        </select>
+        <button onclick="sharePost(${data.id})">Share</button>
+    </div></div>
+<!--sharemodal-end-->`;
+                        $('body').append(smodel);
                         var boo;
                         if (Array.isArray(data.likes) && data.likes.length > 0) {
                             boo = data.likes.some(function (like) {
@@ -360,7 +443,7 @@ loading.....
                             // SHAREeeeeeeeeeeeeeeeeee
                             console.log("it is share")
                             postDiv  = `<div class="feed">
-
+    <input type="hidden" id="op-${data.id}" value="${data.parentPost.id}" >
      <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
@@ -442,7 +525,7 @@ loading.....
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo === true ? `deleteLike(${id},${data.id})` : `addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
@@ -452,8 +535,9 @@ loading.....
                         }else{
                             postDiv = `<div class="feed">
                         <!------------------- Feed Top------------ -->
-
+                        <input type="hidden" id="op-${data.id}" value="${data.id}" >
                         <div class="feed-top">
+
                             <div class="user">
                                 <div class="profile-picture">
                                     <img src="files/${data.userProfile}" alt="">
@@ -507,7 +591,7 @@ loading.....
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
@@ -667,7 +751,22 @@ loading.....
                     postsContainer.empty();// Clear any existing content
                     console.log(response);
                     response.forEach(function(data) {
-
+                        var smodel=`<!--sharemodal-start-->
+<div id="shareModal${data.id}" class="modalshare">
+    <div class="modal-content">
+        <span id="span-${data.id}" class="closeshare">&times;</span>
+        <h2>Share Post</h2>
+        <textarea id="shareContent-${data.id}" placeholder="Add a comment..."></textarea>
+        <select id="shareAudience-${data.id}">
+            <option value="Public">Public</option>
+            <option value="Friends">Friends</option>
+            <option value="FOFriends">FOFriends</option>
+            <option value="Only Me">Only Me</option>
+        </select>
+        <button onclick="sharePost(${data.id})">Share</button>
+    </div></div>
+<!--sharemodal-end-->`;
+                        $('body').append(smodel);
                         var boo;
                         if (Array.isArray(data.likes) && data.likes.length > 0) {
                             boo = data.likes.some(function (like) {
@@ -700,6 +799,8 @@ loading.....
                             // SHAREeeeeeeeeeeeeeeeeee
                             console.log("it is share")
                             postDiv  = `<div class="feed">
+    <input type="hidden" id="op-${data.id}" value="${data.parentPost.id}" >
+
 
      <div class="feed-top">
                             <div class="user">
@@ -782,7 +883,7 @@ loading.....
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo === true ? `deleteLike(${id},${data.id})` : `addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
@@ -791,6 +892,8 @@ loading.....
                     </div>`;
                         }else{
                             postDiv = `<div class="feed">
+    <input type="hidden" id="op-${data.id}" value="${data.id}" >
+
                         <!------------------- Feed Top------------ -->
 
                         <div class="feed-top">
@@ -847,7 +950,7 @@ loading.....
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>

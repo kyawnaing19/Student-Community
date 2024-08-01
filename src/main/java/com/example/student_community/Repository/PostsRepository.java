@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface PostsRepository extends JpaRepository<Posts, Integer> {
 
-    @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user.id IN :friendIds AND p.audience IN :audiences")
+    @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user.id IN :friendIds AND p.audience IN :audiences order by p.id desc")
     List<Posts> findNewsFeedPosts(@Param("friendIds") List<Integer> friendIds, @Param("audiences") List<String> audiences);
 
     @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user.id = :userId order by  p.id desc")

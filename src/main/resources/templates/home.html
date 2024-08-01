@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
-
+    <script src="/assests/js/LikeComShr.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navigateTo = (url, pushState = true) => {
@@ -1391,13 +1391,14 @@
     <div class="modal-content">
         <span id="span-${data.id}" class="closeshare">&times;</span>
         <h2>Share Post</h2>
-        <textarea id="shareContent" placeholder="Add a comment..."></textarea>
-        <select id="shareAudience">
-            <option value="public">Public</option>
-            <option value="friends">Friends</option>
-            <option value="private">Only Me</option>
+        <textarea id="shareContent-${data.id}" placeholder="Add a comment..."></textarea>
+        <select id="shareAudience-${data.id}">
+            <option value="Public">Public</option>
+            <option value="Friends">Friends</option>
+            <option value="FOFriends">FOFriends</option>
+            <option value="Only Me">Only Me</option>
         </select>
-        <button id="shareSaveButton">Share</button>
+        <button onclick="sharePost(${data.id})">Share</button>
     </div></div>
 <!--sharemodal-end-->`;
                 $('body').append(smodel);
@@ -1436,6 +1437,7 @@
                     postDiv  = `<div class="feed">
 
      <div class="feed-top">
+     <input type="hidden" id="op-${data.id}" value="${data.parentPost.id}" >
                             <div class="user">
                                 <div class="profile-picture">
                                     <img src="files/${data.userProfile}" alt="">
@@ -1516,7 +1518,7 @@
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo === true ? `deleteLike(${id},${data.id})` : `addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
@@ -1525,6 +1527,8 @@
                     </div>`;
                 }else{
                     postDiv = `<div class="feed">
+     <input type="hidden" id="op-${data.id}" value="${data.id}" >
+
                         <!------------------- Feed Top------------ -->
 
                         <div class="feed-top">
@@ -1581,7 +1585,7 @@
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
@@ -1669,19 +1673,7 @@
         alert('Request failed: ' + error);
     });
 
-    function shModal(id){
-        var modal=document.getElementById('shareModal'+id);
-        var span=document.getElementById('span-'+id);
-        modal.style.display='block';
-        span.onclick = function() {
-            modal.style.display = "none";
-        };
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-    }
+
 </script>
 
 </body>

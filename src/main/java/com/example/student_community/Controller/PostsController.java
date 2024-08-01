@@ -58,6 +58,21 @@ public class PostsController {
         return postsService.createPostWithImages(posta, images);
     }
 
+    @GetMapping("/sharePost")
+    public ResponseEntity<String> sharePost(@RequestParam int uid,@RequestParam int pid,@RequestParam String aud,@RequestParam String content)
+    {
+        User user=userRepository.findById(uid).get();
+        Posts posts=postsRepository.findById(pid).get();
+        Posts p=new Posts();
+        p.setUser(user);
+        p.setParentId(posts);
+        p.setContent(content);
+        p.setAudience(aud);
+        postsRepository.save(p);
+        return ResponseEntity.ok().build();
+
+    }
+
     @GetMapping("/getNewFeeds")
     public ResponseEntity<List<PostWithParentDTO>> getNewsFeeds(@RequestParam int id){
         return ResponseEntity.ok(postsService.getNewsFeedPosts(id));

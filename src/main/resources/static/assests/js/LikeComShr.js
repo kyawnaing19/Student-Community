@@ -1,3 +1,5 @@
+let user_id=sessionStorage.getItem("id");
+
 function addLike(userId,postId){
     $.get('/likes/addLike', { userId: userId, postId:postId }, function(response) {
 
@@ -41,4 +43,45 @@ function deleteLike(userId, postId) {
             alert('Request failed: ' + error);
         }
     });
+}
+
+
+function shModal(id){
+    var modal=document.getElementById('shareModal'+id);
+    var span=document.getElementById('span-'+id);
+    modal.style.display='block';
+    span.onclick = function() {
+        modal.style.display = "none";
+    };
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+
+function sharePost(id){
+    let selectedValue='Public';
+    let parentId=document.getElementById('op-'+id+'').value;
+    let content=document.getElementById('shareContent-'+id+'').value;
+    // Example of using this in an event handler
+    $('shareAudience-'+id+'').change(function() {
+         selectedValue = $(this).val();
+        console.log(selectedValue);
+    });
+
+    $.get('/posts/sharePost', { uid:user_id , pid:parentId, aud: selectedValue, content:content }, function(response) {
+
+        alert("Shared Successfully")
+        if(sessionStorage.getItem("id")===user_id){
+            window.location.reload();
+        }
+
+    }).fail(function(xhr, status, error) {
+        alert('Request failed: ' + error);
+    });
+
+
+
 }
