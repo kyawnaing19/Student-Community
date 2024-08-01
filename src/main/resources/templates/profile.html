@@ -327,10 +327,10 @@ loading.....
                     postsContainer.empty();// Clear any existing content
                     console.log(response);
                     response.forEach(function(data) {
+
                         var boo;
-                        var boo2;
-                        if (Array.isArray(data.like) && data.like.length > 0) {
-                            boo = data.like.some(function (like) {
+                        if (Array.isArray(data.likes) && data.likes.length > 0) {
+                            boo = data.likes.some(function (like) {
                                 if (like.usrId == id) {
                                     return true;
                                 } else {
@@ -343,20 +343,20 @@ loading.....
                         }
                         console.log(boo);
                         var postDiv;
-                        if(data.posts.length>0){
-                            if (Array.isArray(data.posts[0].like) && data.posts[0].like.length > 0) {
-                                console.log(data.posts[0].like);
-                                boo2 = data.posts[0].like.some(function (like) {
-                                    if (like.usrId == id) {
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                });
-
-                            } else {
-                                boo2 = false;
-                            }
+                        if(data.parentPost!=null){
+                            // console.log("not null parent");
+                            // if (Array.isArray(data.likes) && data.likes.length > 0) {
+                            //     boo2 = data.likes.some(function (like) {
+                            //         if (like.usrId == id) {
+                            //             return true;
+                            //         } else {
+                            //             return false;
+                            //         }
+                            //     });
+                            //
+                            // } else {
+                            //     boo2 = false;
+                            // }
                             // SHAREeeeeeeeeeeeeeeeeee
                             console.log("it is share")
                             postDiv  = `<div class="feed">
@@ -364,30 +364,7 @@ loading.....
      <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.posts[0].profile}" alt="">
-                                </div>
-
-                                <div class="info">
-                                    <h3>${data.posts[0].userName}</h3>
-                                    <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                          <div class="text-container">
-        <p class="text" id="text">${data.posts[0].content}
-        </p>
-        <span class="see-more" id="seeMore">See More</span>
-    </div>
- <div class="feed" style="border: 1px solid black;">
-                        <!------------------- Feed Top------------ -->
-
-                        <div class="feed-top">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="files/${data.profile}" alt="">
+                                    <img src="files/${data.userProfile}" alt="">
                                 </div>
 
                                 <div class="info">
@@ -404,11 +381,35 @@ loading.....
         </p>
         <span class="see-more" id="seeMore">See More</span>
     </div>
+ <div class="feed" style="border: 1px solid black;">
+                        <!------------------- Feed Top------------ -->
+
+                        <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.parentPost.userProfile}" alt="">
+                                </div>
+
+                                <div class="info">
+                                    <h3>${data.parentPost.userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                          <div class="text-container">
+        <p class="text" id="text">${data.parentPost.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+
                         <!------------------- Feed Img------------ -->
-                       ${data.images.length > 1 ? `
+                       ${data.parentPost.images.length > 1 ? `
                 <div class="swiper mySwiper2">
                     <div class="swiper-wrapper">
-                        ${data.images.map(image => `
+                        ${data.parentPost.images.map(image => `
                             <div class="swiper-slide">
                                 <div class="feed-img">
 
@@ -428,7 +429,7 @@ loading.....
             ` : `
                 <div class="feed-img">
 
-                   ${data.images[0] != null ? `<img src="files/images/${data.images[0].image_url}" alt="">` : ''}
+                   ${data.parentPost.images[0] != null ? `<img src="files/images/${data.parentPost.images[0].image_url}" alt="">` : ''}
                 </div>
             `}
 
@@ -439,9 +440,9 @@ loading.....
 
     <div class="action-button">
                             <div class="interaction-button">
-                                <span id="Like-${data.posts[0].id}" onclick="${boo2 === true ? `deleteLike(${id},${data.posts[0].id})` : `addLike(${id},${data.posts[0].id})`}"><i id="LikeIcon-${data.posts[0].id}" class="${boo2 === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
-                                <span id="likeCount">${data.posts[0].like.length}</span><a data-link href="comments/${data.posts[0].id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.posts[0].comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                <span id="Like-${data.id}" onclick="${boo === true ? `deleteLike(${id},${data.id})` : `addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
+                                <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
@@ -455,7 +456,7 @@ loading.....
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.profile}" alt="">
+                                    <img src="files/${data.userProfile}" alt="">
                                 </div>
 
                                 <div class="info">
@@ -505,7 +506,7 @@ loading.....
                         <div class="action-button">
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
-                                <span id="likeCount">${data.like.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
@@ -520,9 +521,8 @@ loading.....
                             View all comments
                         </div>
 
-                    </div>`;}
-                        //
-
+                    </div>`;
+                        }
 
                         document.getElementById('postsContainer').insertAdjacentHTML('beforeend', postDiv);
                     });
@@ -669,7 +669,6 @@ loading.....
                     response.forEach(function(data) {
 
                         var boo;
-                        var boo2;
                         if (Array.isArray(data.likes) && data.likes.length > 0) {
                             boo = data.likes.some(function (like) {
                                 if (like.usrId == id) {
@@ -685,19 +684,19 @@ loading.....
                     console.log(boo);
                         var postDiv;
                         if(data.parentPost!=null){
-                            console.log("not null parent");
-                            if (Array.isArray(data.likes) && data.likes.length > 0) {
-                                boo2 = data.likes.some(function (like) {
-                                    if (like.usrId == id) {
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                });
-
-                            } else {
-                                boo2 = false;
-                            }
+                            // console.log("not null parent");
+                            // if (Array.isArray(data.likes) && data.likes.length > 0) {
+                            //     boo2 = data.likes.some(function (like) {
+                            //         if (like.usrId == id) {
+                            //             return true;
+                            //         } else {
+                            //             return false;
+                            //         }
+                            //     });
+                            //
+                            // } else {
+                            //     boo2 = false;
+                            // }
                             // SHAREeeeeeeeeeeeeeeeeee
                             console.log("it is share")
                             postDiv  = `<div class="feed">
@@ -705,7 +704,7 @@ loading.....
      <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.profile}" alt="">
+                                    <img src="files/${data.userProfile}" alt="">
                                 </div>
 
                                 <div class="info">
@@ -728,7 +727,7 @@ loading.....
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.parentPost.profile}" alt="">
+                                    <img src="files/${data.parentPost.userProfile}" alt="">
                                 </div>
 
                                 <div class="info">
@@ -781,9 +780,9 @@ loading.....
 
     <div class="action-button">
                             <div class="interaction-button">
-                                <span id="Like-${data.parentPost.id}" onclick="${boo2 === true ? `deleteLike(${id},${data.parentPost.id})` : `addLike(${id},${data.parentPost.id})`}"><i id="LikeIcon-${data.parentPost.id}" class="${boo2 === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
-                                <span id="likeCount">${data.parentPost.length}</span><a data-link href="comments/${data.parentPost.id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.parentPost.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                <span id="Like-${data.id}" onclick="${boo === true ? `deleteLike(${id},${data.id})` : `addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
+                                <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
@@ -797,7 +796,7 @@ loading.....
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.profile}" alt="">
+                                    <img src="files/${data.userProfile}" alt="">
                                 </div>
 
                                 <div class="info">
@@ -847,7 +846,7 @@ loading.....
                         <div class="action-button">
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
-                                <span id="likeCount">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">

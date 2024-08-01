@@ -34,6 +34,7 @@ public class PostWithParentDTO {
         private String userProfile;
         private List<Images> images;
         private List<Comments> comments;
+        private List<Likes> likes;
 
         // Getters and Setters
     }

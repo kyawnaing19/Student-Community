@@ -7,6 +7,7 @@ import com.example.student_community.Model.Posts;
 import com.example.student_community.Model.User;
 import com.example.student_community.Repository.PostsRepository;
 import com.example.student_community.Repository.UserRepository;
+import com.example.student_community.Services.FriendService;
 import com.example.student_community.Services.PostsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,8 @@ public class PostsController {
     private UserRepository userRepository;
     @Autowired
     private PostsRepository postsRepository;
+    @Autowired
+    private FriendService friendService;
 
     @GetMapping("/getPosts")
     public Posts getPosts(@RequestParam int id){
@@ -55,8 +59,8 @@ public class PostsController {
     }
 
     @GetMapping("/getNewFeeds")
-    public ResponseEntity<List<Posts>> getNewsFeeds(@RequestParam int id){
-        return postsService.getNewFeed(id);
+    public ResponseEntity<List<PostWithParentDTO>> getNewsFeeds(@RequestParam int id){
+        return ResponseEntity.ok(postsService.getNewsFeedPosts(id));
     }
 
     @GetMapping("/getMyWall")
@@ -67,9 +71,23 @@ public class PostsController {
 
 
     @GetMapping("/getOtherWall")
-    public ResponseEntity<List<Posts>> getOtherWall(@RequestParam int mid,@RequestParam int oid)
-    {
-        return  postsService.getOtherWall(mid,oid);
+    public ResponseEntity<List<PostWithParentDTO>> getOtherWall(@RequestParam int mid, @RequestParam int oid) {
+        List<String> audiences = new ArrayList<>();
+        User user = userRepository.findById(oid).orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (friendService.isFriend(mid, oid)) {
+            audiences.add("Public");
+            audiences.add("Friends");
+            audiences.add("FOFriends");
+        } else if (friendService.isFOF(mid, oid)) {
+            audiences.add("Public");
+            audiences.add("FOFriends");
+        } else {
+            audiences.add("Public");
+        }
+
+        List<PostWithParentDTO> posts = postsService.getOtherWallPosts(mid, oid, user, audiences);
+        return ResponseEntity.ok(posts);
     }
 
 }

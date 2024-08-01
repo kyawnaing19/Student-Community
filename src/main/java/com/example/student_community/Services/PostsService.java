@@ -77,27 +77,15 @@ public class PostsService {
 
 
     //NEWFEED
-    public ResponseEntity<List<Posts>> getNewFeed(int id) {
+    public List<PostWithParentDTO> getNewsFeedPosts(int userId) {
+        List<Integer> friendIds = friendRepository.findFriendsOfUser(userId);
+        List<String> audiences = new ArrayList<>();
+        audiences.add("Public");
+        audiences.add("Friends");
+        audiences.add("FOFriends");
 
-            List<String>audiences = Arrays.asList("Public", "Friends","FOFriends");
-
-        List<Integer> frilist=friendRepository.findFriendsOfUser(id);
-        List<User> users=new ArrayList<>();
-        List<Posts> posts=new ArrayList<>();
-        for (int a: frilist)
-        {
-            User u;
-            u=userRepository.findById(a).get();
-            users.add(u);
-        }
-
-        for(User usr:users){
-            List<Posts> p;
-            p=postsRepository.findByUserAndAudienceIn(usr, audiences);
-            posts.addAll(p);
-        }
-        return ResponseEntity.ok(posts);
-
+        List<Posts> posts = postsRepository.findNewsFeedPosts(friendIds, audiences);
+        return posts.stream().map(this::mapToPostWithParentDTO).collect(Collectors.toList());
     }
 
 
@@ -111,26 +99,9 @@ public class PostsService {
     //getMyWall
 
     //get other wall
-    public ResponseEntity<List<Posts>> getOtherWall(int mid,int oid) {
-        List<String>audiences = new ArrayList<>();
-        List<Posts> posts=new ArrayList<>();
- User user=userRepository.findById(oid).get();
-        if(friendService.isFriend(mid,oid))
-{
-    audiences.add("Public");
-    audiences.add("Friends");
-    audiences.add("FOFriends");
-    posts.addAll(postsRepository.findOtherWall(user,audiences));
-}else if(friendService.isFOF(mid,oid)){
-            audiences.add("Public");
-            audiences.add("FOFriends");
-            posts.addAll(postsRepository.findOtherWall(user,audiences));
-        }else{
-            audiences.add("Public");
-            posts.addAll(postsRepository.findOtherWall(user,audiences));
-
-        }
-        return ResponseEntity.ok(posts);
+    public List<PostWithParentDTO> getOtherWallPosts(int mid, int oid, User user, List<String> audiences) {
+        List<Posts> userPosts = postsRepository.findOtherWall(user, audiences);
+        return userPosts.stream().map(this::mapToPostWithParentDTO).collect(Collectors.toList());
     }
     //get other wall
 
@@ -167,6 +138,7 @@ public class PostsService {
             parentPostDTO.setUserProfile(post.getParentId().getProfile());
             parentPostDTO.setImages(post.getParentId().getImages());
             parentPostDTO.setComments(post.getParentId().getComments());
+           parentPostDTO.setLikes(post.getParentId().getLike());
             dto.setParentPost(parentPostDTO);
 
         }

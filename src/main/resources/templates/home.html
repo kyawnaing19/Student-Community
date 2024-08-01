@@ -132,6 +132,74 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /*//forshare*/
+        .modalshare {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            animation: fadeIn 0.5s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            position: absolute;
+            bottom: 0;
+            transform: translateY(0%);
+            animation: slideUpToHalf 0.5s forwards;
+        }
+
+        .closeshare {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .closeshare:hover,
+        .closeshare:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            height: 40px;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideUpToHalf {
+            from {transform: translateY(100%);}
+            to {transform: translateY(-50%);}
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,8 +216,11 @@
 </head>
 
 <body>
-<!-- Post-->
 
+
+
+
+<!-- Post-->
 
 <div class="containers modall" id="myModal">
     <span class="closee">&times;</span>
@@ -1314,10 +1385,26 @@
             postsContainer.empty();// Clear any existing content
             console.log(response);
             response.forEach(function(data) {
+
+                var smodel=`<!--sharemodal-start-->
+<div id="shareModal${data.id}" class="modalshare">
+    <div class="modal-content">
+        <span id="span-${data.id}" class="closeshare">&times;</span>
+        <h2>Share Post</h2>
+        <textarea id="shareContent" placeholder="Add a comment..."></textarea>
+        <select id="shareAudience">
+            <option value="public">Public</option>
+            <option value="friends">Friends</option>
+            <option value="private">Only Me</option>
+        </select>
+        <button id="shareSaveButton">Share</button>
+    </div></div>
+<!--sharemodal-end-->`;
+                $('body').append(smodel);
+
                 var boo;
-                var boo2;
-                if (Array.isArray(data.like) && data.like.length > 0) {
-                    boo = data.like.some(function (like) {
+                if (Array.isArray(data.likes) && data.likes.length > 0) {
+                    boo = data.likes.some(function (like) {
                         if (like.usrId == id) {
                             return true;
                         } else {
@@ -1328,56 +1415,30 @@
                 } else {
                     boo = false;
                 }
-
-
-
                 console.log(boo);
                 var postDiv;
-            if(data.posts.length>0){
-                if (Array.isArray(data.posts[0].like) && data.posts[0].like.length > 0) {
-                    console.log(data.posts[0].like);
-                    boo2 = data.posts[0].like.some(function (like) {
-                        if (like.usrId == id) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
-
-                } else {
-                    boo2 = false;
-                }
-                // SHAREeeeeeeeeeeeeeeeeee
-                console.log("it is share")
-                postDiv  = `<div class="feed">
+                if(data.parentPost!=null){
+                    // console.log("not null parent");
+                    // if (Array.isArray(data.likes) && data.likes.length > 0) {
+                    //     boo2 = data.likes.some(function (like) {
+                    //         if (like.usrId == id) {
+                    //             return true;
+                    //         } else {
+                    //             return false;
+                    //         }
+                    //     });
+                    //
+                    // } else {
+                    //     boo2 = false;
+                    // }
+                    // SHAREeeeeeeeeeeeeeeeeee
+                    console.log("it is share")
+                    postDiv  = `<div class="feed">
 
      <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.posts[0].profile}" alt="">
-                                </div>
-
-                                <div class="info">
-                                    <h3>${data.posts[0].userName}</h3>
-                                    <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                          <div class="text-container">
-        <p class="text" id="text">${data.posts[0].content}
-        </p>
-        <span class="see-more" id="seeMore">See More</span>
-    </div>
- <div class="feed" style="border: 1px solid black;">
-                        <!------------------- Feed Top------------ -->
-
-                        <div class="feed-top">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="files/${data.profile}" alt="">
+                                    <img src="files/${data.userProfile}" alt="">
                                 </div>
 
                                 <div class="info">
@@ -1394,11 +1455,35 @@
         </p>
         <span class="see-more" id="seeMore">See More</span>
     </div>
+ <div class="feed" style="border: 1px solid black;">
+                        <!------------------- Feed Top------------ -->
+
+                        <div class="feed-top">
+                            <div class="user">
+                                <div class="profile-picture">
+                                    <img src="files/${data.parentPost.userProfile}" alt="">
+                                </div>
+
+                                <div class="info">
+                                    <h3>${data.parentPost.userName}</h3>
+                                    <div class="time text-gry">
+                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                          <div class="text-container">
+        <p class="text" id="text">${data.parentPost.content}
+        </p>
+        <span class="see-more" id="seeMore">See More</span>
+    </div>
+
                         <!------------------- Feed Img------------ -->
-                       ${data.images.length > 1 ? `
+                       ${data.parentPost.images.length > 1 ? `
                 <div class="swiper mySwiper2">
                     <div class="swiper-wrapper">
-                        ${data.images.map(image => `
+                        ${data.parentPost.images.map(image => `
                             <div class="swiper-slide">
                                 <div class="feed-img">
 
@@ -1418,7 +1503,7 @@
             ` : `
                 <div class="feed-img">
 
-                   ${data.images[0] != null ? `<img src="files/images/${data.images[0].image_url}" alt="">` : ''}
+                   ${data.parentPost.images[0] != null ? `<img src="files/images/${data.parentPost.images[0].image_url}" alt="">` : ''}
                 </div>
             `}
 
@@ -1429,23 +1514,23 @@
 
     <div class="action-button">
                             <div class="interaction-button">
-                                <span id="Like-${data.posts[0].id}" onclick="${boo2 === true ? `deleteLike(${id},${data.posts[0].id})` : `addLike(${id},${data.posts[0].id})`}"><i id="LikeIcon-${data.posts[0].id}" class="${boo2 === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
-                                <span id="likeCount">${data.posts[0].like.length}</span><a data-link href="comments/${data.posts[0].id}"><span><i class="fa fa-comment-dots"></i></span></a>
-                                ${data.posts[0].comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
+                                <span id="Like-${data.id}" onclick="${boo === true ? `deleteLike(${id},${data.id})` : `addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo === true ? `fa-brands fa-gratipay` : `fa fa-heart`}"></i></span>
+                                <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
                                 <i class="fa fa-bookmark"></i>
                             </div>
                         </div>
                     </div>`;
-            }else{
-                postDiv = `<div class="feed">
+                }else{
+                    postDiv = `<div class="feed">
                         <!------------------- Feed Top------------ -->
 
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.profile}" alt="">
+                                    <img src="files/${data.userProfile}" alt="">
                                 </div>
 
                                 <div class="info">
@@ -1495,7 +1580,7 @@
                         <div class="action-button">
                             <div class="interaction-button">
                                 <span id="Like-${data.id}" onclick="${boo===true ? `deleteLike(${id},${data.id})`:`addLike(${id},${data.id})`}"><i id="LikeIcon-${data.id}" class="${boo===true ? `fa-brands fa-gratipay`:`fa fa-heart`}"></i></span>
-                                <span id="likeCount">${data.like.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
+                                <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span><i class="fa fa-link"></i></span>
                             </div>
                             <div class="bookmark">
@@ -1511,8 +1596,7 @@
                         </div>
 
                     </div>`;
-            }
-
+                }
                 console.log(data);
 
                 //
@@ -1584,6 +1668,20 @@
     }).fail(function(xhr, status, error) {
         alert('Request failed: ' + error);
     });
+
+    function shModal(id){
+        var modal=document.getElementById('shareModal'+id);
+        var span=document.getElementById('span-'+id);
+        modal.style.display='block';
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    }
 </script>
 
 </body>

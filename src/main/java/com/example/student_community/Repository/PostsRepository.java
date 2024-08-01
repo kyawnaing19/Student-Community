@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public interface PostsRepository extends JpaRepository<Posts, Integer> {
 
-    @Query("SELECT p FROM Posts p WHERE p.user = :user AND p.parentId is NULL AND p.audience IN :audiences order by p.id desc ")
-    List<Posts> findByUserAndAudienceIn(@Param("user") User user, @Param("audiences") List<String> audiences);
+    @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user.id IN :friendIds AND p.audience IN :audiences")
+    List<Posts> findNewsFeedPosts(@Param("friendIds") List<Integer> friendIds, @Param("audiences") List<String> audiences);
 
     @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user.id = :userId order by  p.id desc")
     List<Posts> findAllPostsByUserId(@Param("userId") int userId);
 
-    @Query("SELECT p FROM Posts p WHERE p.user = :user and p.parentId is null AND p.audience IN :audiences order by p.id desc ")
+    @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user = :user AND p.audience IN :audiences")
     List<Posts> findOtherWall(@Param("user") User user, @Param("audiences") List<String> audiences);
 }
