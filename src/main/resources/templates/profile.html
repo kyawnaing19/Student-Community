@@ -179,7 +179,7 @@
             <div class="main-middle ">
                <div class="middle-container" >
                    <div style="text-align: center;left:10%;top:15%;position: absolute;">
-                       <img src="/assests/Vanilla@1x-0.4s-246px-50px%20(1).svg" alt="Centered Image" style="display: block; margin-left: auto; margin-right: auto;">
+                       <img id="loadingImage" src="/assests/Vanilla@1x-0.4s-246px-50px%20(1).svg" alt="Centered Image" style="display: block; margin-left: auto; margin-right: auto;">
                    </div>
 <div  id="postsContainer" class="feeds">
 
@@ -380,8 +380,10 @@
                 if (Array.isArray(response)) {
 
                     var postsContainer = $('#postsContainer');
+                    $('#my-profile-label').hide();
                     postsContainer.empty();// Clear any existing content
                     postsContainer.hide();
+
                     console.log(response);
                     response.forEach(function(data) {
                         var smodel=`<!--sharemodal-start-->
@@ -443,6 +445,17 @@
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                                if (data.audience === 'Public') {
+                                    return `fas fa-globe-asia`;
+                                } else if(data.audience==='Friends') {
+                                    return `fas fa-user`;
+                                }else if(data.audience==='FOFriends'){
+                                    return `fas fa-user-friends`
+                                }else{
+                                    return 'fas fa-lock'
+                                }
+                            })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
@@ -466,7 +479,18 @@
                                 <div class="info">
                                     <h3>${data.parentPost.userName}</h3>
                                     <div class="time text-gry">
-                                        <small><span>${data.parentPost.createdAt}</span></small>
+                                        <small><span>${timeAgo(data.parentPost.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                                if (data.parentPost.audience === 'Public') {
+                                    return `fas fa-globe-asia`;
+                                } else if(data.parentPost.audience==='Friends') {
+                                    return `fas fa-user`;
+                                }else if(data.parentPost.audience==='FOFriends'){
+                                    return `fas fa-user-friends`
+                                }else{
+                                    return 'fas fa-lock'
+                                }
+                            })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
@@ -535,6 +559,17 @@
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                                if (data.audience === 'Public') {
+                                    return `fas fa-globe-asia`;
+                                } else if(data.audience==='Friends') {
+                                    return `fas fa-user`;
+                                }else if(data.audience==='FOFriends'){
+                                    return `fas fa-user-friends`
+                                }else{
+                                    return 'fas fa-lock'
+                                }
+                            })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
@@ -615,46 +650,12 @@
                             hide: true,
                         },
                     });
-                    $(document).ready(function() {
-                        $('.text-container').each(function() {
-                            var $container = $(this);
-                            var $textElement = $container.find('.text');
-                            var $seeMore = $container.find('.see-more');
 
-                            // Save the initial auto height
-                            var initialHeight = $container.height('auto').height();
-
-                            // Set the max height limit for containers
-                            var maxHeight = 100; // Change this to your desired maximum height
-
-                            function checkOverflow() {
-                                if ($textElement[0].scrollHeight >= maxHeight+10) {
-                                    $container.css('height', maxHeight + 'px');
-                                    $seeMore.show();
-                                } else {
-                                    $container.css('height', initialHeight + 'px');
-                                    $seeMore.hide();
-                                }
-                            }
-
-                            checkOverflow();
-
-                            $seeMore.on('click', function() {
-                                if ($(this).text() === 'See More') {
-                                    $container.css('height', 'auto'); // Allow container to expand to fit content
-                                    $(this).text('See Less');
-                                } else {
-                                    $container.css('height', maxHeight + 'px'); // Restrict container height
-                                    $(this).text('See More');
-                                }
-                            });
-                        });
-                    });
                     $(document).ready(function() {
                         setTimeout(function() {
                             $('body').removeAttr('style');
+                            $('#loadingImage').hide();
                             $('#pfAdjust').show();
-                            $('#my-profile-label').show();
                             postsContainer.show();
                             console.log("success");
                         }, 1500); // 3000 milliseconds = 3 seconds
@@ -808,14 +809,24 @@
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                                if (data.audience === 'Public') {
+                                    return `fas fa-globe-asia`;
+                                } else if(data.audience==='Friends') {
+                                    return `fas fa-user`;
+                                }else if(data.audience==='FOFriends'){
+                                    return `fas fa-user-friends`
+                                }else{
+                                    return 'fas fa-lock'
+                                }
+                            })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                           <div class="text-container">
-        <p class="text" id="text">${data.content}
-        </p>
+        <p class="text" id="text">${data.content}</p>
         <span class="see-more" id="seeMore">See More</span>
     </div>
  <div class="feed" style="border: 1px solid black;">
@@ -831,14 +842,24 @@
                                     <h3>${data.parentPost.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.parentPost.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                                if (data.parentPost.audience === 'Public') {
+                                    return `fas fa-globe-asia`;
+                                } else if(data.parentPost.audience==='Friends') {
+                                    return `fas fa-user`;
+                                }else if(data.parentPost.audience==='FOFriends'){
+                                    return `fas fa-user-friends`
+                                }else{
+                                    return 'fas fa-lock'
+                                }
+                            })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                           <div class="text-container">
-        <p class="text" id="text">${data.parentPost.content}
-        </p>
+        <p class="text" id="text">${data.parentPost.content}</p>
         <span class="see-more" id="seeMore">See More</span>
     </div>
 
@@ -900,14 +921,24 @@
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                                if (data.audience === 'Public') {
+                                    return `fas fa-globe-asia`;
+                                } else if(data.audience==='Friends') {
+                                    return `fas fa-user`;
+                                }else if(data.audience==='FOFriends'){
+                                    return `fas fa-user-friends`
+                                }else{
+                                    return 'fas fa-lock'
+                                }
+                            })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                       <div class="text-container">
-        <p class="text" id="text">${data.content}
-        </p>
+        <p class="text" id="text">${data.content}</p>
         <span class="see-more" id="seeMore">See More</span>
     </div>
 
@@ -980,41 +1011,7 @@
                 },
                 });
                     console.log("success");
-                        $(document).ready(function() {
-                            $('.text-container').each(function() {
-                                var $container = $(this);
-                                var $textElement = $container.find('.text');
-                                var $seeMore = $container.find('.see-more');
 
-                                // Save the initial auto height
-                                var initialHeight = $container.height('auto').height();
-
-                                // Set the max height limit for containers
-                                var maxHeight = 100; // Change this to your desired maximum height
-
-                                function checkOverflow() {
-                                    if ($textElement[0].scrollHeight >= maxHeight+10) {
-                                        $container.css('height', maxHeight + 'px');
-                                        $seeMore.show();
-                                    } else {
-                                        $container.css('height', initialHeight + 'px');
-                                        $seeMore.hide();
-                                    }
-                                }
-
-                                checkOverflow();
-
-                                $seeMore.on('click', function() {
-                                    if ($(this).text() === 'See More') {
-                                        $container.css('height', 'auto'); // Allow container to expand to fit content
-                                        $(this).text('See Less');
-                                    } else {
-                                        $container.css('height', maxHeight + 'px'); // Restrict container height
-                                        $(this).text('See More');
-                                    }
-                                });
-                            });
-                        });
                         $(document).ready(function() {
                             setTimeout(function() {
                                 $('body').removeAttr('style');

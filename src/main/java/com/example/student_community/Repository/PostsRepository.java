@@ -18,6 +18,6 @@ public interface PostsRepository extends JpaRepository<Posts, Integer> {
     @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user.id = :userId order by  p.id desc")
     List<Posts> findAllPostsByUserId(@Param("userId") int userId);
 
-    @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user = :user AND p.audience IN :audiences")
+    @Query("SELECT p FROM Posts p LEFT JOIN FETCH p.parentId WHERE p.user = :user AND p.audience IN :audiences order by p.id desc")
     List<Posts> findOtherWall(@Param("user") User user, @Param("audiences") List<String> audiences);
 }

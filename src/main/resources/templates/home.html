@@ -222,7 +222,7 @@
         position: fixed;
         z-index: 10;
         left: 0;
-        top: 0;
+        top: -85px;
         width: 100%;
         height: 100%;
         overflow: auto;
@@ -236,7 +236,7 @@
         padding: 20px;
         border: 1px solid #888;
         width: 80%;
-        max-width: 500px;
+        max-width: 700px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         border-radius: 10px;
     }
@@ -247,6 +247,8 @@
         float: right;
         font-size: 28px;
         font-weight: bold;
+        margin-top: -25px;
+        margin-right: -10px;
     }
 
     .grape:hover,
@@ -264,9 +266,9 @@
 
 
 <div id="bananaModal" class="apple">
-    <div class="orange">
+    <div class="orange" style="width: 500px; height: px;">
         <span class="grape">&times;</span>
-        <video id="video" autoplay></video>
+        <video style="width: 100%; height: 90%;" id="video" autoplay></video>
         <button id="capture">Capture</button>
         <canvas style="display: none;" id="canvas"></canvas>
     </div>
@@ -360,22 +362,12 @@
                     </div>
                     <div class="radio"></div>
                 </li>
-                <li value="Only me">
+                <li value="Only Me">
                     <div class="column">
                         <div class="icon"><i class="fas fa-lock"></i></div>
                         <div class="details">
                             <p>Only me</p>
                             <span>Only you can see your post</span>
-                        </div>
-                    </div>
-                    <div class="radio"></div>
-                </li>
-                <li value="Custom">
-                    <div class="column">
-                        <div class="icon"><i class="fas fa-cog"></i></div>
-                        <div class="details">
-                            <p>Custom</p>
-                            <span>Include and exclude friends</span>
                         </div>
                     </div>
                     <div class="radio"></div>
@@ -1375,9 +1367,9 @@
     document.getElementById('postSubmit').addEventListener('click', function (event) {
         event.preventDefault();
         var captionValue = document.getElementById('caption').value.trim();
-
+        var filess=fileInput.files;
         // Check if the caption field is empty
-        if (captionValue === '') {
+        if (captionValue === '' &&  filess.length===0) {
             console.log('Caption field is empty.');
             return; // Exit the function if the field is empty
         }
@@ -1502,6 +1494,18 @@
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                        if (data.audience === 'Public') {
+                            return `fas fa-globe-asia`;
+                        } else if(data.audience==='Friends') {
+                            return `fas fa-user`;
+                        }else if(data.audience==='FOFriends'){
+                            return `fas fa-user-friends`
+                        }else{
+                            return 'fas fa-lock'
+                        }
+                    })()}"></i></span></small>
+
                                     </div>
                                 </div>
                             </div>
@@ -1525,6 +1529,17 @@
                                     <h3>${data.parentPost.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.parentPost.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                        if (data.parentPost.audience === 'Public') {
+                            return `fas fa-globe-asia`;
+                        } else if(data.parentPost.audience==='Friends') {
+                            return `fas fa-user`;
+                        }else if(data.parentPost.audience==='FOFriends'){
+                            return `fas fa-user-friends`
+                        }else{
+                            return 'fas fa-lock'
+                        }
+                    })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
@@ -1594,6 +1609,17 @@
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.createdAt)}</span></small>
+                                        <small><span><i class="${(function() {
+                        if (data.audience === 'Public') {
+                            return `fas fa-globe-asia`;
+                        } else if(data.audience==='Friends') {
+                            return `fas fa-user`;
+                        }else if(data.audience==='FOFriends'){
+                            return `fas fa-user-friends`
+                        }else{
+                            return 'fas fa-lock'
+                        }
+                    })()}"></i></span></small>
                                     </div>
                                 </div>
                             </div>
