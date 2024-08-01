@@ -61,6 +61,10 @@ public class PostsController {
     @GetMapping("/sharePost")
     public ResponseEntity<String> sharePost(@RequestParam int uid,@RequestParam int pid,@RequestParam String aud,@RequestParam String content)
     {
+        System.out.println(uid);
+        System.out.println(pid);
+        System.out.println(aud);
+        System.out.println(content);
         User user=userRepository.findById(uid).get();
         Posts posts=postsRepository.findById(pid).get();
         Posts p=new Posts();

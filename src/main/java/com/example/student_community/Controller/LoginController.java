@@ -78,6 +78,12 @@ public class LoginController {
         return "profile";
     }
 
+    @GetMapping("/logout")
+    public String logOut(HttpSession session) {
+        session.invalidate();
+        return "login";
+    }
+
 //    @GetMapping("/search")
 //    public String SearchForm() {
 //        return "search";

@@ -232,12 +232,13 @@ main{
 .add-friend{
     width: 100%;
     padding: 8px 8px 0 8px;
+    margin-top: 5px;
    
 
     
     
 }
-.add-friend:hover{
+.user:hover{
     background-color: #d7d7dc;
     border-radius: 10px;
     transition: 1s;

@@ -54,7 +54,12 @@ img {
 }
 
 .profile-picture {
-    width: 3rem;
+    width: 1rem;
+
+}
+.profile-picture img{
+    width: 50px;
+    height:50px;
     aspect-ratio: 1/1;
     border-radius: 50%;
     overflow: hidden;
@@ -121,7 +126,7 @@ nav {
 
 .nav-container {
     display: flex;
-    justify-content: space-between;
+    gap:140px;
     align-items: center;
 }
 
@@ -473,7 +478,7 @@ aside .menu-item:nth-last-child(2){
 }
 .feed .feed-top .user{
     display: flex;
-    gap: 1rem;
+    gap: 50px;
 
 }
 .feed .feed-top .edit img{

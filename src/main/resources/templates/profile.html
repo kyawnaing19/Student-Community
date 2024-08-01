@@ -107,14 +107,14 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #c7ced5">
 
 
     <!-- ..................Start Navbar...................... -->
     <nav>
         <div class="container nav-container">
             <div class="logo">
-                <h3>Community <span>Forum</span></h3>
+                <img src="/assests/Untitled-1.png" style="width: 100%; height: 50px;">
             </div>
             <div class="serch-bar">
                 <i class="fa fa-search"></i>
@@ -122,23 +122,9 @@
             </div>
             <div class="add-post">
 <!--                <label for="add-post" class="btn btn-primary">Add Post</label>-->
-                <a class="menu-item" href="home">
-                <span>
-                            <img src="/Assets/images/svg/house-door.svg" alt="" style="width: 30px;">
-                        </span>
-                </a>
-                <a class="menu-item">
-                <span>
-                            <img src="./Assets/images/svg/bell.svg" alt="" style="width: 30px;">
-                        </span>
-                </a>
-                <a class="menu-item">
-                <span>
-                            <img src="./Assets/images/svg/gear.svg" alt="" style="width: 30px;">
-                        </span>
-                </a>
-                <div class="profile-picture" id="my-profile-picture">
-                    <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                <div class="" style="width:200px; display: flex;right: 20px;position: absolute;">
+
+                    <a onclick="let userConfirmed = confirm('Are you sure you want to log out?'); if (userConfirmed) { window.location.href = 'logout'; }"><img title="Logout" src="/assests/OOjs_UI_icon_logOut-ltr-progressive.svg.png" alt="Logout" style="cursor:pointer;width: 30px;height:30px;"></a>
                 </div>
             </div>
         </div>
@@ -152,7 +138,7 @@
 
 
             <!-- ...........Main Left Start......... -->
-            <div class="main-left">
+            <div class="main-left" >
                 <div class="profile" id="pfAdjust" style="display: none">
 
                     <img src="." alt="Profile Picture"
@@ -191,10 +177,12 @@
             <!--======================Main Middle Start====================== -->
 
             <div class="main-middle ">
-               <div class="middle-container">
+               <div class="middle-container" >
+                   <div style="text-align: center;left:10%;top:15%;position: absolute;">
+                       <img src="/assests/Vanilla@1x-0.4s-246px-50px%20(1).svg" alt="Centered Image" style="display: block; margin-left: auto; margin-right: auto;">
+                   </div>
 <div  id="postsContainer" class="feeds">
 
-loading.....
 </div>
 
                </div>
@@ -203,7 +191,7 @@ loading.....
             </div>
             <!-- ======================Main Middle End======================-->
 
-        </div>
+
     </main>
     <!-- ...................End Main Session................... -->
 
@@ -312,7 +300,6 @@ loading.....
 
     <!-- ----------------Swiper JS---------------------- -->
     <script src="./assests/js/LikeComShr.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 8,
@@ -368,8 +355,12 @@ loading.....
                         $('#userBio').text(data.bio)
                         if(data.profile!=null) {
                             console.log(data.profile)
+
                             $('#my-profile-picture1').attr('src', 'files/' + data.profile + '');
                             $('#imageForModal').attr('src', 'files/'+data.profile + '');
+                        }else{
+                            $('#my-profile-picture1').attr('src', '/assests/noprofile.jpg');
+                            $('#imageForModal').attr('src', '/assests/noprofile.jpg');
                         }
 
 
@@ -384,15 +375,13 @@ loading.....
             console.log("mY ID"+id);
             console.log("OD"+otherid);
             $.get('/posts/getOtherWall', { mid: id, oid:otherid }, function(response) {
-                if(response.length>0)
-                    $('#pfAdjust').css("margin-top", "10px");
-                else
-                    $('#pfAdjust').css("margin-top", "100px");
+
 
                 if (Array.isArray(response)) {
 
                     var postsContainer = $('#postsContainer');
                     postsContainer.empty();// Clear any existing content
+                    postsContainer.hide();
                     console.log(response);
                     response.forEach(function(data) {
                         var smodel=`<!--sharemodal-start-->
@@ -447,13 +436,13 @@ loading.....
      <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.userProfile}" alt="">
+                                   ${data.userProfile ? ` <img src="files/${data.userProfile}" alt="">`: ` <img src="/assests/noprofile.jpg" alt="">`}
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -470,13 +459,14 @@ loading.....
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.parentPost.userProfile}" alt="">
+                                  ${data.parentPost.userProfile ? ` <img src="files/${data.parentPost.userProfile}" alt="">`: ` <img src="/assests/noprofile.jpg" alt="">`}
+
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.parentPost.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${data.parentPost.createdAt}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -527,9 +517,7 @@ loading.....
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
-                            <div class="bookmark">
-                                <i class="fa fa-bookmark"></i>
-                            </div>
+
                         </div>
                     </div>`;
                         }else{
@@ -540,13 +528,13 @@ loading.....
 
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.userProfile}" alt="">
+                                    ${data.userProfile ? `<img src="files/${data.userProfile}" alt="">`: `<img src="/assests/noprofile.jpg" alt="">`}
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -593,9 +581,7 @@ loading.....
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
-                            <div class="bookmark">
-                                <i class="fa fa-bookmark"></i>
-                            </div>
+
                         </div>
 
 
@@ -664,7 +650,15 @@ loading.....
                             });
                         });
                     });
-                    $('#pfAdjust').show();
+                    $(document).ready(function() {
+                        setTimeout(function() {
+                            $('body').removeAttr('style');
+                            $('#pfAdjust').show();
+                            $('#my-profile-label').show();
+                            postsContainer.show();
+                            console.log("success");
+                        }, 1500); // 3000 milliseconds = 3 seconds
+                    });
                     console.log("success");
                 } else {
                     console.log('Response is not an array:', response);
@@ -730,6 +724,9 @@ loading.....
                         if(data.profile!=null) {
                             $('#my-profile-picture1').attr('src', 'files/' + data.profile + '');
                             $('#imageForModal').attr('src', 'files/'+data.profile + '');
+                        }else{
+                            $('#my-profile-picture1').attr('src', '/assests/noprofile.jpg');
+                            $('#imageForModal').attr('src', '/assests/noprofile.jpg');
                         }
                         //auto fill
 
@@ -742,14 +739,13 @@ loading.....
 
                 //get My Wall
                     $.get('/posts/getMyWall', { id: id }, function(response) {
-                        if(response.length>0)
-                            $('#pfAdjust').css("margin-top", "10px");
-                        else
-                            $('#pfAdjust').css("margin-top", "100px");
+
                     if (Array.isArray(response)) {
+                        $('#my-profile-label').hide();
                     var postsContainer = $('#postsContainer');
                     postsContainer.empty();// Clear any existing content
                     console.log(response);
+                    postsContainer.hide();
                     response.forEach(function(data) {
                         var smodel=`<!--sharemodal-start-->
 <div id="shareModal${data.id}" class="modalshare">
@@ -805,13 +801,13 @@ loading.....
      <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.userProfile}" alt="">
+                                    ${data.userProfile ? `<img src="files/${data.userProfile}" alt="">`: `<img src="/assests/noprofile.jpg" alt="">`}
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -828,13 +824,13 @@ loading.....
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.parentPost.userProfile}" alt="">
+                                    ${data.parentPost.userProfile ? `<img src="files/${data.parentPost.userProfile}" alt="">`: `<img src="/assests/noprofile.jpg" alt="">`}
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.parentPost.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.parentPost.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -885,9 +881,7 @@ loading.....
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
-                            <div class="bookmark">
-                                <i class="fa fa-bookmark"></i>
-                            </div>
+
                         </div>
                     </div>`;
                         }else{
@@ -899,13 +893,13 @@ loading.....
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.userProfile}" alt="">
+                                    ${data.userProfile ? `<img src="files/${data.userProfile}" alt="">`: `<img src="/assests/noprofile.jpg" alt="">`}
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -952,9 +946,7 @@ loading.....
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
-                            <div class="bookmark">
-                                <i class="fa fa-bookmark"></i>
-                            </div>
+
                         </div>
 
 
@@ -1023,7 +1015,15 @@ loading.....
                                 });
                             });
                         });
-                        $('#pfAdjust').show();
+                        $(document).ready(function() {
+                            setTimeout(function() {
+                                $('body').removeAttr('style');
+                                $('#pfAdjust').show();
+                                $('#my-profile-label').show();
+                                postsContainer.show();
+                                console.log("success");
+                            }, 1500); // 3000 milliseconds = 3 seconds
+                        });
                 } else {
                     console.log('Response is not an array:', response);
                 }

@@ -51,7 +51,11 @@
 }
 .post form .content img{
   cursor: default;
-  max-width: 52px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+
 }
 .post form .content .details{
   margin: -3px 0 0 12px;

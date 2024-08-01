@@ -44,6 +44,7 @@
     </script>
     <style>
         .text-container {
+            margin-top: 20px;
             width: 100%; /* Set the width of the container */
             overflow: hidden; /* Hide overflow text */
             position: relative;
@@ -82,6 +83,8 @@
 
         .image-containers {
             width: 100%;
+            display: grid;
+            gap: 5px;
             text-align: center;
         }
 
@@ -276,9 +279,9 @@
         <section class="post">
             <form action="/submitPost" method="POST" enctype="multipart/form-data">
                 <div class="content">
-                    <img src="./Assets/icons/logo.png" alt="logo">
+                    <img id="postImage" src="./Assets/icons/logo.png" alt="logo">
                     <div class="details">
-                        <p>Student Community</p>
+                        <p id="postUser">loading..</p>
                         <div class="privacy">
                             <i id="iconPost" class="fas fa-globe-asia"></i>
                             <span id="privacytype">Public</span>
@@ -287,7 +290,7 @@
                         </div>
                     </div>
                 </div>
-                <textarea name="content" placeholder="What's on your mind, Aung?" spellcheck="false" id="caption"
+                <textarea name="content" placeholder="What's on your mind..?" spellcheck="false" id="caption"
                           required></textarea>
 
 
@@ -387,16 +390,19 @@
 <nav>
     <div class="container nav-container">
         <div class="logo">
-            <h3>Community <span>Forum</span></h3>
+            <img src="/assests/Untitled-1.png" style="width: 100%; height: 50px;">
         </div>
         <div class="serch-bar">
             <i class="fa fa-search"></i>
             <input type="search" name="" id="search" placeholder="Search For Creators">
         </div>
         <div class="add-post">
-            <label for="add-post" class="btn btn-primary" id="openModalBtn">GGGGGGGGGG</label>
-            <div class="profile-picture" id="my-profile-picture">
-                <img src="./Assets/images/img/profile-1.jpeg" alt="">
+<!--            <label for="add-post" class="btn btn-primary" id="openModalBtn"> </label>-->
+            <div class="" style="width:200px; display: flex;right: 20px;position: absolute;">
+             <div title="Upload your Shwee to connect with others" id="openModalBtn" style="cursor:pointer;width:80%;display: flex;gap: 8px;"> <img src="/assests/download.png" alt="Logout" style="width: 30px;height:30px;">
+                 <span>Add Shwee</span></div>
+
+                 <a onclick="let userConfirmed = confirm('Are you sure you want to log out?'); if (userConfirmed) { window.location.href = 'logout'; }"><img title="Logout" src="/assests/OOjs_UI_icon_logOut-ltr-progressive.svg.png" alt="Logout" style="cursor:pointer;width: 30px;height:30px;"></a>
             </div>
         </div>
     </div>
@@ -413,12 +419,12 @@
         <div class="main-left">
 
             <!--..................... Profile Start.............. -->
-            <a class="profile">
+            <a href="profile" class="profile">
                 <div class="profile-picture12" id="my-profile-picture-left">
-                    <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                    <img src="/assests/download%20(1).png" alt="">
                 </div>
                 <div class="profile-handle">
-                    <h4 id="name"></h4>
+                    <h4 id="name">loading...</h4>
                 </div>
             </a>
 
@@ -546,10 +552,7 @@
                 </a>
 
 
-                <!-- ..........Add Post Btn...........-->
-                <label for="add-post" class="btn btn-primary btn-lg"><a href="profile"
-                                                                        style="text-decoration: none; color: aliceblue; font-weight: bolder;">View
-                    Profile Details</a></label>
+
 
             </aside>
 
@@ -663,13 +666,13 @@
                 <!-- ---------------------------End Stories --------------------------- -->
 
                 <!-- =======================Post Input==================== -->
-                <form class="add-post">
+                <form id="add-post" class="add-post">
                     <div class="profile-picture" id="my-profile-picture">
-                        <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                        <img id="ggg" src="/assests/download%20(1).png" alt="">
                     </div>
 
-                    <input type="text" name="" id="add-post" placeholder="What's on your mind?">
-                    <input type="submit" value="post" class="btn btn-primary">
+                    <input type="text" disabled name=""  placeholder="What's on your mind..?">
+
                 </form>
 
                 <!-- -------------------Feed Aria Start----------- ----->
@@ -826,7 +829,7 @@
                                 <div class="info">
                                     <h3>Aye Aye Min San</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>2 DAYS AGO</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -926,7 +929,7 @@
                                 <div class="info">
                                     <h3>Aye Aye Min San</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>2 DAYS AGO</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -994,7 +997,7 @@
                                 <div class="info">
                                     <h3>Aye Aye Min San</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>2 DAYS AGO</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -1146,23 +1149,7 @@
 
 <!-- -----------------------Start PopUps Aria----------------- -->
 <!-- ----------Start Profile-Popup------------- -->
-<div class="popup profile-popup">
-    <div>
-        <div class="popup-box profile-popup-box">
-            <h1>Aung Khaing Moe</h1>
-            <p>@aungkhaingmoe</p>
-            <div id="my-profile-picture">
-                <img src="./Assets/images/img/profile-1.jpeg">
-            </div>
-            <label for="profile-upload" class="btn btn-primary btn-lg"><a href="profile"
-                                                                          style="text-decoration: none; color: aliceblue; font-weight: bolder;">View
-                Profile Details</a></label>
-            <!-- <input type="file" name="" accept="image/jpg , image/png, image/jpep" id="profile-upload"> -->
-            <button class="btn btn-primary btn-lg">Log Out</button>
-        </div>
-        <span class="close"><i class="fa fa-close"></i></span>
-    </div>
-</div>
+
 <!-- ----------End Profile-Popup------------- -->
 
 <!-- -----------------------End PopUps Aria----------------- -->
@@ -1218,7 +1205,17 @@
             dataType: 'json', // The type of data you're expecting back from the server
             success: function (data) {
                 $('#name').text(data.name)
-                $('#my-profile-picture-left img').attr('src', 'files/' + data.profile + '');
+                $('#postUser').text(data.name)
+                if(data.profile!==null) {
+                    $('#postImage').attr('src', 'files/' + data.profile + '');
+                    $('#my-profile-picture-left img').attr('src', 'files/' + data.profile + '');
+                    $('#ggg').attr('src', 'files/' + data.profile + '');
+                }
+                else{
+                    $('#my-profile-picture-left img').attr('src', '/assests/noprofile.jpg');
+                    $('#postImage').attr('src', '/assests/noprofile.jpg');
+                    $('#ggg').attr('src', '/assests/noprofile.jpg');
+                }
                 // Access specific keys from the JSON object
                 console.log("ID: " + data.id);
                 console.log("Name: " + data.name);
@@ -1248,10 +1245,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         var modal = document.getElementById("myModal");
+        var aa=document.getElementById("add-post");
         var btn = document.getElementById("openModalBtn");
         var span = document.getElementsByClassName("closee")[0];
 
         btn.onclick = function () {
+            console.log("AAAAAAAAAAAAAAAAA")
+            modal.style.display = "block";
+        }
+
+        aa.onclick = function () {
             console.log("AAAAAAAAAAAAAAAAA")
             modal.style.display = "block";
         }
@@ -1371,7 +1374,13 @@
 <script>
     document.getElementById('postSubmit').addEventListener('click', function (event) {
         event.preventDefault();
+        var captionValue = document.getElementById('caption').value.trim();
 
+        // Check if the caption field is empty
+        if (captionValue === '') {
+            console.log('Caption field is empty.');
+            return; // Exit the function if the field is empty
+        }
         var formData = new FormData();
 
         let files = fileInput.files;
@@ -1492,7 +1501,7 @@
                                 <div class="info">
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -1509,13 +1518,13 @@
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.parentPost.userProfile}" alt="">
+                                    ${data.parentPost.userProfile ? `<img src="files/${data.parentPost.userProfile}" alt="">`:`<img src="/assests/noprofile.jpg" alt="">`}
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.parentPost.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.parentPost.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -1566,9 +1575,7 @@
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
-                            <div class="bookmark">
-                                <i class="fa fa-bookmark"></i>
-                            </div>
+
                         </div>
                     </div>`;
                 }else{
@@ -1580,13 +1587,13 @@
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="files/${data.userProfile}" alt="">
+                                    ${data.userProfile ? `<img src="files/${data.userProfile}" alt="">`: `<img src="/assests/noprofile.jpg" alt="">`}
                                 </div>
 
                                 <div class="info">
                                     <h3>${data.userName}</h3>
                                     <div class="time text-gry">
-                                        <small>Korea, <span>2 DAYS AGO</span></small>
+                                        <small><span>${timeAgo(data.createdAt)}</span></small>
                                     </div>
                                 </div>
                             </div>
@@ -1633,9 +1640,7 @@
                                 <span id="likeCount${data.id}">${data.likes.length}</span><a data-link href="comments/${data.id}"><span><i class="fa fa-comment-dots"></i></span></a>
                                 ${data.comments.length}&nbsp;&nbsp;&nbsp;<span onclick="shModal(${data.id})"><i class="fa fa-link"></i></span>
                             </div>
-                            <div class="bookmark">
-                                <i class="fa fa-bookmark"></i>
-                            </div>
+
                         </div>
 
 

@@ -1,4 +1,4 @@
-let user_id=sessionStorage.getItem("id");
+var user_id = parseInt(sessionStorage.getItem("id"), 10);
 
 function addLike(userId,postId){
     $.get('/likes/addLike', { userId: userId, postId:postId }, function(response) {
@@ -71,17 +71,53 @@ function sharePost(id){
         console.log(selectedValue);
     });
 
-    $.get('/posts/sharePost', { uid:user_id , pid:parentId, aud: selectedValue, content:content }, function(response) {
-
-        alert("Shared Successfully")
-        if(sessionStorage.getItem("id")===user_id){
-            window.location.reload();
+    $.ajax({
+        url: '/posts/sharePost',
+        type: 'GET',
+        data: {
+            uid: user_id,
+            pid: parentId,
+            aud: selectedValue,
+            content: content
+        },
+        success: function(response) {
+            alert("Shared Successfully");
+            if (parseInt(sessionStorage.getItem("id"))=== user_id) {
+                window.location.reload();
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('Request failed: ' + error);
         }
-
-    }).fail(function(xhr, status, error) {
-        alert('Request failed: ' + error);
     });
 
 
-
 }
+
+function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    const minutes = Math.floor(diffInSeconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(months / 12);
+
+    if (years >= 1) {
+        return years === 1 ? "1 year ago" : `${years} years ago`;
+    } else if (months >= 1) {
+        return months === 1 ? "1 month ago" : `${months} months ago`;
+    } else if (days >= 1) {
+        return days === 1 ? "1 day ago" : `${days} days ago`;
+    } else if (hours >= 1) {
+        return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
+    } else {
+        return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
+    }
+}
+
+// Example usage:
+console.log(timeAgo("2024-08-02T00:44:29.173638"));
+

@@ -172,10 +172,7 @@ nav .serch-bar input[type="search"]::placeholder{
 
 /* Main Left */
 .main-left {
-    position: sticky;
-    height: max-content;
-    top: 5.4rem;
-    width: 35%;
+
     margin-left: 5%;
 }
 
@@ -190,10 +187,11 @@ nav .serch-bar input[type="search"]::placeholder{
 }
 
 .main-left {
-    position: sticky;
+
+    position: fixed;
     height: max-content;
     top: 5.4rem;
-    width: 40%;
+    width: 30%;
 }
 
 .profile {
@@ -363,9 +361,13 @@ aside .menu-item:nth-last-child(2) {
 
 /* Main Middle */
 .main-middle {
-    width: 60%;
+
+    width: 50%;
+    left:40%;
+    position: absolute;
     margin-top: 70px;
 }
+
 .main-middle.scroll-blocked {
     overflow: hidden;
 }

@@ -24,16 +24,17 @@
     <nav>
         <div class="container nav-container">
             <div class="logo">
-                <h3>Community <span>Forum</span></h3>
+                <img src="/assests/Untitled-1.png" style="width: 100%; height: 50px;">
             </div>
             <div class="serch-bar">
                 <i class="fa fa-search"></i>
                 <input type="search" name="" id="search" placeholder="Search For Creators">
             </div>
             <div class="add-post">
-                <label for="add-post" class="btn btn-primary">Add Post</label>
-                <div class="profile-picture" id="my-profile-picture">
-                    <img src="./Assets/images/img/profile-1.jpeg" alt="">
+                <div class="" style="width:100%;position: absolute;">
+
+
+                    <a onclick="let userConfirmed = confirm('Are you sure you want to log out?'); if (userConfirmed) { window.location.href = 'logout'; }"><img title="Logout" src="/assests/OOjs_UI_icon_logOut-ltr-progressive.svg.png" alt="Logout" style="cursor:pointer;width: 30px;height:30px;"></a>
                 </div>
             </div>
         </div>
@@ -46,90 +47,25 @@
         <div class="container main-container">
 
             <!-- ...........Main Left Start......... -->
-            <div class="main-left">
+
 
                 <!--.....................  ALl friends.............. -->
             
-                    <div class="friends-suggest">
-                        <div class="back">
-                            <a href="friends.html" class="back-to">
-                                <i class="fa-solid fa-arrow-left"></i>
-                            </a>
-                        </div>
-                        <div class="text">
-                            <h2>Search Result</h2>
-                        </div>      
-                    </div>
+
   
                 <!--.....................All friends End.............. -->
 
                 <!-- ............Start Aside Bar for your all friends............... -->
                 <aside>   
                         
-                        <div class="horizontal-line"></div>
-                        <div class="cal-allfriend">
-                            <p>Filter</p>
-                        </div>
-                    
-                  
 
-                    <a class="menu-item" href="">
-                        <span>
-                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
-                        </span>
-                        <h3>All</h3>
-                    </a>
-
-                    <a class="menu-item" href="">
-                        <span>
-                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
-                        </span>
-                        <h3>People</h3>
-                    </a>
-
-                    <a class="menu-item" href="">
-                        <span>
-                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
-                        </span>
-                        <h3>Post</h3>
-                    </a>
-
-
-                    <a class="menu-item" href="">
-                        <span>
-                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
-                        </span>
-                        <h3>Videos</h3>
-                    </a>
-
-                    <a class="menu-item" href="">
-                        <span>
-                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
-                        </span>
-                        <h3>Photo</h3>
-                    </a>
-
-                    <a class="menu-item" href="">
-                        <span>
-                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
-                        </span>
-                        <h3>Event</h3>
-                    </a>
-
-                    <a class="menu-item" href="">
-                        <span>
-                            <img src="./Assets/images/svg/friends-svgrepo-com.svg" alt="">
-                        </span>
-                        <h3>Group</h3>
-                    </a>
-                    
 
                     
                 </aside>
 
                 <!-- ............End Aside Bar............... -->
 
-            </div>
+
             <!-- ...........Main Left End......... -->
 
 
@@ -172,7 +108,6 @@
 
 
     <!-- ----------------Swiper JS---------------------- -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
     <script src="./Assets/Swiper/swiper-bundle.min.js"></script>
     <!-- Custom Js Link -->
@@ -218,14 +153,14 @@
 
                     var userDiv = `
             <div class="user" id="user-${freindDTO.user.id}" >
-                <img class="user-img" src="/files/${freindDTO.user.profile}" alt="User Image">
-                <div class="content" onclick="window.location.href='profile?otheremail=${freindDTO.user.email}&otherid=${freindDTO.user.id}'">
+                ${freindDTO.user.profile ? `<img class="user-img" src="/files/${freindDTO.user.profile}" alt="User Image">` : `<img class="user-img" src="/assests/noprofile.jpg" alt="User Image">`}
+                <div class="content" style="width: 300px;" onclick="window.location.href='profile?otheremail=${freindDTO.user.email}&otherid=${freindDTO.user.id}'">
                     <h4>${freindDTO.user.name}</h4>
                     <div class="liked-by">
 
                     </div>
                 </div>
-                <div class="add-friend">
+                <div class="add-friend" style="">
                     <a class="btn-confirm" id="btn-${freindDTO.user.id}" onclick="${buttonAction}(${freindDTO.user.id})">${freindDTO.status}</a>
                 </div>
             </div>
