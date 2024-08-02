@@ -45,6 +45,7 @@ function complete(){
         data: JSON.stringify(user), // Convert object to JSON string
         success: function(response) {
             alert("successfully registered");
+
         },
         error: function(error) {
             alert("error");

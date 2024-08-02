@@ -166,4 +166,29 @@ public boolean isFOF(int myId,int oId)
 }
     //fri of fri
 
+    //aung myint tun
+    public ResponseEntity<FriendDTO> getFriBtn(int id, String otherEmail) {
+        User users=friendRepository.findByEmailAndExclude(otherEmail,id);
+
+        FriendDTO dto=new FriendDTO();
+        dto.setUser(users);
+        Optional<Friends> a=friendRepository.findBySenderAndReceiver(id,users.getId());
+        Optional<Friends> b=friendRepository.findBySenderAndReceiver(users.getId(),id);
+        if(a.isPresent()){
+            dto.setStatus("Cancel Request");
+            if(a.get().getStatus().equals("ACCEPTED"))
+                dto.setStatus("Friend");
+        }else if(b.isPresent()){
+            dto.setStatus("Confirm");
+            if(b.get().getStatus().equals("ACCEPTED"))
+                dto.setStatus("Friend");
+        }else{
+            dto.setStatus("Add Friend");
+        }
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
+    //aung myint tun
+
 }

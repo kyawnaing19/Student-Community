@@ -104,6 +104,23 @@
         .hidden {
             display: none;
         }
+        .add-friend{
+            display: flex;
+        }
+
+
+        /*aung myint tun*/
+        .btn-confirm{
+
+            padding: 7px 22px;
+            text-decoration: none;
+            text-align: center;
+            background-color: #1714b4;
+            color: white;
+             margin-right:15px;
+            border-radius: 7px;
+        }
+        /*aung myint tun*/
     </style>
 </head>
 
@@ -153,6 +170,18 @@
                         <p id="em">loading</p>
                     </div>
 
+                    <!--        aung myint tun-->
+                    <div class="add-friend">
+
+
+                    <div class="" id="friBtn">
+
+                    </div>
+                    <div class="" id="delBtn">
+
+                    </div>
+                    </div>
+                    <!--        aung myint tun-->
 
                     <div class="details">
                         <div ><i class="fas fa-university"></i>Major : <p id="mj"></p></div>
@@ -337,8 +366,103 @@
         if(otheremail!==''){
             $('#userBio').attr('onclick','');
             $('.profile-info').css('pointer-events', 'none');
-            $(document).ready(function(){
 
+            // aung myint tun
+
+            $.get('/friend/getFriendBtn', { id: id, otherEmail:otheremail }, function(response) {
+
+                console.log("Btn type = "+response);
+                console.log(response.status);
+
+                var buttonAction;
+
+                if(response.status==="Cancel Request")
+                    buttonAction="cancelFunc";
+                if(response.status==="Add Friend")
+                    buttonAction="addFunc";
+                if(response.status==="Confirm")
+                    buttonAction="confirmFunc";
+                if(response.status==="Friend")
+                    buttonAction="cancelFunc";
+
+
+                let friBtn=$('#friBtn');
+                let delBtn=$('#delBtn');
+                friBtn.empty();
+                // Create the new button and set its HTML
+                if(response.status==="Confirm")
+                {
+                    let buttonHTML = `<a class="btn-confirm" id="btn" onclick="${buttonAction}(otherid)">${response.status}</a>`;
+                    let buttonDel = `<a class="btn-confirm" id="btnDel" onclick="cancelFunc(otherid)">Delete</a>`;                    friBtn.html(buttonDel);
+                    delBtn.html(buttonHTML);
+                }
+                else
+                {
+                    let buttonHTML = `<a class="btn-confirm" id="btn" onclick="${buttonAction}(otherid)">${response.status}</a>`;
+                    friBtn.html(buttonHTML); // Use .html() to set the content of the element
+                }
+
+
+            }).fail(function(xhr, status, error) {
+                alert('Request failed: ' + error);
+            });
+
+            function addFunc(userId){
+                $.get('/friend/requestFriend', { sender: id, receiver:userId }, function(response) {
+                    $('#btn').text("Cancel Request");
+                    $('#btn').attr('onclick','cancelFunc('+userId+')');
+                }).fail(function(xhr, status, error) {
+                    alert('Request failed: ' + error);
+                });
+            }
+
+            function cancelFunc(userId) {
+                // Display a confirmation dialog to the user
+                let prompt = confirm("Are you sure you want to delete this friend?");
+
+                // Check the user's response
+                if (prompt) {
+                    // Proceed with the AJAX request if the user confirmed
+                    $.ajax({
+                        url: '/friend/deleteFriend', // your delete mapping URL
+                        type: 'DELETE',
+                        data: { sender: id, receiver: userId },
+                        success: function(response) {
+                            $('#btn').text("Add Friend");
+                            $('#btn').attr('onclick', 'addFunc(' + userId + ')');
+
+                            // Remove the "Delete" button from the UI
+                            $('#btnDel').remove();
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Request failed: ' + error);
+                        }
+                    });
+                } else {
+                    // Optional: Handle the case where the user cancels the action
+                    console.log("User canceled the delete action.");
+                }
+            }
+
+            function  confirmFunc(userId)
+            {
+                $.ajax({
+                    url: '/friend/acceptFriend', // your delete mapping URL
+                    type: 'POST',
+                    data: { sender: userId, receiver: id },
+                    success: function(response) {
+                        $('#btn').text("Friend");
+                        $('#btn').attr('onclick', 'cancelFunc('+userId+')');
+
+                        $('#btnDel').remove();
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Request failed: ' + error);
+                    }
+                });
+            }
+
+            $(document).ready(function(){
                 $.ajax({
                     url: '/userInfo/'+otheremail+'', // Replace with your actual API endpoint
                     type: 'GET', // HTTP method

@@ -48,4 +48,13 @@ public class FriendController {
     public List<User> getFriendsOfFriends(@RequestParam int userId) {
         return friendService.getFriendsOfFriends(userId);
     }
+
+    // aung myint tun
+    @GetMapping("/getFriendBtn")
+    public ResponseEntity<FriendDTO> getFriBtn(@RequestParam int id, @RequestParam String otherEmail)
+    {
+        return friendService.getFriBtn(id,otherEmail);
+    }
+    // aung myint tun
+
 }

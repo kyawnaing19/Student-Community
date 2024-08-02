@@ -46,4 +46,10 @@ public interface FriendRepository extends JpaRepository<Friends, Integer> {
             "  AND (f.sender = :friendId OR f.receiver = :friendId) " +
             "  AND (f.sender != :originalUserId AND f.receiver != :originalUserId)")
     List<Integer> findFriendsOfFriend(int friendId, int originalUserId);
+
+
+    //aung myint tun
+    @Query("SELECT e FROM User e WHERE e.email= :otherEmail AND e.id != :id")
+    User findByEmailAndExclude(String otherEmail,int id);
+    //aung myint tun
 }

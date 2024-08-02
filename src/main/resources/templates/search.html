@@ -186,18 +186,28 @@
         }
 
         function cancelFunc(userId) {
-            $.ajax({
-                url: '/friend/deleteFriend', // your delete mapping URL
-                type: 'DELETE',
-                data: { sender: id, receiver: userId },
-                success: function(response) {
-                    $('#btn-'+userId+'').text("Add Friend");
-                    $('#btn-'+userId+'').attr('onclick', 'addFunc('+userId+')');
-                },
-                error: function(xhr, status, error) {
-                    alert('Request failed: ' + error);
-                }
-            });
+            // Display a confirmation dialog to the user
+            let prompt = confirm("Are you sure you want to delete this friend?");
+
+            // Check the user's response
+            if (prompt) {
+                // Proceed with the AJAX request if the user confirmed
+                $.ajax({
+                    url: '/friend/deleteFriend', // your delete mapping URL
+                    type: 'DELETE',
+                    data: { sender: id, receiver: userId },
+                    success: function(response) {
+                        $('#btn-'+userId+'').text("Add Friend");
+                        $('#btn-'+userId+'').attr('onclick', 'addFunc('+userId+')')
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Request failed: ' + error);
+                    }
+                });
+            } else {
+                // Optional: Handle the case where the user cancels the action
+                console.log("User canceled the delete action.");
+            }
         }
 
         function  confirmFunc(userId)
