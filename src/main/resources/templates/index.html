@@ -7,12 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../assests/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assests/css/style.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
 
     <style>
         .hidden {
             display: none;
         }
+
+        :root {
+            --color-white: hsl(252, 30%, 100%);
+            --color-light: hsl(252, 30%, 93%);
+            --color-gray: hsl(252, 15%, 60%);
+            --color-primary: hsl(252, 75%, 60%);
+            --color-secondary: hsl(252, 100%, 90%);
+            --color-success: hsl(120, 95%, 60%);
+            --color-danger: hsl(0, 95%, 60%);
+            --color-dark: hsl(252, 30%, 15%);
+
+
+            --border-radius: 2rem;
+            --card-border-radius: 1rem;
+
+            --btn-padding: .6rem 2rem;
+
+            --search-padding: .6rem 1rem;
+            --card-padding: 1rem;
+
+
+        }
+
+        body {
+            background-color: #ffffff;
+        }
+
+
     </style>
 </head>
 
@@ -29,7 +57,7 @@
 
             <div class="col-md-6 left-box d-flex justify-content-center">
                 <div class="aut_icon ms-1">
-                    <img src="../image/aut_img1.png" class="img-fluid" style="width: 350px;">
+                    <img src="../image/img1.png" class="img-fluid" style="width: 350px;">
                 </div>
             </div>
 
@@ -38,7 +66,7 @@
             <div class="col-md-6 right-box d-flex flex-column align-items-center">
                 <div id="email-authentication" class="row align-items-center">
                     <div class="header-text mb-3">
-                        <p class="fs-1 text-center text-primary">Authentication</p>
+                        <p class="fs-1 text-center" style="color: var(--color-primary);">Authentication</p>
                     </div>
 
                     <div class="bottom-box email-type-selector d-flex mb-4 justify-content-center">
@@ -64,7 +92,7 @@
 
                     <div class="input-group mt-5 d-flex justify-content-center">
                         <button id="showOtpVerification" class="btn btn-lg btn-primary w-50 fs-unset rounded-pill"
-                            onclick="showOtpVerification()">Continue ></button>
+                            onclick="showOtpVerification()" style="background-color: var(--color-primary); color: #000000;">Continue ></button>
                     </div>
                     <div class="row">
                         <small class="login text-white text-center mt-5 fs-6">Already have an account? <a
@@ -77,7 +105,7 @@
 
                 <div id="otp-verification" class="row align-items-center hidden">
                     <div class="header-text mb-3">
-                        <p class="fs-1 text-center text-primary">OTP Verification</p>
+                        <p class="fs-1 text-center" style="color: var(--color-primary)">OTP Verification</p>
                     </div>
                     <div class="d-flex align-items-center mt-3">
                         <input type="text" id="otp-placeholder"
@@ -86,7 +114,7 @@
                     </div>
                     <div class="input-group mt-5 d-flex justify-content-center">
                         <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill"
-                            onclick="showProfileCompletion()">Verify OTP ></button>
+                            onclick="showProfileCompletion()" style="background-color: var(--color-primary)">Verify OTP ></button>
                     </div>
                     <div class="row d-flex justify-content-center">
                         <small class="otp login text-white text-center  mt-3 fs-6 ml-5">Resend Code</small>
@@ -113,7 +141,7 @@
                     </div>
                     <div class="input-group mt-5 d-flex justify-content-center">
                         <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill"
-                            onclick="showPassword()">Continue ></button>
+                            onclick="showPassword()" style="background-color: var(--color-primary)">Continue ></button>
                     </div>
                     <div class="row">
                         <small class="login text-white text-center mt-5 fs-6">Already have an account? <a
@@ -139,10 +167,7 @@
                                placeholder="Confirm Your Password">
                     </div>
                     <div class="input-group mt-5 d-flex justify-content-center">
-                        <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill" onclick="complete()">Complete ></button>
-                    </div>
-                    <div class="input-group mt-5 d-flex justify-content-center">
-                       <a href="login" >Login</a>
+                        <button class="btn btn-lg btn-primary w-50 fs-unset rounded-pill" onclick="complete()" style="background-color: var(--color-primary)">Complete ></button>
                     </div>
                 </div>
                 <!-- ===== End Password session =====-->

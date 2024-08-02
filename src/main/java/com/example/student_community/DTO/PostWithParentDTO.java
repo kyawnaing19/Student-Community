@@ -20,6 +20,7 @@ public class PostWithParentDTO {
     private List<Likes> likes;
     private List<Comments> comments;
     private ParentPostDTO parentPost;
+    private int otherId;
 
     // Getters and Setters
 
@@ -35,6 +36,7 @@ public class PostWithParentDTO {
         private List<Images> images;
         private List<Comments> comments;
         private List<Likes> likes;
+        private int otherId;
 
         // Getters and Setters
     }

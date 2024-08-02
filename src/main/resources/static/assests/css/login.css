@@ -7,7 +7,7 @@
 }
 body {
     font-family: 'Poppins',sans-serif;
-    background-color: #000000;
+    background-color: var(--color-light);
     color: white;
 }
 form{
@@ -15,6 +15,29 @@ form{
     /* background-color:#252a2b; */
     padding: 50px;
     border-radius: 20px;
+
+}
+
+:root {
+    --color-white: hsl(252, 30%, 100%);
+    --color-light: hsl(252, 30%, 93%);
+    --color-gray: hsl(252, 15%, 60%);
+    --color-primary: hsl(252, 75%, 60%);
+    --color-secondary: hsl(252, 100%, 90%);
+    --color-success: hsl(120, 95%, 60%);
+    --color-danger: hsl(0, 95%, 60%);
+    --color-dark: hsl(252, 30%, 15%);
+    --color-black: hsl(252, 30%, 8%);
+
+
+    --border-radius: 2rem;
+    --card-border-radius: 1rem;
+
+    --btn-padding: .6rem 2rem;
+
+    --search-padding: .6rem 1rem;
+    --card-padding: 1rem;
+
 
 }
 .btn-primary{
@@ -55,7 +78,7 @@ form{
     position: absolute;
     width: 160px;
     height: 100%;
-    background: #DEB887;
+    background: var(--color-primary);
     border-radius: 30px;
     transform: .5s;
 }

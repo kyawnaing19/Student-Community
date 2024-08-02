@@ -126,6 +126,7 @@ public class PostsService {
         dto.setImages(post.getImages());
         dto.setLikes(post.getLike());
         dto.setComments(post.getComments());
+        dto.setOtherId(post.getUser().getId());
 
         if (post.getParentId() != null) {
             PostWithParentDTO.ParentPostDTO parentPostDTO = new PostWithParentDTO.ParentPostDTO();
@@ -139,6 +140,7 @@ public class PostsService {
             parentPostDTO.setImages(post.getParentId().getImages());
             parentPostDTO.setComments(post.getParentId().getComments());
            parentPostDTO.setLikes(post.getParentId().getLike());
+           parentPostDTO.setOtherId(post.getParentId().getUser().getId());
             dto.setParentPost(parentPostDTO);
 
         }
