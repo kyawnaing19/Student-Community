@@ -77,16 +77,16 @@ public class Controller {
     }
     //editBio
 
-//    @GetMapping("/test")
-//    public void test() {
-//
-//         postsRepository.deleteAll();
-////         userRepository.deleteAll();
-////         friendRepository.deleteAll();
-//
-//
-//
-//    }
+    @GetMapping("/test")
+    public String test() {
+
+         userRepository.deleteById(22);
+         return "ok";
+
+
+
+
+    }
 
     //edit pf image
     private static final String UPLOAD_DIR = "\\src\\main\\resources\\static\\profiles"; // Replace with your desired upload directory

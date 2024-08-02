@@ -1572,11 +1572,11 @@
      <input type="hidden" id="op-${data.id}" value="${data.parentPost.id}" >
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img onclick="window.location.href='profile?otheremail=${data.parentPost.userEmail}&otherid=${data.parentPost.otherId}'" src="files/${data.userProfile}" alt="">
+                                    <img onclick="window.location.href='profile?otheremail=${data.userEmail}&otherid=${data.otherId}'" src="/assests/noprofile.jpg" alt="">
                                 </div>
 
                                 <div class="info">
-                                    <h3 onclick="window.location.href='profile?otheremail=${data.parentPost.userEmail}&otherid=${data.parentPost.otherId}'">${data.userName}</h3>
+                                    <h3 onclick="window.location.href='profile?otheremail=${data.userEmail}&otherid=${data.otherId}'">${data.userName}</h3>
                                     <div class="time text-gry">
                                         <small><span>${timeAgo(data.createdAt)}</span></small>
                                         <small><span><i class="${(function() {
